@@ -3,6 +3,9 @@ import sys
 sys.path.insert(0, os.path.abspath('..'))
 sys.path.insert(0, os.path.abspath('../src'))
 
+# Mock dependencies that might not be available in CI
+autodoc_mock_imports = ['pulp', 'numpy', 'pandas']
+
 # Project information
 project = 'Oracle'
 copyright = '2024'
@@ -56,4 +59,7 @@ napoleon_type_aliases = None
 # Type hints settings
 autodoc_typehints = 'description'
 typehints_use_signature = True
-typehints_use_signature_return = True 
+typehints_use_signature_return = True
+
+# Suppress warnings that can happen in CI
+suppress_warnings = ['autosummary.import_cycle'] 
