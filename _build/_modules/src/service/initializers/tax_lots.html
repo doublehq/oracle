@@ -1,0 +1,190 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.service.initializers.tax_lots &mdash; Oracle 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            Oracle
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../index.html">Oracle Optimizer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules/initializers.html">Initializers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules/optimization_types.html">Optimization Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules/oracle.html">Oracle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules/oracle_strategy.html">OracleStrategy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules/objectives.html">Objectives</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules/constraints.html">Constraints</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules/helpers.html">Helpers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Oracle</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">src.service.initializers.tax_lots</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for src.service.initializers.tax_lots</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.service.helpers.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">CASH_CUSIP_ID</span>
+
+<div class="viewcode-block" id="initialize_tax_lots">
+<a class="viewcode-back" href="../../../../modules/initializers.html#service.initializers.initialize_tax_lots">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">initialize_tax_lots</span><span class="p">(</span><span class="n">tax_lots</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Initialize and validate tax lots DataFrame.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        tax_lots: DataFrame with columns:</span>
+<span class="sd">        - tax_lot_id (str, optional): Unique identifier for each tax lot</span>
+<span class="sd">        - identifier (str): Security identifier</span>
+<span class="sd">        - quantity (float): Number of shares/units</span>
+<span class="sd">        - cost_basis (float): Total cost basis of the lot</span>
+<span class="sd">        - date or date_acquired (datetime): Purchase date of the lot</span>
+<span class="sd">        </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Validated tax lots DataFrame with standardized columns and types:</span>
+<span class="sd">        - tax_lot_id (str): Unique identifier for each tax lot (generated if not provided)</span>
+<span class="sd">        - identifier (str): Security identifier (standardized to uppercase)</span>
+<span class="sd">        - quantity (float): Number of shares/units (validated as non-negative)</span>
+<span class="sd">        - cost_basis (float): Total cost basis of the lot (validated as non-negative)</span>
+<span class="sd">        - date (datetime): Acquisition date (standardized column name from date or date_acquired)</span>
+<span class="sd">        </span>
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If tax lots DataFrame is missing required columns or contains invalid data</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">tax_lots</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">tax_lots</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;tax_lot_id&#39;</span><span class="p">,</span> <span class="s1">&#39;identifier&#39;</span><span class="p">,</span> <span class="s1">&#39;quantity&#39;</span><span class="p">,</span> <span class="s1">&#39;cost_basis&#39;</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span><span class="p">])</span>
+
+    <span class="c1"># Check for either date or date_acquired</span>
+    <span class="k">if</span> <span class="s1">&#39;date_acquired&#39;</span> <span class="ow">in</span> <span class="n">tax_lots</span><span class="o">.</span><span class="n">columns</span> <span class="ow">and</span> <span class="s1">&#39;date&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tax_lots</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">tax_lots</span> <span class="o">=</span> <span class="n">tax_lots</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;date_acquired&#39;</span><span class="p">:</span> <span class="s1">&#39;date&#39;</span><span class="p">})</span>
+    <span class="k">elif</span> <span class="s1">&#39;date&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tax_lots</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Tax lots DataFrame must have either &#39;date&#39; or &#39;date_acquired&#39; column&quot;</span><span class="p">)</span>
+
+    <span class="n">required_columns</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;identifier&#39;</span><span class="p">,</span> <span class="s1">&#39;quantity&#39;</span><span class="p">,</span> <span class="s1">&#39;cost_basis&#39;</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span><span class="p">}</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">set</span><span class="p">(</span><span class="n">tax_lots</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="o">.</span><span class="n">issuperset</span><span class="p">(</span><span class="n">required_columns</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tax lots DataFrame missing required columns: </span><span class="si">{</span><span class="n">required_columns</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Ensure data types</span>
+    <span class="n">tax_lots</span> <span class="o">=</span> <span class="n">tax_lots</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">tax_lots</span><span class="p">[</span><span class="s1">&#39;identifier&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tax_lots</span><span class="p">[</span><span class="s1">&#39;identifier&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+    
+    <span class="c1"># Replace any &#39;CASH&#39; or &#39;cash&#39; identifiers with CASH_CUSIP_ID</span>
+    <span class="n">cash_mask</span> <span class="o">=</span> <span class="n">tax_lots</span><span class="p">[</span><span class="s1">&#39;identifier&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;CASH&#39;</span>
+    <span class="k">if</span> <span class="n">cash_mask</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+        <span class="n">tax_lots</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">cash_mask</span><span class="p">,</span> <span class="s1">&#39;identifier&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">CASH_CUSIP_ID</span>
+    
+    <span class="n">tax_lots</span><span class="p">[</span><span class="s1">&#39;quantity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">tax_lots</span><span class="p">[</span><span class="s1">&#39;quantity&#39;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;raise&#39;</span><span class="p">)</span>
+    <span class="n">tax_lots</span><span class="p">[</span><span class="s1">&#39;cost_basis&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">tax_lots</span><span class="p">[</span><span class="s1">&#39;cost_basis&#39;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;raise&#39;</span><span class="p">)</span>
+    <span class="n">tax_lots</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">tax_lots</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;raise&#39;</span><span class="p">)</span>
+    
+    <span class="c1"># Handle tax lot IDs: preserve existing, fill nulls with unique IDs, or create new if column doesn&#39;t exist</span>
+    <span class="k">if</span> <span class="s1">&#39;tax_lot_id&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tax_lots</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">tax_lots</span><span class="p">[</span><span class="s1">&#39;tax_lot_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;lot_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y%m</span><span class="si">%d</span><span class="s1">%H%M%S</span><span class="si">%f</span><span class="s1">&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tax_lots</span><span class="p">))]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Fill any null values with unique IDs</span>
+        <span class="n">null_mask</span> <span class="o">=</span> <span class="n">tax_lots</span><span class="p">[</span><span class="s1">&#39;tax_lot_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">null_mask</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+            <span class="n">timestamp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y%m</span><span class="si">%d</span><span class="s1">%H%M%S</span><span class="si">%f</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">null_indices</span> <span class="o">=</span> <span class="n">null_mask</span><span class="p">[</span><span class="n">null_mask</span><span class="p">]</span><span class="o">.</span><span class="n">index</span>
+            <span class="n">tax_lots</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">null_indices</span><span class="p">,</span> <span class="s1">&#39;tax_lot_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="sa">f</span><span class="s2">&quot;lot_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">timestamp</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">null_indices</span><span class="p">))</span>
+            <span class="p">]</span>
+    
+    <span class="c1"># Validate that all tax lot IDs are unique</span>
+    <span class="k">if</span> <span class="n">tax_lots</span><span class="p">[</span><span class="s1">&#39;tax_lot_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">duplicated</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+        <span class="n">duplicated_ids</span> <span class="o">=</span> <span class="n">tax_lots</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">tax_lots</span><span class="p">[</span><span class="s1">&#39;tax_lot_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">duplicated</span><span class="p">(),</span> <span class="s1">&#39;tax_lot_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Found duplicate tax lot IDs: </span><span class="si">{</span><span class="n">duplicated_ids</span><span class="si">}</span><span class="s2">. All tax lot IDs must be unique.&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Validate no negative quantities</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">tax_lots</span><span class="p">[</span><span class="s1">&#39;quantity&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Tax lots contain negative quantities&quot;</span><span class="p">)</span>
+        
+    <span class="c1"># Validate no negative cost basis</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">tax_lots</span><span class="p">[</span><span class="s1">&#39;cost_basis&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Tax lots contain negative cost basis&quot;</span><span class="p">)</span>
+        
+    <span class="k">return</span> <span class="n">tax_lots</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

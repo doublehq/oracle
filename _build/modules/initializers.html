@@ -1,0 +1,533 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Initializers &mdash; Oracle 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Optimization Types" href="optimization_types.html" />
+    <link rel="prev" title="Oracle Optimizer" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Oracle
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Oracle Optimizer</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Initializers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#tax-lots">Tax Lots</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#service.initializers.initialize_tax_lots"><code class="docutils literal notranslate"><span class="pre">initialize_tax_lots()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#targets">Targets</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#service.initializers.initialize_targets"><code class="docutils literal notranslate"><span class="pre">initialize_targets()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#prices">Prices</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#service.initializers.initialize_prices"><code class="docutils literal notranslate"><span class="pre">initialize_prices()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#spreads">Spreads</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#service.initializers.initialize_spreads"><code class="docutils literal notranslate"><span class="pre">initialize_spreads()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#closed-lots">Closed Lots</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#service.initializers.initialize_closed_lots"><code class="docutils literal notranslate"><span class="pre">initialize_closed_lots()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#stock-restrictions">Stock Restrictions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#service.initializers.initialize_stock_restrictions"><code class="docutils literal notranslate"><span class="pre">initialize_stock_restrictions()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#tax-rates">Tax Rates</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#service.initializers.initialize_tax_rates"><code class="docutils literal notranslate"><span class="pre">initialize_tax_rates()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#factor-model">Factor Model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#service.initializers.initialize_factor_model"><code class="docutils literal notranslate"><span class="pre">initialize_factor_model()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="optimization_types.html">Optimization Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oracle.html">Oracle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oracle_strategy.html">OracleStrategy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objectives.html">Objectives</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constraints.html">Constraints</a></li>
+<li class="toctree-l1"><a class="reference internal" href="helpers.html">Helpers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Oracle</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Initializers</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/modules/initializers.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="initializers">
+<h1>Initializers<a class="headerlink" href="#initializers" title="Link to this heading"></a></h1>
+<p>The initializers module provides functions for initializing and validating various data structures used in the Oracle system.</p>
+<section id="tax-lots">
+<h2>Tax Lots<a class="headerlink" href="#tax-lots" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="service.initializers.initialize_tax_lots">
+<span class="sig-prename descclassname"><span class="pre">service.initializers.</span></span><span class="sig-name descname"><span class="pre">initialize_tax_lots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tax_lots</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="../_modules/src/service/initializers/tax_lots.html#initialize_tax_lots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.initializers.initialize_tax_lots" title="Link to this definition"></a></dt>
+<dd><p>Initialize and validate tax lots DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tax_lots</strong> – DataFrame with columns:</p></li>
+<li><p><strong>tax_lot_id</strong> (<em>-</em>) – Unique identifier for each tax lot</p></li>
+<li><p><strong>identifier</strong> (<em>-</em>) – Security identifier</p></li>
+<li><p><strong>quantity</strong> (<em>-</em>) – Number of shares/units</p></li>
+<li><p><strong>cost_basis</strong> (<em>-</em>) – Total cost basis of the lot</p></li>
+<li><p><strong>date_acquired</strong> (<em>- date or</em>) – Purchase date of the lot</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>tax_lot_id (str): Unique identifier for each tax lot (generated if not provided)</p></li>
+<li><p>identifier (str): Security identifier (standardized to uppercase)</p></li>
+<li><p>quantity (float): Number of shares/units (validated as non-negative)</p></li>
+<li><p>cost_basis (float): Total cost basis of the lot (validated as non-negative)</p></li>
+<li><p>date (datetime): Acquisition date (standardized column name from date or date_acquired)</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Validated tax lots DataFrame with standardized columns and types</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If tax lots DataFrame is missing required columns or contains invalid data</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="targets">
+<h2>Targets<a class="headerlink" href="#targets" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="service.initializers.initialize_targets">
+<span class="sig-prename descclassname"><span class="pre">service.initializers.</span></span><span class="sig-name descname"><span class="pre">initialize_targets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">targets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">withdraw_target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deminimus_cash_target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="../_modules/src/service/initializers/targets.html#initialize_targets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.initializers.initialize_targets" title="Link to this definition"></a></dt>
+<dd><p>Initialize and validate targets DataFrame with asset class structure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>targets</strong> – DataFrame with columns:</p></li>
+<li><p><strong>asset_class</strong> (<em>-</em>) – Asset class identifier</p></li>
+<li><p><strong>target_weight</strong> (<em>-</em>) – Target portfolio weight (0 to 1)</p></li>
+<li><p><strong>identifiers</strong> (<em>-</em>) – List of valid identifiers for each asset class</p></li>
+<li><p><strong>withdraw_target</strong> (<em>float</em>) – Target cash percentage for withdrawals (0.0 to 1.0, default: 0.0)</p></li>
+<li><p><strong>deminimus_cash_target</strong> (<em>float</em>) – Minimum cash target percentage (0.0 to 1.0, default: 0.0)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>Standardized asset class names (CASH_CUSIP_ID for cash)</p></li>
+<li><p>Validated target weights (sum to 1.0)</p></li>
+<li><p>Standardized identifiers (uppercase)</p></li>
+<li><p>Cash target adjusted for withdrawals and minimum requirements</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Validated targets DataFrame with</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – If:</p></li>
+<li><p><strong>- DataFrame is missing required columns</strong> – </p></li>
+<li><p><strong>- Target weights don't sum to 1.0</strong> – </p></li>
+<li><p><strong>- Target weights are outside</strong><strong> [</strong><strong>0</strong><strong>,</strong><strong>1</strong><strong>] </strong><strong>range</strong> – </p></li>
+<li><p><strong>- Asset classes are duplicated</strong> – </p></li>
+<li><p><strong>- Identifiers are not in list format</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="prices">
+<h2>Prices<a class="headerlink" href="#prices" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="service.initializers.initialize_prices">
+<span class="sig-prename descclassname"><span class="pre">service.initializers.</span></span><span class="sig-name descname"><span class="pre">initialize_prices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_identifiers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="../_modules/src/service/initializers/prices.html#initialize_prices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.initializers.initialize_prices" title="Link to this definition"></a></dt>
+<dd><p>Initialize and validate prices DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prices</strong> (<em>pd.DataFrame</em>) – DataFrame with columns:</p></li>
+<li><p><strong>identifier</strong> (<em>-</em>) – Security identifier</p></li>
+<li><p><strong>price</strong> (<em>-</em>) – Current market price</p></li>
+<li><p><strong>all_identifiers</strong> (<em>Set</em><em>[</em><em>str</em><em>]</em>) – Set of all identifiers that need prices</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>identifier (str): Security identifier (uppercase)</p></li>
+<li><p>price (float): Current market price (non-negative)</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Validated prices DataFrame with standardized columns</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>CASH_CUSIP_ID is automatically added with price of 1.0 if needed</p></li>
+<li><p>All identifiers must have a valid price</p></li>
+<li><p>Prices are validated to be non-negative</p></li>
+<li><p>Identifiers are standardized to uppercase</p></li>
+<li><p>Duplicate identifiers are not allowed</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ValueError</strong> – If:</p></li>
+<li><p><strong>- Required columns are missing</strong> – </p></li>
+<li><p><strong>- Prices are missing for any required identifier</strong> – </p></li>
+<li><p><strong>- Negative prices are present</strong> – </p></li>
+<li><p><strong>- Invalid data types in any column</strong> – </p></li>
+<li><p><strong>- Duplicate identifiers present</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="spreads">
+<h2>Spreads<a class="headerlink" href="#spreads" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="service.initializers.initialize_spreads">
+<span class="sig-prename descclassname"><span class="pre">service.initializers.</span></span><span class="sig-name descname"><span class="pre">initialize_spreads</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spreads</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_identifiers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="../_modules/src/service/initializers/spreads.html#initialize_spreads"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.initializers.initialize_spreads" title="Link to this definition"></a></dt>
+<dd><p>Initialize spreads DataFrame. If no spreads provided, create default DataFrame
+with 0.0001 (1bps) spread for all identifiers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>spreads</strong> (<em>pd.DataFrame</em><em> | </em><em>None</em>) – Optional DataFrame with columns:</p></li>
+<li><p><strong>identifier</strong> (<em>-</em>) – Security identifier</p></li>
+<li><p><strong>spread</strong> (<em>-</em>) – Bid-ask spread as decimal (e.g., 0.0001 for 1bps)</p></li>
+<li><p><strong>all_identifiers</strong> (<em>Set</em><em>[</em><em>str</em><em>]</em>) – Set of all identifiers that need spreads</p></li>
+<li><p><strong>prices</strong> (<em>pd.DataFrame</em>) – DataFrame with columns:</p></li>
+<li><p><strong>identifier</strong> – Security identifier</p></li>
+<li><p><strong>price</strong> (<em>-</em>) – Current price used to calculate per_share_cost</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>identifier (str): Security identifier</p></li>
+<li><p>spread (float): Bid-ask spread as decimal</p></li>
+<li><p>per_share_cost (float): Pre-calculated transaction cost per share (price * spread)</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>DataFrame with spreads for all identifiers</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>Default spread of 0.0001 (1bps) is used for any missing identifiers</p></li>
+<li><p>CASH_CUSIP_ID is automatically added with 0 spread if needed</p></li>
+<li><p>All spreads are validated to be non-negative</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ValueError</strong> – If:</p></li>
+<li><p><strong>- Spreads DataFrame is provided but missing required columns</strong> – </p></li>
+<li><p><strong>- Contains negative spread values</strong> – </p></li>
+<li><p><strong>- Contains duplicate identifiers</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="closed-lots">
+<h2>Closed Lots<a class="headerlink" href="#closed-lots" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="service.initializers.initialize_closed_lots">
+<span class="sig-prename descclassname"><span class="pre">service.initializers.</span></span><span class="sig-name descname"><span class="pre">initialize_closed_lots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">closed_lots</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/service/initializers/closed_lots.html#initialize_closed_lots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.initializers.initialize_closed_lots" title="Link to this definition"></a></dt>
+<dd><p>Initialize and validate closed lots DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>closed_lots</strong> (<em>Optional</em><em>[</em><em>pd.DataFrame</em><em>]</em>) – DataFrame with columns:</p></li>
+<li><p><strong>identifier</strong> (<em>-</em>) – Security identifier</p></li>
+<li><p><strong>quantity</strong> (<em>-</em>) – Number of shares/units sold</p></li>
+<li><p><strong>cost_basis</strong> (<em>-</em>) – Original purchase cost of the lot</p></li>
+<li><p><strong>date_acquired</strong> (<em>-</em>) – Original purchase date</p></li>
+<li><p><strong>date_sold</strong> (<em>-</em>) – Date the lot was sold</p></li>
+<li><p><strong>proceeds</strong> (<em>-</em>) – Amount received from sale</p></li>
+<li><p><strong>realized_gain</strong> (<em>-</em>) – Proceeds minus cost basis</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Validated closed lots DataFrame with standardized:
+- Data types for all columns
+- Uppercase identifiers
+- ISO format dates
+- Validated calculations
+Returns None if no closed lots provided</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[pd.DataFrame]</p>
+</dd>
+</dl>
+<p>Notes:
+- All numeric values must be non-negative
+- date_sold must be after date_acquired
+- realized_gain must equal proceeds minus cost_basis
+- quantity must be greater than 0</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ValueError</strong> – If:</p></li>
+<li><p><strong>- Required columns are missing</strong> – </p></li>
+<li><p><strong>- Invalid data types in any column</strong> – </p></li>
+<li><p><strong>- Negative values in quantity/cost/proceeds</strong> – </p></li>
+<li><p><strong>- Invalid date relationships</strong> – </p></li>
+<li><p><strong>- Inconsistent gain calculations</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="stock-restrictions">
+<h2>Stock Restrictions<a class="headerlink" href="#stock-restrictions" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="service.initializers.initialize_stock_restrictions">
+<span class="sig-prename descclassname"><span class="pre">service.initializers.</span></span><span class="sig-name descname"><span class="pre">initialize_stock_restrictions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stock_restrictions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="../_modules/src/service/initializers/stock_restrictions.html#initialize_stock_restrictions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.initializers.initialize_stock_restrictions" title="Link to this definition"></a></dt>
+<dd><p>Initialize and validate stock restrictions DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stock_restrictions</strong> (<em>Optional</em><em>[</em><em>pd.DataFrame</em><em>]</em>) – DataFrame with columns:</p></li>
+<li><p><strong>identifier</strong> (<em>-</em>) – Security identifier</p></li>
+<li><p><strong>can_buy</strong> (<em>-</em>) – Whether the security can be purchased</p></li>
+<li><p><strong>can_sell</strong> (<em>-</em>) – Whether the security can be sold</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>identifier (str): Security identifier (uppercase)</p></li>
+<li><p>can_buy (bool): Purchase permission flag</p></li>
+<li><p>can_sell (bool): Sale permission flag</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Validated stock restrictions DataFrame with standardized columns</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>If no restrictions provided, returns empty DataFrame implying no restrictions</p></li>
+<li><p>A security cannot have both can_buy and can_sell set to True</p></li>
+<li><p>Identifiers are standardized to uppercase</p></li>
+<li><p>Empty DataFrame implies all securities can be both bought and sold</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ValueError</strong> – If:</p></li>
+<li><p><strong>- Required columns are missing</strong> – </p></li>
+<li><p><strong>- Both can_buy and can_sell are True for any security</strong> – </p></li>
+<li><p><strong>- Invalid data types in any column</strong> – </p></li>
+<li><p><strong>- Duplicate identifiers present</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="tax-rates">
+<h2>Tax Rates<a class="headerlink" href="#tax-rates" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="service.initializers.initialize_tax_rates">
+<span class="sig-prename descclassname"><span class="pre">service.initializers.</span></span><span class="sig-name descname"><span class="pre">initialize_tax_rates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tax_rates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="../_modules/src/service/initializers/tax_rates.html#initialize_tax_rates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.initializers.initialize_tax_rates" title="Link to this definition"></a></dt>
+<dd><p>Initialize and validate tax rates DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tax_rates</strong> (<em>Optional</em><em>[</em><em>pd.DataFrame</em><em>]</em>) – DataFrame with columns:</p></li>
+<li><p><strong>gain_type</strong> (<em>-</em>) – Type of gain (‘short_term’, ‘long_term’, ‘qualified_dividend’)</p></li>
+<li><p><strong>federal_rate</strong> (<em>-</em>) – Federal tax rate as decimal (0 to 1)</p></li>
+<li><p><strong>state_rate</strong> (<em>-</em>) – State tax rate as decimal (0 to 1)</p></li>
+<li><p><strong>total_rate</strong> (<em>-</em>) – Combined federal and state rate as decimal (0 to 1)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>Short-term gains: 41% (35% federal + 6% state)</p></li>
+<li><p>Long-term gains: 26% (20% federal + 6% state)</p></li>
+<li><p>Qualified dividends: 21% (15% federal + 6% state)</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Validated DataFrame with standardized tax rates. If no rates provided, uses defaults</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Default rates are based on 75th percentile wealth users:
+- Federal ordinary income (short term): 35%
+- Federal long term capital gains: 20%
+- Federal qualified dividends: 15%
+- State tax rate: 6% (average for high tax states)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ValueError</strong> – If:</p></li>
+<li><p><strong>- Required columns are missing</strong> – </p></li>
+<li><p><strong>- Invalid gain types are present</strong> – </p></li>
+<li><p><strong>- Required gain types are missing</strong> – </p></li>
+<li><p><strong>- Tax rates are outside</strong><strong> [</strong><strong>0</strong><strong>,</strong><strong>1</strong><strong>] </strong><strong>range</strong> – </p></li>
+<li><p><strong>- Total rate doesn't match federal + state</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="factor-model">
+<h2>Factor Model<a class="headerlink" href="#factor-model" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="service.initializers.initialize_factor_model">
+<span class="sig-prename descclassname"><span class="pre">service.initializers.</span></span><span class="sig-name descname"><span class="pre">initialize_factor_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">factor_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">targets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">actuals</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">DataFrame</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/src/service/initializers/factor_model.html#initialize_factor_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.initializers.initialize_factor_model" title="Link to this definition"></a></dt>
+<dd><p>Initialize and validate a factor model DataFrame, and compute weighted average factors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>factor_model</strong> (<em>pd.DataFrame</em>) – DataFrame with columns:</p></li>
+<li><p><strong>identifier</strong> (<em>-</em>) – Security identifier</p></li>
+<li><p><strong>[</strong><strong>factor_name</strong><strong>]</strong> (<em>-</em>) – One or more factor exposure columns</p></li>
+<li><p><strong>targets</strong> (<em>pd.DataFrame</em>) – DataFrame with columns:</p></li>
+<li><p><strong>asset_class</strong> (<em>-</em>) – Asset class identifier</p></li>
+<li><p><strong>target_weight</strong> (<em>-</em>) – Target portfolio weight</p></li>
+<li><p><strong>identifiers</strong> (<em>-</em>) – List of valid identifiers for each asset class</p></li>
+<li><p><strong>actuals</strong> (<em>pd.DataFrame</em>) – DataFrame with columns:</p></li>
+<li><p><strong>identifier</strong> – Security identifier</p></li>
+<li><p><strong>actual_weight</strong> (<em>-</em>) – Current portfolio weight</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>factor_model (pd.DataFrame): Normalized factor exposures for each security</p></li>
+<li><p>target_exposures (pd.DataFrame): Target portfolio’s weighted average factor exposures</p></li>
+<li><p>actual_exposures (pd.DataFrame): Current portfolio’s weighted average factor exposures</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple containing</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>Factor values are normalized using tanh-based compression</p></li>
+<li><p>Weighted averages are computed using target and actual weights</p></li>
+<li><p>Missing factors are handled gracefully with appropriate warnings</p></li>
+<li><p>Factors are validated for numerical stability</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ValueError</strong> – If:</p></li>
+<li><p><strong>- Factor model is missing required columns</strong> – </p></li>
+<li><p><strong>- No numeric factor columns are present</strong> – </p></li>
+<li><p><strong>- Non-numeric data in factor columns</strong> – </p></li>
+<li><p><strong>- Missing entries for required identifiers</strong> – </p></li>
+<li><p><strong>- Null values in any column</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="Oracle Optimizer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="optimization_types.html" class="btn btn-neutral float-right" title="Optimization Types" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

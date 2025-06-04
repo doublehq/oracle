@@ -1,0 +1,430 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Oracle Optimizer &mdash; Oracle 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=01f34227"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Initializers" href="modules/initializers.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            Oracle
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Oracle Optimizer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/initializers.html">Initializers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/optimization_types.html">Optimization Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/oracle.html">Oracle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/oracle_strategy.html">OracleStrategy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/objectives.html">Objectives</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/constraints.html">Constraints</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/helpers.html">Helpers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Oracle</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Oracle Optimizer</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="oracle-optimizer">
+<h1>Oracle Optimizer<a class="headerlink" href="#oracle-optimizer" title="Link to this heading"></a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>Oracle, built by <a class="reference external" href="https://double.finance">Double Finance</a>, is a sophisticated portfolio optimization engine that tax loss harvests and intelligently rebalances portfolios while considering tax implications, trading costs, and various constraints placed upon portfolios (holding time restrictions, etc). It’s designed to help investors maintain their target asset allocations while minimizing tax burdens and transaction costs.</p>
+<p>We use this in production at <a class="reference external" href="https://double.finance">Double Finance</a> for daily Tax Loss Harvesting and Automated Rebalancing. Oracle simply returns optimal trades to make for a portfolio - it does not execute anything. You must bring your own price and target/index data. Oracle does not fetch anything from the internet. It allows for customization and control regarding how aggressive you want to be along pretty much every axis.</p>
+<p>It provides the basics of a complete portfolio optimization engine similar to:</p>
+<ul class="simple">
+<li><p>Rowboat Advisors (Acquired by Betterment May 2025)</p></li>
+<li><p><a class="reference external" href="https://www.smartleaf.com/">Smartleaf</a></p></li>
+<li><p><a class="reference external" href="https://alphathena.com/">AlphaThena</a></p></li>
+<li><p><a class="reference external" href="https://www.blackrock.com/us/financial-professionals/investments/tax-managed-equity-sma-aperio">BlackRock’s Tax-Managed Equity SMA by Aperio</a></p></li>
+<li><p><a class="reference external" href="https://apexfintechsolutions.com/news-resources/press-releases/apex-fintech-solutions-announces-acquisition-of-advisorarch-bringing-a-suite-of-technology-driven-portfolio-management-solutions/">AdvisorArch (Acquired by Apex 2024)</a></p></li>
+<li><p><a class="reference external" href="https://partipris-invest.com/">Parti Pris</a></p></li>
+</ul>
+</section>
+<section id="features">
+<h2>Features<a class="headerlink" href="#features" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Tax Loss Harvesting</strong>: Ability to specify a threshold at which to TLH a given security, while respecting wash sale rules.</p></li>
+<li><p><strong>Tax-Aware Rebalancing</strong>: Optimizes trades to minimize tax impact while reducing drift</p></li>
+<li><p><strong>Multi-Asset Support</strong>: Can handle any asset type (stocks, etfs, mutual funds, crypto)</p></li>
+<li><p><strong>Consider Trading Costs</strong>: Considers spreads/trading costs while recommending trades.</p></li>
+<li><p><strong>Factor Model Rebalancing Integration</strong>: Supports considering a factor model for use the Direct Indexed based TLH</p></li>
+<li><p><strong>Tax Lot Management</strong>: Tracks and optimizes individual tax lots.</p></li>
+<li><p><strong>Wash Sale Prevention</strong>: Built-in protection against wash sales</p></li>
+</ul>
+</section>
+<section id="documentation-contents">
+<h2>Documentation Contents<a class="headerlink" href="#documentation-contents" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install CBC solver (required for optimization)</span>
+brew<span class="w"> </span>install<span class="w"> </span>coin-or-tools/coinor/cbc
+
+<span class="c1"># Set up Python environment</span>
+python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
+<span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+</pre></div>
+</div>
+</section>
+<section id="quick-start-guide">
+<h2>Quick Start Guide<a class="headerlink" href="#quick-start-guide" title="Link to this heading"></a></h2>
+<section id="initialize-an-oracle-strategy">
+<h3>Initialize an Oracle Strategy<a class="headerlink" href="#initialize-an-oracle-strategy" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">service.oracle</span><span class="w"> </span><span class="kn">import</span> <span class="n">Oracle</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">service.oracle_strategy</span><span class="w"> </span><span class="kn">import</span> <span class="n">OracleStrategy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">service.helpers.enums</span><span class="w"> </span><span class="kn">import</span> <span class="n">OracleOptimizationType</span>
+
+ <span class="n">current_date</span> <span class="o">=</span> <span class="n">date</span><span class="p">(</span><span class="mi">2024</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+
+ <span class="c1"># Create tax rates data</span>
+ <span class="n">tax_rates</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>
+     <span class="p">{</span>
+         <span class="s1">&#39;gain_type&#39;</span><span class="p">:</span> <span class="s1">&#39;short_term&#39;</span><span class="p">,</span>
+         <span class="s1">&#39;federal_rate&#39;</span><span class="p">:</span> <span class="mf">0.35</span><span class="p">,</span>
+         <span class="s1">&#39;state_rate&#39;</span><span class="p">:</span> <span class="mf">0.06</span><span class="p">,</span>
+         <span class="s1">&#39;total_rate&#39;</span><span class="p">:</span> <span class="mf">0.41</span>
+     <span class="p">},</span>
+     <span class="p">{</span>
+         <span class="s1">&#39;gain_type&#39;</span><span class="p">:</span> <span class="s1">&#39;long_term&#39;</span><span class="p">,</span>
+         <span class="s1">&#39;federal_rate&#39;</span><span class="p">:</span> <span class="mf">0.20</span><span class="p">,</span>
+         <span class="s1">&#39;state_rate&#39;</span><span class="p">:</span> <span class="mf">0.06</span><span class="p">,</span>
+         <span class="s1">&#39;total_rate&#39;</span><span class="p">:</span> <span class="mf">0.26</span>
+     <span class="p">},</span>
+     <span class="p">{</span>
+         <span class="s2">&quot;gain_type&quot;</span><span class="p">:</span> <span class="s2">&quot;qualified_dividend&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;federal_rate&quot;</span><span class="p">:</span> <span class="mf">0.15</span><span class="p">,</span>
+         <span class="s2">&quot;state_rate&quot;</span><span class="p">:</span> <span class="mf">0.06</span><span class="p">,</span>
+         <span class="s2">&quot;total_rate&quot;</span><span class="p">:</span> <span class="mf">0.21</span>
+     <span class="p">}</span>
+ <span class="p">])</span>
+
+ <span class="c1"># Define test data based on documentation example</span>
+ <span class="n">targets_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+     <span class="s1">&#39;asset_class&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;STOCK_A&#39;</span><span class="p">,</span> <span class="s1">&#39;STOCK_B&#39;</span><span class="p">,</span> <span class="s1">&#39;CASH&#39;</span><span class="p">],</span>
+     <span class="s1">&#39;target_weight&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span>
+     <span class="s1">&#39;identifiers&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="s1">&#39;STOCK_A&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;STOCK_B&#39;</span><span class="p">],</span> <span class="p">[</span><span class="n">CASH_CUSIP_ID</span><span class="p">]]</span>
+ <span class="p">})</span>
+
+ <span class="n">tax_lots_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+     <span class="s1">&#39;tax_lot_id&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;lot_a1&#39;</span><span class="p">,</span> <span class="s1">&#39;lot_b1&#39;</span><span class="p">],</span>
+     <span class="s1">&#39;identifier&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;STOCK_A&#39;</span><span class="p">,</span> <span class="s1">&#39;STOCK_B&#39;</span><span class="p">],</span>
+     <span class="s1">&#39;quantity&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">],</span>
+     <span class="s1">&#39;cost_basis&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">],</span>
+     <span class="s1">&#39;date&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;2024-01-01&#39;</span><span class="p">,</span> <span class="s1">&#39;2024-01-01&#39;</span><span class="p">]</span>
+ <span class="p">})</span>
+
+ <span class="n">prices_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>
+     <span class="p">{</span>
+         <span class="s1">&#39;identifier&#39;</span><span class="p">:</span> <span class="s1">&#39;STOCK_A&#39;</span><span class="p">,</span>
+         <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="mf">100.0</span><span class="p">,</span>
+     <span class="p">},</span>
+     <span class="p">{</span>
+         <span class="s1">&#39;identifier&#39;</span><span class="p">:</span> <span class="s1">&#39;STOCK_B&#39;</span><span class="p">,</span>
+         <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="mf">100.0</span><span class="p">,</span>
+     <span class="p">},</span>
+     <span class="p">{</span>
+         <span class="s1">&#39;identifier&#39;</span><span class="p">:</span> <span class="n">CASH_CUSIP_ID</span><span class="p">,</span>
+         <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+     <span class="p">}</span>
+ <span class="p">])</span>
+
+ <span class="n">spreads_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>
+     <span class="p">{</span>
+         <span class="s1">&#39;identifier&#39;</span><span class="p">:</span> <span class="s1">&#39;STOCK_A&#39;</span><span class="p">,</span>
+         <span class="s1">&#39;spread&#39;</span><span class="p">:</span> <span class="mf">0.001</span>  <span class="c1"># 10 basis points</span>
+     <span class="p">},</span>
+     <span class="p">{</span>
+         <span class="s1">&#39;identifier&#39;</span><span class="p">:</span> <span class="s1">&#39;STOCK_B&#39;</span><span class="p">,</span>
+         <span class="s1">&#39;spread&#39;</span><span class="p">:</span> <span class="mf">0.001</span>  <span class="c1"># 10 basis points</span>
+     <span class="p">},</span>
+     <span class="p">{</span>
+         <span class="s1">&#39;identifier&#39;</span><span class="p">:</span> <span class="n">CASH_CUSIP_ID</span><span class="p">,</span>
+         <span class="s1">&#39;spread&#39;</span><span class="p">:</span> <span class="mf">0.0</span>  <span class="c1"># No spread for cash</span>
+     <span class="p">}</span>
+ <span class="p">])</span>
+
+ <span class="c1"># Create Oracle instance</span>
+ <span class="n">oracle</span> <span class="o">=</span> <span class="n">Oracle</span><span class="p">(</span>
+     <span class="n">current_date</span><span class="o">=</span><span class="n">current_date</span><span class="p">,</span>
+     <span class="n">recently_closed_lots</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(),</span>
+     <span class="n">stock_restrictions</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(),</span>
+     <span class="n">tax_rates</span><span class="o">=</span><span class="n">tax_rates</span>
+ <span class="p">)</span>
+
+ <span class="c1"># Create and configure strategy</span>
+ <span class="n">strategy</span> <span class="o">=</span> <span class="n">OracleStrategy</span><span class="p">(</span>
+     <span class="n">strategy_id</span><span class="o">=</span><span class="s2">&quot;STRATEGY_1&quot;</span><span class="p">,</span>
+     <span class="n">tax_lots</span><span class="o">=</span><span class="n">tax_lots_df</span><span class="p">,</span>
+     <span class="n">prices</span><span class="o">=</span><span class="n">prices_df</span><span class="p">,</span>
+     <span class="n">cash</span><span class="o">=</span><span class="mf">10000.0</span><span class="p">,</span>
+     <span class="n">targets</span><span class="o">=</span><span class="n">targets_df</span><span class="p">,</span>
+     <span class="n">asset_class_targets</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+     <span class="n">spreads</span><span class="o">=</span><span class="n">spreads_df</span><span class="p">,</span>
+     <span class="n">factor_model</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+     <span class="n">optimization_type</span><span class="o">=</span><span class="n">OracleOptimizationType</span><span class="o">.</span><span class="n">TAX_AWARE</span><span class="p">,</span>
+     <span class="n">deminimus_cash_target</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">,</span>
+     <span class="n">withdrawal_amount</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+     <span class="n">enforce_wash_sale_prevention</span><span class="o">=</span><span class="kc">True</span>
+ <span class="p">)</span>
+
+ <span class="n">strategy</span><span class="o">.</span><span class="n">set_oracle</span><span class="p">(</span><span class="n">oracle</span><span class="p">)</span>
+ <span class="n">oracle</span><span class="o">.</span><span class="n">strategies</span> <span class="o">=</span> <span class="p">[</span><span class="n">strategy</span><span class="p">]</span>
+ <span class="n">oracle</span><span class="o">.</span><span class="n">initialize_wash_sale_restrictions</span><span class="p">(</span><span class="n">percentage_protection_from_inadvertent_wash_sales</span><span class="o">=</span><span class="mf">0.003</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="run-the-optimizer">
+<h3>Run the Optimizer<a class="headerlink" href="#run-the-optimizer" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute optimal trades</span>
+<span class="n">results</span><span class="p">,</span> <span class="n">netted_trades</span> <span class="o">=</span> <span class="n">oracle</span><span class="o">.</span><span class="n">compute_optimal_trades_for_all_strategies</span><span class="p">(</span>
+    <span class="n">settings</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;strategies&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;STRATEGY_1&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;weight_tax&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+                <span class="s2">&quot;weight_drift&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+                <span class="s2">&quot;weight_transaction&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+                <span class="s2">&quot;weight_factor_model&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                <span class="s2">&quot;weight_cash_drag&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                <span class="s2">&quot;rebalance_threshold&quot;</span><span class="p">:</span> <span class="mf">0.001</span><span class="p">,</span>
+                <span class="s2">&quot;buy_threshold&quot;</span><span class="p">:</span> <span class="mf">0.0005</span><span class="p">,</span>
+                <span class="s2">&quot;holding_time_days&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">&quot;should_tlh&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;tlh_min_loss_threshold&quot;</span><span class="p">:</span> <span class="mf">0.015</span><span class="p">,</span>
+                <span class="s2">&quot;range_min_weight_multiplier&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+                <span class="s2">&quot;range_max_weight_multiplier&quot;</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">,</span>
+                <span class="s2">&quot;min_notional&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">&quot;rank_penalty_factor&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                <span class="s2">&quot;trade_rounding&quot;</span><span class="p">:</span> <span class="mi">4</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="response-format">
+<h3>Response Format<a class="headerlink" href="#response-format" title="Link to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">compute_optimal_trades_for_all_strategies</span></code> method returns a tuple of <code class="docutils literal notranslate"><span class="pre">(results,</span> <span class="pre">netted_trades)</span></code>:</p>
+<p>The return value consists of two components:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">results</span></code> - A dictionary with strategy IDs as keys</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">netted_trades</span></code> - A pandas DataFrame containing the final trades</p></li>
+</ol>
+<section id="results-dictionary-structure">
+<h4>Results Dictionary Structure<a class="headerlink" href="#results-dictionary-structure" title="Link to this heading"></a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s1">&#39;STRATEGY_1&#39;</span><span class="p">:</span> <span class="p">(</span>
+        <span class="mi">1</span><span class="p">,</span>  <span class="c1"># Status code</span>
+        <span class="kc">True</span><span class="p">,</span>  <span class="c1"># Success flag</span>
+        <span class="p">{</span>
+            <span class="s1">&#39;drift&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;average_drift_improvement&#39;</span><span class="p">:</span> <span class="mf">0.08755555555555557</span><span class="p">,</span>
+                <span class="s1">&#39;max_drift_improvement&#39;</span><span class="p">:</span> <span class="mf">0.1313333333333333</span><span class="p">,</span>
+                <span class="s1">&#39;median_drift_improvement&#39;</span><span class="p">:</span> <span class="mf">0.0656666666666667</span><span class="p">,</span>
+                <span class="s1">&#39;overall_drift_reduction&#39;</span><span class="p">:</span> <span class="mf">0.985</span><span class="p">,</span>
+                <span class="s1">&#39;positions_improved&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+                <span class="s1">&#39;positions_unchanged&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s1">&#39;positions_worsened&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s1">&#39;post_drift_magnitude&#39;</span><span class="p">:</span> <span class="mf">0.0040000000000000036</span><span class="p">,</span>
+                <span class="s1">&#39;post_num_overweight&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s1">&#39;post_num_underweight&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                <span class="s1">&#39;pre_drift_magnitude&#39;</span><span class="p">:</span> <span class="mf">0.2666666666666667</span><span class="p">,</span>
+                <span class="s1">&#39;pre_num_overweight&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s1">&#39;pre_num_underweight&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                <span class="s1">&#39;total_drift_improvement&#39;</span><span class="p">:</span> <span class="mf">0.2626666666666667</span><span class="p">,</span>
+                <span class="s1">&#39;weighted_drift_reduction&#39;</span><span class="p">:</span> <span class="mf">0.985</span>
+            <span class="p">},</span>
+            <span class="s1">&#39;execution&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;num_buys&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                <span class="s1">&#39;num_sells&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s1">&#39;total_buys_value&#39;</span><span class="p">:</span> <span class="mf">3940.0</span><span class="p">,</span>
+                <span class="s1">&#39;total_sells_value&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                <span class="s1">&#39;total_trades&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                <span class="s1">&#39;total_value&#39;</span><span class="p">:</span> <span class="mf">3940.0</span>
+            <span class="p">},</span>
+            <span class="s1">&#39;explanation&#39;</span><span class="p">:</span> <span class="s1">&#39;buying $3,940.00 worth of 2 securities. &#39;</span>
+                         <span class="s1">&#39;Buying $1,970 STOCK_B, $1,970 STOCK_A. drift &#39;</span>
+                         <span class="s1">&#39;cost got better by 4.1313, spread costs got &#39;</span>
+                         <span class="s1">&#39;worse by 0.1576</span><span class="se">\n</span><span class="s1">&#39;</span>
+                         <span class="s1">&#39;Overall, these trades will improve the &#39;</span>
+                         <span class="s1">&#39;portfolio by 3.97. pre_strategy_cash: 10000.0 &#39;</span>
+                         <span class="s1">&#39;min_cash: 5850.0 post_strategy_cash: 6060.0&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;factor_model&#39;</span><span class="p">:</span> <span class="p">{},</span>
+            <span class="s1">&#39;gain_loss&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;long_term_gains&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                <span class="s1">&#39;long_term_losses&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                <span class="s1">&#39;net_gain_loss&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                <span class="s1">&#39;short_term_gains&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                <span class="s1">&#39;short_term_losses&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                <span class="s1">&#39;total_gains&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                <span class="s1">&#39;total_losses&#39;</span><span class="p">:</span> <span class="mf">0.0</span>
+            <span class="p">},</span>
+            <span class="s1">&#39;optimization_info&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;after_optimization&#39;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s1">&#39;cash_drag&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="s1">&#39;drift_cost&#39;</span><span class="p">:</span> <span class="mf">0.002</span><span class="p">,</span>
+                    <span class="s1">&#39;factor_cost&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="s1">&#39;overall&#39;</span><span class="p">:</span> <span class="mf">0.1596</span><span class="p">,</span>
+                    <span class="s1">&#39;spread_costs&#39;</span><span class="p">:</span> <span class="mf">0.1576</span><span class="p">,</span>
+                    <span class="s1">&#39;tax_cost&#39;</span><span class="p">:</span> <span class="mf">0.0</span>
+                <span class="p">},</span>
+                <span class="s1">&#39;before_optimization&#39;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s1">&#39;cash_drag&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="s1">&#39;drift_cost&#39;</span><span class="p">:</span> <span class="mf">4.1333334</span><span class="p">,</span>
+                    <span class="s1">&#39;factor_cost&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="s1">&#39;overall&#39;</span><span class="p">:</span> <span class="mf">4.1333334</span><span class="p">,</span>
+                    <span class="s1">&#39;spread_costs&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;tax_cost&#39;</span><span class="p">:</span> <span class="mf">0.0</span>
+                <span class="p">},</span>
+                <span class="s1">&#39;component_improvements&#39;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s1">&#39;cash_drag&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;absolute&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;percent&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+                    <span class="s1">&#39;drift_cost&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;absolute&#39;</span><span class="p">:</span> <span class="mf">4.1313334</span><span class="p">,</span> <span class="s1">&#39;percent&#39;</span><span class="p">:</span> <span class="mf">99.95161290400625</span><span class="p">},</span>
+                    <span class="s1">&#39;factor_cost&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;absolute&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;percent&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+                    <span class="s1">&#39;overall&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;absolute&#39;</span><span class="p">:</span> <span class="mf">3.9737333999999995</span><span class="p">,</span> <span class="s1">&#39;percent&#39;</span><span class="p">:</span> <span class="mf">96.13870973969823</span><span class="p">},</span>
+                    <span class="s1">&#39;spread_costs&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;absolute&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.1576</span><span class="p">,</span> <span class="s1">&#39;percent&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+                    <span class="s1">&#39;tax_cost&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;absolute&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s1">&#39;percent&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The results dictionary contains:</p>
+<ul class="simple">
+<li><p><strong>Status code</strong> (<code class="docutils literal notranslate"><span class="pre">1</span></code>): Indicates the optimization status</p></li>
+<li><p><strong>Success flag</strong> (<code class="docutils literal notranslate"><span class="pre">True/False</span></code>): Whether the optimization succeeded</p></li>
+<li><p><strong>Detailed results dictionary</strong> containing:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">drift</span></code>: Metrics about portfolio drift improvements</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">execution</span></code>: Summary of trades (counts and values)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">explanation</span></code>: Human-readable description of the changes</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">factor_model</span></code>: Factor model related data (if used)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gain_loss</span></code>: Tax implications of the trades</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">optimization_info</span></code>: Detailed metrics before and after optimization</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="netted-trades-dataframe">
+<h4>Netted Trades DataFrame<a class="headerlink" href="#netted-trades-dataframe" title="Link to this heading"></a></h4>
+<p>The netted trades DataFrame shows the actual trades to be executed:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">identifier</span> <span class="n">action</span>  <span class="n">quantity</span>  <span class="n">price</span> <span class="n">tax_lot_id</span>  <span class="n">short_term_gain</span>  <span class="n">short_term_loss</span>  <span class="n">long_term_gain</span>  <span class="n">long_term_loss</span>
+<span class="n">STOCK_A</span>    <span class="n">buy</span>      <span class="mf">19.7</span>  <span class="mf">100.0</span>        <span class="n">NaN</span>             <span class="n">NaN</span>             <span class="n">NaN</span>            <span class="n">NaN</span>            <span class="n">NaN</span>
+<span class="n">STOCK_B</span>    <span class="n">buy</span>      <span class="mf">19.7</span>  <span class="mf">100.0</span>        <span class="n">NaN</span>             <span class="n">NaN</span>             <span class="n">NaN</span>            <span class="n">NaN</span>            <span class="n">NaN</span>
+</pre></div>
+</div>
+<p>Each row represents a single trade with the following columns:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">identifier</span></code>: The security identifier</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">action</span></code>: The trade action (buy/sell)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">quantity</span></code>: Number of units to trade</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">price</span></code>: Trade price</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tax_lot_id</span></code>: Associated tax lot (if applicable)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">short_term_gain</span></code>: Short-term capital gains (if applicable)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">short_term_loss</span></code>: Short-term capital losses (if applicable)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">long_term_gain</span></code>: Long-term capital gains (if applicable)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">long_term_loss</span></code>: Long-term capital losses (if applicable)</p></li>
+</ul>
+<p>For detailed information about optimization types, parameters, constraints, and more, please refer to the specific sections in the documentation.</p>
+</section>
+</section>
+</section>
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules/initializers.html" class="btn btn-neutral float-right" title="Initializers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

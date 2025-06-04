@@ -1,0 +1,716 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Objectives &mdash; Oracle 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Constraints" href="constraints.html" />
+    <link rel="prev" title="OracleStrategy" href="oracle_strategy.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Oracle
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Oracle Optimizer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="initializers.html">Initializers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="optimization_types.html">Optimization Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oracle.html">Oracle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oracle_strategy.html">OracleStrategy</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Objectives</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#objectivemanager">ObjectiveManager</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#service.objectives.objective_manager.ObjectiveManager"><code class="docutils literal notranslate"><span class="pre">ObjectiveManager</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#service.objectives.objective_manager.ObjectiveManager.__init__"><code class="docutils literal notranslate"><span class="pre">ObjectiveManager.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#service.objectives.objective_manager.ObjectiveManager.calculate_cash_deployment_objective"><code class="docutils literal notranslate"><span class="pre">ObjectiveManager.calculate_cash_deployment_objective()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#service.objectives.objective_manager.ObjectiveManager.calculate_max_withdrawal_objective"><code class="docutils literal notranslate"><span class="pre">ObjectiveManager.calculate_max_withdrawal_objective()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#service.objectives.objective_manager.ObjectiveManager.calculate_objectives"><code class="docutils literal notranslate"><span class="pre">ObjectiveManager.calculate_objectives()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#service.objectives.objective_manager.ObjectiveManager.extract_component_values"><code class="docutils literal notranslate"><span class="pre">ObjectiveManager.extract_component_values()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#objective-components">Objective Components</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-service.objectives.taxes.tax_optimization">Tax Impact</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#service.objectives.taxes.tax_optimization.calculate_tax_impact"><code class="docutils literal notranslate"><span class="pre">calculate_tax_impact()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#service.objectives.taxes.tax_optimization.get_tax_cost"><code class="docutils literal notranslate"><span class="pre">get_tax_cost()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-service.objectives.taxes.tlh">Tax Loss Harvesting</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#service.objectives.taxes.tlh.TLHTrade"><code class="docutils literal notranslate"><span class="pre">TLHTrade</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#service.objectives.taxes.tlh.calculate_tlh_impact"><code class="docutils literal notranslate"><span class="pre">calculate_tlh_impact()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-service.objectives.drift.drift_optimization">Drift Impact</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#service.objectives.drift.drift_optimization.calculate_drift_impact"><code class="docutils literal notranslate"><span class="pre">calculate_drift_impact()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#service.objectives.drift.drift_optimization.calculate_drift_impact_vectorized"><code class="docutils literal notranslate"><span class="pre">calculate_drift_impact_vectorized()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#service.objectives.drift.drift_optimization.calculate_withdrawal_objective"><code class="docutils literal notranslate"><span class="pre">calculate_withdrawal_objective()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#service.objectives.drift.drift_optimization.get_buy_weight_change"><code class="docutils literal notranslate"><span class="pre">get_buy_weight_change()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#service.objectives.drift.drift_optimization.get_sell_weight_change"><code class="docutils literal notranslate"><span class="pre">get_sell_weight_change()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-service.objectives.transaction_costs.transaction_optimization">Transaction Costs</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#service.objectives.transaction_costs.transaction_optimization.calculate_transaction_costs"><code class="docutils literal notranslate"><span class="pre">calculate_transaction_costs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#service.objectives.transaction_costs.transaction_optimization.get_buy_cost"><code class="docutils literal notranslate"><span class="pre">get_buy_cost()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#service.objectives.transaction_costs.transaction_optimization.get_sell_cost"><code class="docutils literal notranslate"><span class="pre">get_sell_cost()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-service.objectives.factor_model.factor_model_optimization">Factor Model Impact</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#service.objectives.factor_model.factor_model_optimization.calculate_factor_model_impact_vectorized"><code class="docutils literal notranslate"><span class="pre">calculate_factor_model_impact_vectorized()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-service.objectives.cash_deployment.cash_deployment">Cash Deployment</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#service.objectives.cash_deployment.cash_deployment.calculate_cash_deployment_objective"><code class="docutils literal notranslate"><span class="pre">calculate_cash_deployment_objective()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#service.objectives.cash_deployment.cash_deployment.calculate_max_withdrawal_objective"><code class="docutils literal notranslate"><span class="pre">calculate_max_withdrawal_objective()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#normalization-constants">Normalization Constants</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="constraints.html">Constraints</a></li>
+<li class="toctree-l1"><a class="reference internal" href="helpers.html">Helpers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Oracle</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Objectives</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/modules/objectives.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="objectives">
+<h1>Objectives<a class="headerlink" href="#objectives" title="Link to this heading"></a></h1>
+<p>The objectives module handles all optimization objective terms used in Oracle’s portfolio optimization.</p>
+<section id="objectivemanager">
+<h2>ObjectiveManager<a class="headerlink" href="#objectivemanager" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="service.objectives.objective_manager.ObjectiveManager">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">service.objectives.objective_manager.</span></span><span class="sig-name descname"><span class="pre">ObjectiveManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">oracle_strategy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/service/objectives/objective_manager.html#ObjectiveManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.objectives.objective_manager.ObjectiveManager" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Manager class for handling all optimization objective terms.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="service.objectives.objective_manager.ObjectiveManager.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">oracle_strategy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/service/objectives/objective_manager.html#ObjectiveManager.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.objectives.objective_manager.ObjectiveManager.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize ObjectiveManager with reference to OracleStrategy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>oracle_strategy</strong> – Reference to the OracleStrategy instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="service.objectives.objective_manager.ObjectiveManager.calculate_cash_deployment_objective">
+<span class="sig-name descname"><span class="pre">calculate_cash_deployment_objective</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prob</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">LpProblem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">LpVariable</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sells</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">LpVariable</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drift</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor_normalization</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">LpAffineExpression</span></span></span><a class="reference internal" href="../_modules/service/objectives/objective_manager.html#ObjectiveManager.calculate_cash_deployment_objective"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.objectives.objective_manager.ObjectiveManager.calculate_cash_deployment_objective" title="Link to this definition"></a></dt>
+<dd><p>Calculate the cash deployment objective term.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prob</strong> – The optimization problem to add constraints to</p></li>
+<li><p><strong>buy_df</strong> – DataFrame with buy variables and prices</p></li>
+<li><p><strong>sell_df</strong> – DataFrame with sell variables and prices</p></li>
+<li><p><strong>drift</strong> – DataFrame with drift report</p></li>
+<li><p><strong>total_value</strong> – Total portfolio value</p></li>
+<li><p><strong>debug</strong> – Enable debug logging</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Cash deployment objective term</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="service.objectives.objective_manager.ObjectiveManager.calculate_max_withdrawal_objective">
+<span class="sig-name descname"><span class="pre">calculate_max_withdrawal_objective</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prob</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">LpProblem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">LpVariable</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sells</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">LpVariable</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gain_loss</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">LpAffineExpression</span></span></span><a class="reference internal" href="../_modules/service/objectives/objective_manager.html#ObjectiveManager.calculate_max_withdrawal_objective"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.objectives.objective_manager.ObjectiveManager.calculate_max_withdrawal_objective" title="Link to this definition"></a></dt>
+<dd><p>Calculate an objective that maximizes cash withdrawal.
+Creates an objective that maximizes the cash generated from selling securities.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prob</strong> – PuLP optimization problem</p></li>
+<li><p><strong>buys</strong> – Dictionary of buy variables</p></li>
+<li><p><strong>sells</strong> – Dictionary of sell variables</p></li>
+<li><p><strong>gain_loss</strong> – DataFrame with gain/loss report</p></li>
+<li><p><strong>debug</strong> – Enable debug logging</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Cash withdrawal maximization objective term (negative since we’re minimizing)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="service.objectives.objective_manager.ObjectiveManager.calculate_objectives">
+<span class="sig-name descname"><span class="pre">calculate_objectives</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">LpVariable</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sells</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">LpVariable</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drift</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gain_loss</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_tax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_drift</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_transaction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_factor_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_cash_drag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank_penalty_factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buy_df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sell_df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enforce_wash_sale_prevention</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">LpAffineExpression</span></span></span><a class="reference internal" href="../_modules/service/objectives/objective_manager.html#ObjectiveManager.calculate_objectives"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.objectives.objective_manager.ObjectiveManager.calculate_objectives" title="Link to this definition"></a></dt>
+<dd><p>Calculate all objective terms and return the combined objective.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buys</strong> – Dictionary of buy variables</p></li>
+<li><p><strong>sells</strong> – Dictionary of sell variables</p></li>
+<li><p><strong>drift</strong> – DataFrame with drift report</p></li>
+<li><p><strong>tax_lot_drift</strong> – DataFrame with tax lot level drift</p></li>
+<li><p><strong>gain_loss</strong> – DataFrame with gain/loss report</p></li>
+<li><p><strong>total_value</strong> – Total portfolio value</p></li>
+<li><p><strong>weight_tax</strong> – Weight for tax component</p></li>
+<li><p><strong>weight_drift</strong> – Weight for drift component</p></li>
+<li><p><strong>weight_transaction</strong> – Weight for transaction cost component</p></li>
+<li><p><strong>weight_factor_model</strong> – Weight for factor model component</p></li>
+<li><p><strong>weight_cash_drag</strong> – Weight for cash deployment component</p></li>
+<li><p><strong>rank_penalty_factor</strong> – Factor to control the strength of rank penalty (default 0.05)</p></li>
+<li><p><strong>debug</strong> – Enable debug logging</p></li>
+<li><p><strong>log_time</strong> – Whether to log timing information</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Combined objective function expression</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="service.objectives.objective_manager.ObjectiveManager.extract_component_values">
+<span class="sig-name descname"><span class="pre">extract_component_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prob</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">LpProblem</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/service/objectives/objective_manager.html#ObjectiveManager.extract_component_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.objectives.objective_manager.ObjectiveManager.extract_component_values" title="Link to this definition"></a></dt>
+<dd><p>Extract the values of each objective component from a solved problem.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>prob</strong> – A solved PuLP problem</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary containing component values</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="objective-components">
+<h2>Objective Components<a class="headerlink" href="#objective-components" title="Link to this heading"></a></h2>
+<section id="module-service.objectives.taxes.tax_optimization">
+<span id="tax-impact"></span><h3>Tax Impact<a class="headerlink" href="#module-service.objectives.taxes.tax_optimization" title="Link to this heading"></a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="service.objectives.taxes.tax_optimization.calculate_tax_impact">
+<span class="sig-prename descclassname"><span class="pre">service.objectives.taxes.tax_optimization.</span></span><span class="sig-name descname"><span class="pre">calculate_tax_impact</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prob</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">LpProblem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sells</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">LpVariable</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gain_loss</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tax_normalization</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enforce_wash_sale_prevention</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">LpAffineExpression</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/service/objectives/taxes/tax_optimization.html#calculate_tax_impact"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.objectives.taxes.tax_optimization.calculate_tax_impact" title="Link to this definition"></a></dt>
+<dd><p>Calculate the tax impact component of the objective function and current tax score.
+Uses pre-calculated per_share_tax_liability from gain_loss report.
+Tax impact is expressed as a percentage of portfolio value to be comparable with drift.</p>
+<p>For each tax lot, we track:
+- Current tax liability = quantity * per_share_tax_liability
+- New tax liability = (quantity - sells) * per_share_tax_liability
+- The difference represents realized tax cost
+- Negative tax_realized values represent beneficial tax loss harvesting</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prob</strong> – The optimization problem to add constraints to</p></li>
+<li><p><strong>sells</strong> – Dictionary of sell variables</p></li>
+<li><p><strong>gain_loss</strong> – DataFrame with gain/loss report</p></li>
+<li><p><strong>total_value</strong> – Total portfolio value</p></li>
+<li><p><strong>tax_normalization</strong> – Normalization factor for tax impact</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>Tax impact expression representing the change in tax liability</p></li>
+<li><p>Current tax score (sum of unrealized gains as percentage of portfolio)</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple of</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="service.objectives.taxes.tax_optimization.get_tax_cost">
+<span class="sig-prename descclassname"><span class="pre">service.objectives.taxes.tax_optimization.</span></span><span class="sig-name descname"><span class="pre">get_tax_cost</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">quantity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">per_share_tax_liability</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tax_normalization</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../_modules/service/objectives/taxes/tax_optimization.html#get_tax_cost"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.objectives.taxes.tax_optimization.get_tax_cost" title="Link to this definition"></a></dt>
+<dd><p>Calculate the tax cost component of the objective function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>quantity</strong> – Quantity of the security to sell</p></li>
+<li><p><strong>per_share_tax_liability</strong> – Tax liability per share</p></li>
+<li><p><strong>total_value</strong> – Total portfolio value</p></li>
+<li><p><strong>tax_normalization</strong> – Normalization factor for tax impact</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The total tax cost as a percentage of portfolio value</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-service.objectives.taxes.tlh">
+<span id="tax-loss-harvesting"></span><h3>Tax Loss Harvesting<a class="headerlink" href="#module-service.objectives.taxes.tlh" title="Link to this heading"></a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="service.objectives.taxes.tlh.TLHTrade">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">service.objectives.taxes.tlh.</span></span><span class="sig-name descname"><span class="pre">TLHTrade</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tax_lot_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">identifier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quantity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cost_basis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss_percentage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">potential_tax_savings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_weight</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_weight</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">harvest_quantity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lot_priority</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">replacement_buys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/service/objectives/taxes/tlh.html#TLHTrade"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.objectives.taxes.tlh.TLHTrade" title="Link to this definition"></a></dt>
+<dd><p>Represents a tax loss harvesting opportunity for a specific lot</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="service.objectives.taxes.tlh.TLHTrade.cost_basis">
+<span class="sig-name descname"><span class="pre">cost_basis</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#service.objectives.taxes.tlh.TLHTrade.cost_basis" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="service.objectives.taxes.tlh.TLHTrade.current_value">
+<span class="sig-name descname"><span class="pre">current_value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#service.objectives.taxes.tlh.TLHTrade.current_value" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="service.objectives.taxes.tlh.TLHTrade.current_weight">
+<span class="sig-name descname"><span class="pre">current_weight</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#service.objectives.taxes.tlh.TLHTrade.current_weight" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="service.objectives.taxes.tlh.TLHTrade.harvest_quantity">
+<span class="sig-name descname"><span class="pre">harvest_quantity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#service.objectives.taxes.tlh.TLHTrade.harvest_quantity" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="service.objectives.taxes.tlh.TLHTrade.identifier">
+<span class="sig-name descname"><span class="pre">identifier</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#service.objectives.taxes.tlh.TLHTrade.identifier" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="service.objectives.taxes.tlh.TLHTrade.loss_percentage">
+<span class="sig-name descname"><span class="pre">loss_percentage</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#service.objectives.taxes.tlh.TLHTrade.loss_percentage" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="service.objectives.taxes.tlh.TLHTrade.lot_priority">
+<span class="sig-name descname"><span class="pre">lot_priority</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#service.objectives.taxes.tlh.TLHTrade.lot_priority" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="service.objectives.taxes.tlh.TLHTrade.potential_tax_savings">
+<span class="sig-name descname"><span class="pre">potential_tax_savings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#service.objectives.taxes.tlh.TLHTrade.potential_tax_savings" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="service.objectives.taxes.tlh.TLHTrade.quantity">
+<span class="sig-name descname"><span class="pre">quantity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#service.objectives.taxes.tlh.TLHTrade.quantity" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="service.objectives.taxes.tlh.TLHTrade.replacement_buys">
+<span class="sig-name descname"><span class="pre">replacement_buys</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#service.objectives.taxes.tlh.TLHTrade.replacement_buys" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="service.objectives.taxes.tlh.TLHTrade.target_weight">
+<span class="sig-name descname"><span class="pre">target_weight</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#service.objectives.taxes.tlh.TLHTrade.target_weight" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="service.objectives.taxes.tlh.TLHTrade.tax_lot_id">
+<span class="sig-name descname"><span class="pre">tax_lot_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#service.objectives.taxes.tlh.TLHTrade.tax_lot_id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="service.objectives.taxes.tlh.calculate_tlh_impact">
+<span class="sig-prename descclassname"><span class="pre">service.objectives.taxes.tlh.</span></span><span class="sig-name descname"><span class="pre">calculate_tlh_impact</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prob</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">LpProblem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">LpVariable</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sells</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">LpVariable</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drift_report</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gain_loss_report</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tax_rates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">constraints_manager</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ConstraintsManager</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_weights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_portfolio_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_weight_multiplier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_weight_multiplier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_notional</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trade_rounding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_loss_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.015</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">objective_manager</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimization_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">OracleOptimizationType</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#service.objectives.taxes.tlh.TLHTrade" title="service.objectives.taxes.tlh.TLHTrade"><span class="pre">TLHTrade</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/service/objectives/taxes/tlh.html#calculate_tlh_impact"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.objectives.taxes.tlh.calculate_tlh_impact" title="Link to this definition"></a></dt>
+<dd><p>Identify tax loss harvesting opportunities and determine sell quantities.
+Also calculates baseline objective values after TLH trades.
+For pairs trading, identifies and constrains both sells and replacement buys.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prob</strong> – The optimization problem</p></li>
+<li><p><strong>buys</strong> – Dictionary of buy variables</p></li>
+<li><p><strong>sells</strong> – Dictionary of sell variables</p></li>
+<li><p><strong>gain_loss_report</strong> – DataFrame with current gain/loss information for all lots</p></li>
+<li><p><strong>prices</strong> – DataFrame with current security prices</p></li>
+<li><p><strong>tax_rates</strong> – DataFrame with tax rates for different gain types</p></li>
+<li><p><strong>constraints_manager</strong> – ConstraintsManager instance to check restrictions</p></li>
+<li><p><strong>target_weights</strong> – DataFrame with target weights for each security</p></li>
+<li><p><strong>total_portfolio_value</strong> – Total portfolio value for weight calculations</p></li>
+<li><p><strong>min_weight_multiplier</strong> – Minimum weight multiplier from strategy type</p></li>
+<li><p><strong>max_weight_multiplier</strong> – Maximum weight multiplier from strategy type</p></li>
+<li><p><strong>min_notional</strong> – Minimum notional value for a trade in dollars</p></li>
+<li><p><strong>trade_rounding</strong> – Rounding increment for trade quantities</p></li>
+<li><p><strong>min_loss_threshold</strong> – Minimum loss percentage to consider for TLH (default 1.5%)</p></li>
+<li><p><strong>objective_manager</strong> – ObjectiveManager instance to calculate objective values</p></li>
+<li><p><strong>optimization_type</strong> – The optimization type (OracleOptimizationType)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>List of TLHTrade objects representing identified opportunities</p></li>
+<li><p>Dictionary mapping tax_lot_id to sell quantities</p></li>
+<li><p>Dictionary mapping identifier to buy quantities (for pairs trading)</p></li>
+<li><p>Dictionary of baseline objective component values after TLH trades (or None if no TLH trades)</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple of</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-service.objectives.drift.drift_optimization">
+<span id="drift-impact"></span><h3>Drift Impact<a class="headerlink" href="#module-service.objectives.drift.drift_optimization" title="Link to this heading"></a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="service.objectives.drift.drift_optimization.calculate_drift_impact">
+<span class="sig-prename descclassname"><span class="pre">service.objectives.drift.drift_optimization.</span></span><span class="sig-name descname"><span class="pre">calculate_drift_impact</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prob</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">LpProblem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">LpVariable</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sells</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">LpVariable</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drift</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gain_report</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">absolute_drift_normalization</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_piecewise</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank_penalty_factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">LpAffineExpression</span></span></span><a class="reference internal" href="../_modules/service/objectives/drift/drift_optimization.html#calculate_drift_impact"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.objectives.drift.drift_optimization.calculate_drift_impact" title="Link to this definition"></a></dt>
+<dd><p>Calculate both absolute and relative drift impacts.
+- Absolute drift measures deviation as % of portfolio (comparable to tax impact)
+- Relative drift measures proportional deviation from target (e.g. 50% off target vs 10% off target)
+Both components are weighted equally to ensure we consider both the size of the position
+and how far it is from its target in relative terms.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prob</strong> – The optimization problem to add constraints to</p></li>
+<li><p><strong>buys</strong> – Dictionary of buy variables</p></li>
+<li><p><strong>sells</strong> – Dictionary of sell variables</p></li>
+<li><p><strong>drift</strong> – DataFrame with drift report</p></li>
+<li><p><strong>gain_report</strong> – DataFrame with gain/loss report</p></li>
+<li><p><strong>total_value</strong> – Total portfolio value</p></li>
+<li><p><strong>prices</strong> – DataFrame with current prices</p></li>
+<li><p><strong>debug</strong> – Enable debug logging</p></li>
+<li><p><strong>absolute_drift_normalization</strong> – Normalization factor for absolute drift (default 1.0)</p></li>
+<li><p><strong>use_piecewise</strong> – Whether to use piecewise linear approximation (True) or absolute deviation (False)</p></li>
+<li><p><strong>rank_penalty_factor</strong> – Factor to penalize non-primary securities within an asset class (default 0.1)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Combined drift impact expression incorporating both absolute and relative components with equal weights</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="service.objectives.drift.drift_optimization.calculate_drift_impact_vectorized">
+<span class="sig-prename descclassname"><span class="pre">service.objectives.drift.drift_optimization.</span></span><span class="sig-name descname"><span class="pre">calculate_drift_impact_vectorized</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prob</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">LpProblem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buy_df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sell_df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drift</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">absolute_drift_normalization</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_piecewise</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank_penalty_factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">LpAffineExpression</span></span></span><a class="reference internal" href="../_modules/service/objectives/drift/drift_optimization.html#calculate_drift_impact_vectorized"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.objectives.drift.drift_optimization.calculate_drift_impact_vectorized" title="Link to this definition"></a></dt>
+<dd><p>Vectorized version of calculate_drift_impact that avoids nested loops.</p>
+<p>Key vectorization steps:
+1. Process all buys at once by grouping buy_df by identifier
+2. Process all sells at once by grouping sell_df by identifier
+3. Merge weight changes into drift DataFrame for efficient processing</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prob</strong> – The optimization problem to add constraints to</p></li>
+<li><p><strong>buy_df</strong> – DataFrame containing buy variables and prices</p></li>
+<li><p><strong>sell_df</strong> – DataFrame containing sell variables, tax lots and prices</p></li>
+<li><p><strong>drift</strong> – DataFrame with drift report containing asset class groupings</p></li>
+<li><p><strong>total_value</strong> – Total portfolio value</p></li>
+<li><p><strong>absolute_drift_normalization</strong> – Normalization factor for absolute drift</p></li>
+<li><p><strong>use_piecewise</strong> – Whether to use piecewise linear approximation</p></li>
+<li><p><strong>rank_penalty_factor</strong> – Factor to penalize non-primary securities</p></li>
+<li><p><strong>debug</strong> – Enable debug logging</p></li>
+<li><p><strong>log_time</strong> – Whether to log timing information for each step</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Combined drift impact expression</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="service.objectives.drift.drift_optimization.calculate_withdrawal_objective">
+<span class="sig-prename descclassname"><span class="pre">service.objectives.drift.drift_optimization.</span></span><span class="sig-name descname"><span class="pre">calculate_withdrawal_objective</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prob</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">LpProblem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">LpVariable</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sells</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">LpVariable</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drift</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gain_loss</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">withdrawal_amount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">LpAffineExpression</span></span></span><a class="reference internal" href="../_modules/service/objectives/drift/drift_optimization.html#calculate_withdrawal_objective"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.objectives.drift.drift_optimization.calculate_withdrawal_objective" title="Link to this definition"></a></dt>
+<dd><p>Calculate constraints and objective components for a portfolio withdrawal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prob</strong> – The optimization problem to add constraints to</p></li>
+<li><p><strong>buys</strong> – Dictionary of buy variables</p></li>
+<li><p><strong>sells</strong> – Dictionary of sell variables</p></li>
+<li><p><strong>drift</strong> – DataFrame with drift report</p></li>
+<li><p><strong>gain_loss</strong> – DataFrame with gain/loss report</p></li>
+<li><p><strong>total_value</strong> – Total portfolio value</p></li>
+<li><p><strong>prices</strong> – DataFrame with current prices</p></li>
+<li><p><strong>withdrawal_amount</strong> – Amount to be withdrawn from the portfolio</p></li>
+<li><p><strong>debug</strong> – Enable debug logging</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The withdrawal penalty expression (usually 0 since this adds constraints)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="service.objectives.drift.drift_optimization.get_buy_weight_change">
+<span class="sig-prename descclassname"><span class="pre">service.objectives.drift.drift_optimization.</span></span><span class="sig-name descname"><span class="pre">get_buy_weight_change</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">quantity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">price</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../_modules/service/objectives/drift/drift_optimization.html#get_buy_weight_change"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.objectives.drift.drift_optimization.get_buy_weight_change" title="Link to this definition"></a></dt>
+<dd><p>Calculate the weight change from buying a security.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>quantity</strong> – Quantity of the security to buy</p></li>
+<li><p><strong>prices</strong> – DataFrame with current prices</p></li>
+<li><p><strong>total_value</strong> – Total portfolio value</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The weight change from buying the security</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="service.objectives.drift.drift_optimization.get_sell_weight_change">
+<span class="sig-prename descclassname"><span class="pre">service.objectives.drift.drift_optimization.</span></span><span class="sig-name descname"><span class="pre">get_sell_weight_change</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">quantity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">price</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../_modules/service/objectives/drift/drift_optimization.html#get_sell_weight_change"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.objectives.drift.drift_optimization.get_sell_weight_change" title="Link to this definition"></a></dt>
+<dd><p>Calculate the weight change from buying a security.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>quantity</strong> – Quantity of the security to buy</p></li>
+<li><p><strong>prices</strong> – DataFrame with current prices</p></li>
+<li><p><strong>total_value</strong> – Total portfolio value</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The weight change from buying the security</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-service.objectives.transaction_costs.transaction_optimization">
+<span id="transaction-costs"></span><h3>Transaction Costs<a class="headerlink" href="#module-service.objectives.transaction_costs.transaction_optimization" title="Link to this heading"></a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="service.objectives.transaction_costs.transaction_optimization.calculate_transaction_costs">
+<span class="sig-prename descclassname"><span class="pre">service.objectives.transaction_costs.transaction_optimization.</span></span><span class="sig-name descname"><span class="pre">calculate_transaction_costs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">LpVariable</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sells</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">LpVariable</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spreads</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transaction_normalization</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">LpAffineExpression</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/service/objectives/transaction_costs/transaction_optimization.html#calculate_transaction_costs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.objectives.transaction_costs.transaction_optimization.calculate_transaction_costs" title="Link to this definition"></a></dt>
+<dd><p>Calculate the transaction costs component of the objective function.
+Uses pre-calculated per_share_cost from spreads DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buys</strong> – Dictionary of buy variables</p></li>
+<li><p><strong>sells</strong> – Dictionary of sell variables</p></li>
+<li><p><strong>drift</strong> – DataFrame with drift report</p></li>
+<li><p><strong>gain_loss</strong> – DataFrame with gain/loss report</p></li>
+<li><p><strong>total_value</strong> – Total portfolio value</p></li>
+<li><p><strong>prices</strong> – DataFrame with current prices</p></li>
+<li><p><strong>spreads</strong> – DataFrame with bid-ask spreads</p></li>
+<li><p><strong>transaction_normalization</strong> – Normalization factor for transaction costs</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The normalized transaction costs expression</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="service.objectives.transaction_costs.transaction_optimization.get_buy_cost">
+<span class="sig-prename descclassname"><span class="pre">service.objectives.transaction_costs.transaction_optimization.</span></span><span class="sig-name descname"><span class="pre">get_buy_cost</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">quantity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spread</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transaction_normalization</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../_modules/service/objectives/transaction_costs/transaction_optimization.html#get_buy_cost"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.objectives.transaction_costs.transaction_optimization.get_buy_cost" title="Link to this definition"></a></dt>
+<dd><p>Calculate the buy cost component of the objective function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>identifier</strong> – String identifier of the security</p></li>
+<li><p><strong>spreads</strong> – DataFrame with bid-ask spreads</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The total buy cost as a percentage of portfolio value</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="service.objectives.transaction_costs.transaction_optimization.get_sell_cost">
+<span class="sig-prename descclassname"><span class="pre">service.objectives.transaction_costs.transaction_optimization.</span></span><span class="sig-name descname"><span class="pre">get_sell_cost</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">quantity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spread</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transaction_normalization</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../_modules/service/objectives/transaction_costs/transaction_optimization.html#get_sell_cost"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.objectives.transaction_costs.transaction_optimization.get_sell_cost" title="Link to this definition"></a></dt>
+<dd><p>Calculate the sell cost component of the objective function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>identifier</strong> – String identifier of the security</p></li>
+<li><p><strong>spreads</strong> – DataFrame with bid-ask spreads</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The total sell cost as a percentage of portfolio value</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-service.objectives.factor_model.factor_model_optimization">
+<span id="factor-model-impact"></span><h3>Factor Model Impact<a class="headerlink" href="#module-service.objectives.factor_model.factor_model_optimization" title="Link to this heading"></a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="service.objectives.factor_model.factor_model_optimization.calculate_factor_model_impact_vectorized">
+<span class="sig-prename descclassname"><span class="pre">service.objectives.factor_model.factor_model_optimization.</span></span><span class="sig-name descname"><span class="pre">calculate_factor_model_impact_vectorized</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prob</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">LpProblem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buy_df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sell_df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_factors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">actual_factors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor_normalization</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_piecewise</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">LpAffineExpression</span></span></span><a class="reference internal" href="../_modules/service/objectives/factor_model/factor_model_optimization.html#calculate_factor_model_impact_vectorized"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.objectives.factor_model.factor_model_optimization.calculate_factor_model_impact_vectorized" title="Link to this definition"></a></dt>
+<dd><p>Vectorized version of calculate_factor_model_impact that avoids nested loops.
+Uses pandas operations for efficient calculation of factor exposures.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prob</strong> – The optimization problem to add constraints to</p></li>
+<li><p><strong>buy_df</strong> – DataFrame containing buy variables and prices</p></li>
+<li><p><strong>sell_df</strong> – DataFrame containing sell variables, tax lots and prices</p></li>
+<li><p><strong>drift</strong> – DataFrame with drift report</p></li>
+<li><p><strong>total_value</strong> – Total portfolio value</p></li>
+<li><p><strong>factor_model</strong> – DataFrame with factor exposures for each security</p></li>
+<li><p><strong>target_factors</strong> – DataFrame with target factor exposures</p></li>
+<li><p><strong>actual_factors</strong> – DataFrame with actual factor exposures</p></li>
+<li><p><strong>debug</strong> – Enable debug logging</p></li>
+<li><p><strong>factor_normalization</strong> – Normalization factor for factor impact</p></li>
+<li><p><strong>use_piecewise</strong> – Whether to use piecewise linear approximation</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The total factor model impact expression to minimize</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-service.objectives.cash_deployment.cash_deployment">
+<span id="cash-deployment"></span><h3>Cash Deployment<a class="headerlink" href="#module-service.objectives.cash_deployment.cash_deployment" title="Link to this heading"></a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="service.objectives.cash_deployment.cash_deployment.calculate_cash_deployment_objective">
+<span class="sig-prename descclassname"><span class="pre">service.objectives.cash_deployment.cash_deployment.</span></span><span class="sig-name descname"><span class="pre">calculate_cash_deployment_objective</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prob</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">LpProblem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">LpVariable</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sells</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">LpVariable</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drift</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gain_loss</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cash_normalization</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">LpAffineExpression</span></span></span><a class="reference internal" href="../_modules/service/objectives/cash_deployment/cash_deployment.html#calculate_cash_deployment_objective"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.objectives.cash_deployment.cash_deployment.calculate_cash_deployment_objective" title="Link to this definition"></a></dt>
+<dd><p>Calculate a penalty for holding excess cash above target.
+Only penalizes cash when it’s above target, not when below.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prob</strong> – The optimization problem to add constraints to</p></li>
+<li><p><strong>buys</strong> – Dictionary of buy variables</p></li>
+<li><p><strong>sells</strong> – Dictionary of sell variables</p></li>
+<li><p><strong>drift</strong> – DataFrame with drift report</p></li>
+<li><p><strong>gain_loss</strong> – DataFrame with gain/loss report</p></li>
+<li><p><strong>total_value</strong> – Total portfolio value</p></li>
+<li><p><strong>prices</strong> – DataFrame with current prices</p></li>
+<li><p><strong>debug</strong> – Enable debug logging</p></li>
+<li><p><strong>cash_normalization</strong> – Normalization factor for cash penalty</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The cash penalty expression</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="service.objectives.cash_deployment.cash_deployment.calculate_max_withdrawal_objective">
+<span class="sig-prename descclassname"><span class="pre">service.objectives.cash_deployment.cash_deployment.</span></span><span class="sig-name descname"><span class="pre">calculate_max_withdrawal_objective</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prob</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">LpProblem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">LpVariable</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sells</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">LpVariable</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gain_loss</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">LpAffineExpression</span></span></span><a class="reference internal" href="../_modules/service/objectives/cash_deployment/cash_deployment.html#calculate_max_withdrawal_objective"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.objectives.cash_deployment.cash_deployment.calculate_max_withdrawal_objective" title="Link to this definition"></a></dt>
+<dd><p>Calculate an objective that maximizes cash withdrawal.
+Creates an objective that maximizes the cash generated from selling securities.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prob</strong> – PuLP optimization problem</p></li>
+<li><p><strong>buys</strong> – Dictionary of buy variables</p></li>
+<li><p><strong>sells</strong> – Dictionary of sell variables</p></li>
+<li><p><strong>gain_loss</strong> – DataFrame with gain/loss report</p></li>
+<li><p><strong>debug</strong> – Enable debug logging</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Cash withdrawal maximization objective term (negative since we’re minimizing)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+<section id="normalization-constants">
+<h2>Normalization Constants<a class="headerlink" href="#normalization-constants" title="Link to this heading"></a></h2>
+<p>The following normalization constants are used to scale different objective components:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">TAX_NORMALIZATION</span> <span class="o">=</span> <span class="mi">800</span>  <span class="c1"># Scale tax impact</span>
+<span class="n">DRIFT_NORMALIZATION</span> <span class="o">=</span> <span class="mf">1.0</span>  <span class="c1"># Scale drift impact</span>
+<span class="n">TRANSACTION_NORMALIZATION</span> <span class="o">=</span> <span class="mf">1.0</span>  <span class="c1"># Scale transaction costs</span>
+<span class="n">FACTOR_MODEL_NORMALIZATION</span> <span class="o">=</span> <span class="mf">1.0</span>  <span class="c1"># Scale factor model impact</span>
+<span class="n">CASH_DRAG_NORMALIZATION</span> <span class="o">=</span> <span class="mf">1.0</span>  <span class="c1"># Scale cash drag impact</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="oracle_strategy.html" class="btn btn-neutral float-left" title="OracleStrategy" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="constraints.html" class="btn btn-neutral float-right" title="Constraints" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

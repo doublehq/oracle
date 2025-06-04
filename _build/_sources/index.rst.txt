@@ -32,15 +32,6 @@ Features
 * **Factor Model Rebalancing Integration**: Supports considering a factor model for use the Direct Indexed based TLH
 * **Tax Lot Management**: Tracks and optimizes individual tax lots.
 * **Wash Sale Prevention**: Built-in protection against wash sales
-* **Stock Restrictions**: Can restrict buying/selling of specific securities
-* **Holding Time Restrictions**: Enforces minimum holding periods before selling tax lots
-
-Not currently supported
-----------------------
-
-* **ESG Tilts**: No support for ESG scoring or ESG-based portfolio tilts
-* **Household Level Optimization**: Cannot optimize across multiple accounts in a household
-* **Sector Constraints**: No support for sector exposure limits or constraints
 
 Documentation Contents
 --------------------

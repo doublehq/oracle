@@ -1,0 +1,566 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OracleStrategy &mdash; Oracle 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Objectives" href="objectives.html" />
+    <link rel="prev" title="Oracle" href="oracle.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Oracle
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Oracle Optimizer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="initializers.html">Initializers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="optimization_types.html">Optimization Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oracle.html">Oracle</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">OracleStrategy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#service.oracle_strategy.OracleStrategy"><code class="docutils literal notranslate"><span class="pre">OracleStrategy</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#service.oracle_strategy.OracleStrategy.CASH_DRAG_NORMALIZATION"><code class="docutils literal notranslate"><span class="pre">OracleStrategy.CASH_DRAG_NORMALIZATION</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#service.oracle_strategy.OracleStrategy.DEMINIMUS_CASH_TARGET_PERCENT"><code class="docutils literal notranslate"><span class="pre">OracleStrategy.DEMINIMUS_CASH_TARGET_PERCENT</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#service.oracle_strategy.OracleStrategy.DRIFT_NORMALIZATION"><code class="docutils literal notranslate"><span class="pre">OracleStrategy.DRIFT_NORMALIZATION</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#service.oracle_strategy.OracleStrategy.FACTOR_MODEL_NORMALIZATION"><code class="docutils literal notranslate"><span class="pre">OracleStrategy.FACTOR_MODEL_NORMALIZATION</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#service.oracle_strategy.OracleStrategy.TAX_NORMALIZATION"><code class="docutils literal notranslate"><span class="pre">OracleStrategy.TAX_NORMALIZATION</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#service.oracle_strategy.OracleStrategy.TRANSACTION_NORMALIZATION"><code class="docutils literal notranslate"><span class="pre">OracleStrategy.TRANSACTION_NORMALIZATION</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#service.oracle_strategy.OracleStrategy.__init__"><code class="docutils literal notranslate"><span class="pre">OracleStrategy.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#service.oracle_strategy.OracleStrategy.actuals"><code class="docutils literal notranslate"><span class="pre">OracleStrategy.actuals</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#service.oracle_strategy.OracleStrategy.calculate_max_withdrawal_amount"><code class="docutils literal notranslate"><span class="pre">OracleStrategy.calculate_max_withdrawal_amount()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#service.oracle_strategy.OracleStrategy.compare_drift"><code class="docutils literal notranslate"><span class="pre">OracleStrategy.compare_drift()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#service.oracle_strategy.OracleStrategy.compare_factor_model"><code class="docutils literal notranslate"><span class="pre">OracleStrategy.compare_factor_model()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#service.oracle_strategy.OracleStrategy.compute_optimal_trades"><code class="docutils literal notranslate"><span class="pre">OracleStrategy.compute_optimal_trades()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#service.oracle_strategy.OracleStrategy.current_date"><code class="docutils literal notranslate"><span class="pre">OracleStrategy.current_date</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#service.oracle_strategy.OracleStrategy.drift_report"><code class="docutils literal notranslate"><span class="pre">OracleStrategy.drift_report</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#service.oracle_strategy.OracleStrategy.from_dict"><code class="docutils literal notranslate"><span class="pre">OracleStrategy.from_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#service.oracle_strategy.OracleStrategy.gain_loss_report"><code class="docutils literal notranslate"><span class="pre">OracleStrategy.gain_loss_report</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#service.oracle_strategy.OracleStrategy.min_cash_amount"><code class="docutils literal notranslate"><span class="pre">OracleStrategy.min_cash_amount()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#service.oracle_strategy.OracleStrategy.set_oracle"><code class="docutils literal notranslate"><span class="pre">OracleStrategy.set_oracle()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#service.oracle_strategy.OracleStrategy.to_dict"><code class="docutils literal notranslate"><span class="pre">OracleStrategy.to_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#service.oracle_strategy.OracleStrategy.total_value"><code class="docutils literal notranslate"><span class="pre">OracleStrategy.total_value()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="objectives.html">Objectives</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constraints.html">Constraints</a></li>
+<li class="toctree-l1"><a class="reference internal" href="helpers.html">Helpers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Oracle</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">OracleStrategy</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/modules/oracle_strategy.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="oraclestrategy">
+<h1>OracleStrategy<a class="headerlink" href="#oraclestrategy" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="service.oracle_strategy.OracleStrategy">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">service.oracle_strategy.</span></span><span class="sig-name descname"><span class="pre">OracleStrategy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tax_lots</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cash</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">targets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_class_targets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spreads</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimization_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">OracleOptimizationType</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">OracleOptimizationType.TAX_AWARE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deminimus_cash_target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">withdrawal_amount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enforce_wash_sale_prevention</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/service/oracle_strategy.html#OracleStrategy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.oracle_strategy.OracleStrategy" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A sophisticated portfolio optimization strategy class that handles various types of portfolio rebalancing.</p>
+<p>This class implements complex portfolio optimization strategies including tax-aware rebalancing,
+tax-loss harvesting, direct indexing, and withdrawal optimization. It uses linear programming
+to find optimal trade solutions while considering multiple objectives and constraints.</p>
+<dl class="simple">
+<dt>Class Attributes:</dt><dd><p>TAX_NORMALIZATION (float): Normalization factor for tax objective (800)
+DRIFT_NORMALIZATION (float): Normalization factor for drift objective (100)
+TRANSACTION_NORMALIZATION (float): Normalization factor for transaction costs (1200)
+FACTOR_MODEL_NORMALIZATION (float): Normalization factor for factor model objective (60)
+CASH_DRAG_NORMALIZATION (float): Normalization factor for cash deployment objective (50)
+DEMINIMUS_CASH_TARGET_PERCENT (float): Minimum possible cash target (0.03%)
+_next_strategy_id (int): Counter for generating unique strategy IDs</p>
+</dd>
+</dl>
+<p class="rubric">Methods Summary</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#service.oracle_strategy.OracleStrategy.__init__" title="service.oracle_strategy.OracleStrategy.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(tax_lots, prices, cash[, targets, ...])</p></td>
+<td><p>Initialize an OracleStrategy instance with portfolio data and optimization parameters.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#service.oracle_strategy.OracleStrategy.set_oracle" title="service.oracle_strategy.OracleStrategy.set_oracle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_oracle</span></code></a>(oracle)</p></td>
+<td><p>Set the Oracle reference for this strategy.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#service.oracle_strategy.OracleStrategy.compute_optimal_trades" title="service.oracle_strategy.OracleStrategy.compute_optimal_trades"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_optimal_trades</span></code></a>([weight_tax, ...])</p></td>
+<td><p>Compute optimal trades using linear optimization.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#service.oracle_strategy.OracleStrategy.to_dict" title="service.oracle_strategy.OracleStrategy.to_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dict</span></code></a>()</p></td>
+<td><p>Convert the strategy's state to a dictionary for serialization.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#service.oracle_strategy.OracleStrategy.from_dict" title="service.oracle_strategy.OracleStrategy.from_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code></a>(data)</p></td>
+<td><p>Create a new OracleStrategy instance from a dictionary.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Properties</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#service.oracle_strategy.OracleStrategy.current_date" title="service.oracle_strategy.OracleStrategy.current_date"><code class="xref py py-obj docutils literal notranslate"><span class="pre">current_date</span></code></a></p></td>
+<td><p>Get the current date from the Oracle instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#service.oracle_strategy.OracleStrategy.gain_loss_report" title="service.oracle_strategy.OracleStrategy.gain_loss_report"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gain_loss_report</span></code></a></p></td>
+<td><p>Generate a gain/loss report for all tax lots using current prices.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="service.oracle_strategy.OracleStrategy.CASH_DRAG_NORMALIZATION">
+<span class="sig-name descname"><span class="pre">CASH_DRAG_NORMALIZATION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">50</span></em><a class="headerlink" href="#service.oracle_strategy.OracleStrategy.CASH_DRAG_NORMALIZATION" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="service.oracle_strategy.OracleStrategy.DEMINIMUS_CASH_TARGET_PERCENT">
+<span class="sig-name descname"><span class="pre">DEMINIMUS_CASH_TARGET_PERCENT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0003</span></em><a class="headerlink" href="#service.oracle_strategy.OracleStrategy.DEMINIMUS_CASH_TARGET_PERCENT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="service.oracle_strategy.OracleStrategy.DRIFT_NORMALIZATION">
+<span class="sig-name descname"><span class="pre">DRIFT_NORMALIZATION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">100</span></em><a class="headerlink" href="#service.oracle_strategy.OracleStrategy.DRIFT_NORMALIZATION" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="service.oracle_strategy.OracleStrategy.FACTOR_MODEL_NORMALIZATION">
+<span class="sig-name descname"><span class="pre">FACTOR_MODEL_NORMALIZATION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">60</span></em><a class="headerlink" href="#service.oracle_strategy.OracleStrategy.FACTOR_MODEL_NORMALIZATION" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="service.oracle_strategy.OracleStrategy.TAX_NORMALIZATION">
+<span class="sig-name descname"><span class="pre">TAX_NORMALIZATION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">800</span></em><a class="headerlink" href="#service.oracle_strategy.OracleStrategy.TAX_NORMALIZATION" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="service.oracle_strategy.OracleStrategy.TRANSACTION_NORMALIZATION">
+<span class="sig-name descname"><span class="pre">TRANSACTION_NORMALIZATION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1200</span></em><a class="headerlink" href="#service.oracle_strategy.OracleStrategy.TRANSACTION_NORMALIZATION" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="service.oracle_strategy.OracleStrategy.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tax_lots</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cash</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">targets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asset_class_targets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spreads</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimization_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">OracleOptimizationType</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">OracleOptimizationType.TAX_AWARE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deminimus_cash_target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">withdrawal_amount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enforce_wash_sale_prevention</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/service/oracle_strategy.html#OracleStrategy.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.oracle_strategy.OracleStrategy.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize an OracleStrategy instance with portfolio data and optimization parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tax_lots</strong> (<em>pd.DataFrame</em>) – Current portfolio tax lots with columns including ‘identifier’,
+‘tax_lot_id’, ‘quantity’, ‘cost_basis’, and ‘date’</p></li>
+<li><p><strong>prices</strong> (<em>pd.DataFrame</em>) – Current security prices with columns ‘identifier’ and ‘price’</p></li>
+<li><p><strong>cash</strong> (<em>float</em>) – Current portfolio cash balance</p></li>
+<li><p><strong>targets</strong> (<em>pd.DataFrame</em><em>, </em><em>optional</em>) – Target portfolio weights with columns ‘identifier’,
+‘target_weight’, and ‘identifiers’ (list of equivalent securities)</p></li>
+<li><p><strong>asset_class_targets</strong> (<em>pd.DataFrame</em><em>, </em><em>optional</em>) – Asset class level targets, required if
+targets is not provided</p></li>
+<li><p><strong>spreads</strong> (<em>pd.DataFrame</em><em>, </em><em>optional</em>) – Bid-ask spreads for securities</p></li>
+<li><p><strong>factor_model</strong> (<em>pd.DataFrame</em><em>, </em><em>optional</em>) – Factor exposures for direct indexing,
+required if optimization_type is DIRECT_INDEX</p></li>
+<li><p><strong>strategy_id</strong> (<em>int</em><em>, </em><em>optional</em>) – Unique identifier for the strategy. Auto-generated if None</p></li>
+<li><p><strong>optimization_type</strong> (<a class="reference internal" href="helpers.html#service.helpers.enums.OracleOptimizationType" title="service.helpers.enums.OracleOptimizationType"><em>OracleOptimizationType</em></a><em> | </em><em>str</em>) – Type of optimization strategy to use</p></li>
+<li><p><strong>deminimus_cash_target</strong> (<em>float</em>) – Minimum cash percentage target (default: 0.0)</p></li>
+<li><p><strong>withdrawal_amount</strong> (<em>float</em>) – Amount to withdraw from portfolio (default: 0.0)</p></li>
+<li><p><strong>enforce_wash_sale_prevention</strong> (<em>bool</em>) – Whether to enforce wash sale rules (default: True)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – If neither targets nor asset_class_targets is provided, or if factor_model
+    is required but not provided</p></li>
+<li><p><strong>TypeError</strong> – If optimization_type is not a valid OracleOptimizationType or string</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="service.oracle_strategy.OracleStrategy.actuals">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">actuals</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">DataFrame</span></em><a class="headerlink" href="#service.oracle_strategy.OracleStrategy.actuals" title="Link to this definition"></a></dt>
+<dd><p>Calculate actual portfolio weights based on current tax lots and prices.</p>
+<p>This cached property computes the current portfolio allocation including
+both security positions and cash, with weights calculated as percentages
+of total portfolio value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>DataFrame containing actual portfolio weights and market values</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="service.oracle_strategy.OracleStrategy.calculate_max_withdrawal_amount">
+<span class="sig-name descname"><span class="pre">calculate_max_withdrawal_amount</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">respect_wash_sales</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preserve_targets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/service/oracle_strategy.html#OracleStrategy.calculate_max_withdrawal_amount"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.oracle_strategy.OracleStrategy.calculate_max_withdrawal_amount" title="Link to this definition"></a></dt>
+<dd><p>Calculate the maximum amount that can be withdrawn from the portfolio.</p>
+<p>Creates a special optimization problem that attempts to liquidate as much
+of the portfolio as possible while respecting specified constraints.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>respect_wash_sales</strong> (<em>bool</em>) – Whether to respect wash sale restrictions (default: True)</p></li>
+<li><p><strong>preserve_targets</strong> (<em>bool</em>) – Whether to maintain target allocations (default: True)</p></li>
+<li><p><strong>debug</strong> (<em>bool</em>) – Whether to print debug information (default: False)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>Tuple containing:</dt><dd><ul class="simple">
+<li><p>Maximum withdrawal amount possible</p></li>
+<li><p>Trade summary with optimization statistics</p></li>
+<li><p>DataFrame of trades required to achieve the withdrawal</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[float, Dict, pd.DataFrame]</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The actual withdrawal amount may be less than the total portfolio value
+due to various constraints like wash sales or target preservation.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="service.oracle_strategy.OracleStrategy.compare_drift">
+<span class="sig-name descname"><span class="pre">compare_drift</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">DataFrame</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/service/oracle_strategy.html#OracleStrategy.compare_drift"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.oracle_strategy.OracleStrategy.compare_drift" title="Link to this definition"></a></dt>
+<dd><p>Compare drift between current strategy and post-trade strategy.</p>
+<p>For pairs-based strategies, compares based on asset class drift instead
+of individual security drift.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>Tuple containing:</dt><dd><ul class="simple">
+<li><p>DataFrame showing drift comparison for each position</p></li>
+<li><p>Dictionary of summary statistics about drift improvement</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple[pd.DataFrame, Dict]</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If post-trade strategy is not available</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="service.oracle_strategy.OracleStrategy.compare_factor_model">
+<span class="sig-name descname"><span class="pre">compare_factor_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">DataFrame</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/service/oracle_strategy.html#OracleStrategy.compare_factor_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.oracle_strategy.OracleStrategy.compare_factor_model" title="Link to this definition"></a></dt>
+<dd><p>Compare factor model exposures between current and post-trade strategy.</p>
+<p>Only applicable for DIRECT_INDEX optimization type. Analyzes changes in
+factor exposures resulting from the proposed trades.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>Tuple containing:</dt><dd><ul class="simple">
+<li><p>DataFrame showing factor exposure comparison</p></li>
+<li><p>Dictionary of summary statistics about factor exposure improvements</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple[pd.DataFrame, Dict]</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If post-trade strategy is not available</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="service.oracle_strategy.OracleStrategy.compute_optimal_trades">
+<span class="sig-name descname"><span class="pre">compute_optimal_trades</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">weight_tax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_drift</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_transaction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_factor_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_cash_drag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rebalance_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buy_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">holding_time_days</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">should_tlh</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tlh_min_loss_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.015</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">range_min_weight_multiplier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">range_max_weight_multiplier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_notional</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank_penalty_factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trade_rounding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enforce_wash_sale_prevention</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dump</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/service/oracle_strategy.html#OracleStrategy.compute_optimal_trades"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.oracle_strategy.OracleStrategy.compute_optimal_trades" title="Link to this definition"></a></dt>
+<dd><p>Compute optimal trades using linear optimization.</p>
+<p>This is the main optimization method that attempts to find the optimal set
+of trades to achieve the portfolio’s objectives while respecting all constraints.
+It can handle various optimization types including tax-aware rebalancing,
+tax-loss harvesting, and direct indexing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>weight_tax</strong> (<em>float</em>) – Weight for tax objective component (default: 1)</p></li>
+<li><p><strong>weight_drift</strong> (<em>float</em>) – Weight for drift objective component (default: 1)</p></li>
+<li><p><strong>weight_transaction</strong> (<em>float</em>) – Weight for transaction cost component (default: 1)</p></li>
+<li><p><strong>weight_factor_model</strong> (<em>float</em>) – Weight for factor model objective (default: 0.0)</p></li>
+<li><p><strong>weight_cash_drag</strong> (<em>float</em>) – Weight for cash penalty component (default: 0.0)</p></li>
+<li><p><strong>rebalance_threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Minimum improvement for full rebalance</p></li>
+<li><p><strong>buy_threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Minimum improvement for buy-only trades</p></li>
+<li><p><strong>holding_time_days</strong> (<em>int</em>) – Minimum holding period in days (default: 0)</p></li>
+<li><p><strong>should_tlh</strong> (<em>bool</em>) – Whether to enable tax-loss harvesting (default: False)</p></li>
+<li><p><strong>tlh_min_loss_threshold</strong> (<em>float</em>) – Minimum loss % for TLH (default: 1.5%)</p></li>
+<li><p><strong>range_min_weight_multiplier</strong> (<em>float</em>) – Lower bound for weight ranges (default: 0.5)</p></li>
+<li><p><strong>range_max_weight_multiplier</strong> (<em>float</em>) – Upper bound for weight ranges (default: 2.0)</p></li>
+<li><p><strong>min_notional</strong> (<em>float</em>) – Minimum notional amount for trades (default: 0)</p></li>
+<li><p><strong>rank_penalty_factor</strong> (<em>float</em>) – Factor for rank penalty (default: 0.0)</p></li>
+<li><p><strong>trade_rounding</strong> (<em>int</em>) – Decimal places for trade rounding (default: 4)</p></li>
+<li><p><strong>enforce_wash_sale_prevention</strong> (<em>bool</em>) – Whether to enforce wash sale rules (default: True)</p></li>
+<li><p><strong>debug</strong> (<em>bool</em>) – Whether to print debug information (default: True)</p></li>
+<li><p><strong>dump</strong> (<em>bool</em>) – Whether to dump strategy state (default: False)</p></li>
+<li><p><strong>log_time</strong> (<em>bool</em>) – Whether to log execution times (default: True)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>Tuple containing:</dt><dd><ul class="simple">
+<li><p>Solution status code (or None if optimization failed)</p></li>
+<li><p>Whether trades should be executed</p></li>
+<li><p>Trade summary dictionary with optimization statistics</p></li>
+<li><p>DataFrame of recommended trades</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[Optional[int], bool, Dict, pd.DataFrame]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If optimization parameters are invalid or incompatible</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="service.oracle_strategy.OracleStrategy.current_date">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">current_date</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">date</span></em><a class="headerlink" href="#service.oracle_strategy.OracleStrategy.current_date" title="Link to this definition"></a></dt>
+<dd><p>Get the current date from the Oracle instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The current date set in the Oracle instance</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>date</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If Oracle reference is not set</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="service.oracle_strategy.OracleStrategy.drift_report">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">drift_report</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">DataFrame</span></em><a class="headerlink" href="#service.oracle_strategy.OracleStrategy.drift_report" title="Link to this definition"></a></dt>
+<dd><p>Generate a report comparing current portfolio weights to target weights.</p>
+<p>This cached property calculates the drift between actual and target weights
+for all positions in the portfolio, including cash.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>DataFrame containing drift information including columns</dt><dd><p>for actual weights, target weights, and drift amounts</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="service.oracle_strategy.OracleStrategy.from_dict">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#service.oracle_strategy.OracleStrategy" title="service.oracle_strategy.OracleStrategy"><span class="pre">OracleStrategy</span></a></span></span><a class="reference internal" href="../_modules/service/oracle_strategy.html#OracleStrategy.from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.oracle_strategy.OracleStrategy.from_dict" title="Link to this definition"></a></dt>
+<dd><p>Create a new OracleStrategy instance from a dictionary.</p>
+<p>Factory method to reconstruct an OracleStrategy instance from a serialized
+dictionary format, typically created by to_dict().</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>dict</em>) – Dictionary containing strategy data</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>New instance initialized with the provided data</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#service.oracle_strategy.OracleStrategy" title="service.oracle_strategy.OracleStrategy">OracleStrategy</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If required data is missing or invalid</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="service.oracle_strategy.OracleStrategy.gain_loss_report">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">gain_loss_report</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">DataFrame</span></em><a class="headerlink" href="#service.oracle_strategy.OracleStrategy.gain_loss_report" title="Link to this definition"></a></dt>
+<dd><p>Generate a gain/loss report for all tax lots using current prices.</p>
+<p>This cached property calculates realized and unrealized gains/losses
+for all tax lots in the portfolio based on current market prices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>DataFrame containing gain/loss information for each tax lot</dt><dd><p>including columns for cost basis, market value, and gain/loss amounts</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="service.oracle_strategy.OracleStrategy.min_cash_amount">
+<span class="sig-name descname"><span class="pre">min_cash_amount</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../_modules/service/oracle_strategy.html#OracleStrategy.min_cash_amount"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.oracle_strategy.OracleStrategy.min_cash_amount" title="Link to this definition"></a></dt>
+<dd><p>Calculate the minimum cash amount required to meet target weights.</p>
+<p>The minimum cash amount is calculated using a hard limit that is:
+1. At least self.deminimus_cash_target (3 bps)
+2. No more than 97.5% of the target cash weight
+3. No more than the current actual cash percentage
+4. Capped at 100%
+5. Rounded to 8 decimal places</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Minimum required cash amount in base currency</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="service.oracle_strategy.OracleStrategy.set_oracle">
+<span class="sig-name descname"><span class="pre">set_oracle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">oracle</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/service/oracle_strategy.html#OracleStrategy.set_oracle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.oracle_strategy.OracleStrategy.set_oracle" title="Link to this definition"></a></dt>
+<dd><p>Set the Oracle reference for this strategy.</p>
+<p>This method is called by Oracle when the strategy is added to establish
+a bidirectional relationship between Oracle and Strategy instances.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>oracle</strong> – The Oracle instance this strategy belongs to</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If attempting to access Oracle reference before it’s set</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="service.oracle_strategy.OracleStrategy.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/service/oracle_strategy.html#OracleStrategy.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.oracle_strategy.OracleStrategy.to_dict" title="Link to this definition"></a></dt>
+<dd><p>Convert the strategy’s state to a dictionary for serialization.</p>
+<p>Converts all strategy data, including DataFrames and complex objects,
+into a JSON-serializable dictionary format for storage or transmission.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>Dictionary containing all strategy data with properly formatted dates</dt><dd><p>and serializable values</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="service.oracle_strategy.OracleStrategy.total_value">
+<span class="sig-name descname"><span class="pre">total_value</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../_modules/service/oracle_strategy.html#OracleStrategy.total_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.oracle_strategy.OracleStrategy.total_value" title="Link to this definition"></a></dt>
+<dd><p>Calculate the total market value of the portfolio.</p>
+<p>Sums the market value of all positions including cash to determine
+the total portfolio value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Total portfolio market value in base currency</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="oracle.html" class="btn btn-neutral float-left" title="Oracle" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="objectives.html" class="btn btn-neutral float-right" title="Objectives" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

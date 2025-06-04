@@ -1,0 +1,398 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Oracle &mdash; Oracle 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="OracleStrategy" href="oracle_strategy.html" />
+    <link rel="prev" title="Optimization Types" href="optimization_types.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Oracle
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Oracle Optimizer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="initializers.html">Initializers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="optimization_types.html">Optimization Types</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Oracle</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#service.oracle.Oracle"><code class="docutils literal notranslate"><span class="pre">Oracle</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#service.oracle.Oracle.__init__"><code class="docutils literal notranslate"><span class="pre">Oracle.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#service.oracle.Oracle.add_strategy"><code class="docutils literal notranslate"><span class="pre">Oracle.add_strategy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#service.oracle.Oracle.compute_optimal_trades_for_all_strategies"><code class="docutils literal notranslate"><span class="pre">Oracle.compute_optimal_trades_for_all_strategies()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#service.oracle.Oracle.from_dict"><code class="docutils literal notranslate"><span class="pre">Oracle.from_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#service.oracle.Oracle.initialize_wash_sale_restrictions"><code class="docutils literal notranslate"><span class="pre">Oracle.initialize_wash_sale_restrictions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#service.oracle.Oracle.process_lambda_event"><code class="docutils literal notranslate"><span class="pre">Oracle.process_lambda_event()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#service.oracle.Oracle.set_restrictions"><code class="docutils literal notranslate"><span class="pre">Oracle.set_restrictions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#service.oracle.Oracle.to_dict"><code class="docutils literal notranslate"><span class="pre">Oracle.to_dict()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="oracle_strategy.html">OracleStrategy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objectives.html">Objectives</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constraints.html">Constraints</a></li>
+<li class="toctree-l1"><a class="reference internal" href="helpers.html">Helpers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Oracle</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Oracle</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/modules/oracle.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="oracle">
+<h1>Oracle<a class="headerlink" href="#oracle" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="service.oracle.Oracle">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">service.oracle.</span></span><span class="sig-name descname"><span class="pre">Oracle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">current_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recently_closed_lots</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stock_restrictions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tax_rates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategies</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">OracleStrategy</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/service/oracle.html#Oracle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.oracle.Oracle" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p class="rubric">Methods Summary</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#service.oracle.Oracle.__init__" title="service.oracle.Oracle.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(current_date[, ...])</p></td>
+<td><p>Initialize Oracle with portfolio data.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#service.oracle.Oracle.add_strategy" title="service.oracle.Oracle.add_strategy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_strategy</span></code></a>(tax_lots, targets, prices, cash)</p></td>
+<td><p>Create a new strategy and add it to the Oracle.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#service.oracle.Oracle.set_restrictions" title="service.oracle.Oracle.set_restrictions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_restrictions</span></code></a>(stock_restrictions)</p></td>
+<td><p>Set stock trading restrictions for the Oracle.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#service.oracle.Oracle.initialize_wash_sale_restrictions" title="service.oracle.Oracle.initialize_wash_sale_restrictions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">initialize_wash_sale_restrictions</span></code></a>([...])</p></td>
+<td><p>Initialize wash sale restrictions using all tax lots from all strategies.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#service.oracle.Oracle.compute_optimal_trades_for_all_strategies" title="service.oracle.Oracle.compute_optimal_trades_for_all_strategies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_optimal_trades_for_all_strategies</span></code></a>(...)</p></td>
+<td><p>Compute optimal trades for all strategies managed by this Oracle instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#service.oracle.Oracle.to_dict" title="service.oracle.Oracle.to_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dict</span></code></a>()</p></td>
+<td><p>Convert Oracle state to a dictionary for serialization.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#service.oracle.Oracle.from_dict" title="service.oracle.Oracle.from_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code></a>(data)</p></td>
+<td><p>Create an Oracle instance from a dictionary representation.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#service.oracle.Oracle.process_lambda_event" title="service.oracle.Oracle.process_lambda_event"><code class="xref py py-obj docutils literal notranslate"><span class="pre">process_lambda_event</span></code></a>(event)</p></td>
+<td><p>Process an AWS Lambda event to compute optimal trades and handle withdrawal amounts.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="service.oracle.Oracle.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">current_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recently_closed_lots</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stock_restrictions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tax_rates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategies</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">OracleStrategy</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/service/oracle.html#Oracle.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.oracle.Oracle.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize Oracle with portfolio data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>current_date</strong> – The current date to use for calculations and restrictions</p></li>
+<li><p><strong>recently_closed_lots</strong> – Optional DataFrame of recently closed tax lots</p></li>
+<li><p><strong>stock_restrictions</strong> – Optional DataFrame specifying which stocks can be bought/sold</p></li>
+<li><p><strong>tax_rates</strong> – Optional DataFrame of tax rates with columns [type, rate]</p></li>
+<li><p><strong>strategies</strong> – Optional list of OracleStrategy instances</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="service.oracle.Oracle.add_strategy">
+<span class="sig-name descname"><span class="pre">add_strategy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tax_lots</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">targets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cash</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spreads</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">withdrawal_amount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimization_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">OracleOptimizationType</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">OracleOptimizationType.TAX_AWARE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">OracleStrategy</span></span></span><a class="reference internal" href="../_modules/service/oracle.html#Oracle.add_strategy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.oracle.Oracle.add_strategy" title="Link to this definition"></a></dt>
+<dd><p>Create a new strategy and add it to the Oracle.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tax_lots</strong> – DataFrame of current tax lots</p></li>
+<li><p><strong>targets</strong> – DataFrame of target weights</p></li>
+<li><p><strong>prices</strong> – DataFrame of current prices</p></li>
+<li><p><strong>cash</strong> – Current cash balance</p></li>
+<li><p><strong>spreads</strong> – Optional DataFrame of bid-ask spreads</p></li>
+<li><p><strong>factor_model</strong> – Optional DataFrame for factor model optimization</p></li>
+<li><p><strong>withdrawal_amount</strong> – Amount to withdraw from the portfolio (default 0.0)</p></li>
+<li><p><strong>optimization_type</strong> – The type of optimization strategy to use</p></li>
+<li><p><strong>strategy_id</strong> – Optional unique identifier for the strategy</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The newly created OracleStrategy instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="service.oracle.Oracle.compute_optimal_trades_for_all_strategies">
+<span class="sig-name descname"><span class="pre">compute_optimal_trades_for_all_strategies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dump</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/service/oracle.html#Oracle.compute_optimal_trades_for_all_strategies"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.oracle.Oracle.compute_optimal_trades_for_all_strategies" title="Link to this definition"></a></dt>
+<dd><p>Compute optimal trades for all strategies managed by this Oracle instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>settings</strong> (<em>dict</em>) – A dictionary containing optimization settings for each strategy.
+Must have a ‘strategies’ key with strategy-specific settings.</p></li>
+<li><p><strong>debug</strong> (<em>bool</em>) – If True, enables detailed logging of the optimization process.
+Default is True.</p></li>
+<li><p><strong>dump</strong> (<em>bool</em>) – If True, dumps the optimization state for debugging.
+Default is False.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments passed to individual strategy optimizations.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>A tuple containing:</dt><dd><ul>
+<li><p>Dict[int, Tuple[Optional[int], bool, Dict, pd.DataFrame]]: A dictionary mapping
+strategy IDs to their optimization results. Each result is a tuple containing:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>status: The optimization status (None if failed)</p></li>
+<li><p>should_trade: Boolean indicating if trades should be executed</p></li>
+<li><p>trade_summary: Dictionary containing trade summary information</p></li>
+<li><p>trades: DataFrame containing the detailed trades</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>pd.DataFrame: A DataFrame containing the netted trades across all strategies</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method aggregates trades across all strategies and performs trade netting
+to produce a final set of trades that considers the entire portfolio’s needs.
+If debug is enabled, detailed logging will show the progress and results of
+each strategy’s optimization.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="service.oracle.Oracle.from_dict">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#service.oracle.Oracle" title="service.oracle.Oracle"><span class="pre">Oracle</span></a></span></span><a class="reference internal" href="../_modules/service/oracle.html#Oracle.from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.oracle.Oracle.from_dict" title="Link to this definition"></a></dt>
+<dd><p>Create an Oracle instance from a dictionary representation.</p>
+<p>This class method deserializes an Oracle instance from a dictionary format,
+typically used when loading saved state or receiving data from an API.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>dict</em>) – A dictionary containing Oracle state data with the following keys:
+- current_date: ISO format date string
+- recently_closed_lots: List of dictionaries representing closed lots
+- stock_restrictions: List of dictionaries for stock trading restrictions
+- tax_rates: List of dictionaries containing tax rate information
+- strategies: List of dictionaries containing strategy data
+- percentage_protection_from_inadvertent_wash_sales: Float value for wash sale protection</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A new Oracle instance initialized with the provided data</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#service.oracle.Oracle" title="service.oracle.Oracle">Oracle</a></p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The method handles date conversions from ISO format strings and properly
+initializes all components including strategies. It’s the counterpart to
+the to_dict() method used for serialization.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="service.oracle.Oracle.initialize_wash_sale_restrictions">
+<span class="sig-name descname"><span class="pre">initialize_wash_sale_restrictions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">percentage_protection_from_inadvertent_wash_sales</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.003</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/service/oracle.html#Oracle.initialize_wash_sale_restrictions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.oracle.Oracle.initialize_wash_sale_restrictions" title="Link to this definition"></a></dt>
+<dd><p>Initialize wash sale restrictions using all tax lots from all strategies.
+This method should be called after strategies are set up and their tax lots are loaded.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>percentage_protection_from_inadvertent_wash_sales</strong> (<em>float</em>) – The percentage buffer to protect against
+inadvertent wash sales. Default is 0.3% (0.003). This adds a safety margin to wash sale calculations.</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method gathers all tax lots and prices from all strategies to create a comprehensive
+wash sale restriction system. It requires that strategies have been added to the Oracle
+and their tax lots are properly loaded.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="service.oracle.Oracle.process_lambda_event">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">process_lambda_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/service/oracle.html#Oracle.process_lambda_event"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.oracle.Oracle.process_lambda_event" title="Link to this definition"></a></dt>
+<dd><p>Process an AWS Lambda event to compute optimal trades and handle withdrawal amounts.</p>
+<p>This class method handles the processing of Lambda events, creating an Oracle instance
+from the event data, computing optimal trades, and optionally calculating maximum
+withdrawal amounts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>event</strong> (<em>dict</em>) – The Lambda event dictionary containing:
+- oracle: Dictionary containing Oracle configuration
+- settings: Dictionary containing optimization settings
+- max_withdrawal_amount_settings: Optional dictionary for withdrawal calculations</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A response dictionary containing:</dt><dd><ul class="simple">
+<li><p>version: Current version of the service</p></li>
+<li><p>results: Dictionary mapping strategy IDs to their optimization results</p></li>
+<li><p>netted_trades: List of netted trades across all strategies</p></li>
+<li><p>max_withdrawal_amount_results: Optional dictionary with withdrawal calculations</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The method handles both regular trade optimization and optional maximum withdrawal
+amount calculations. It ensures all trades are properly formatted and NaN values
+are replaced with None for JSON serialization.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="service.oracle.Oracle.set_restrictions">
+<span class="sig-name descname"><span class="pre">set_restrictions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stock_restrictions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/service/oracle.html#Oracle.set_restrictions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.oracle.Oracle.set_restrictions" title="Link to this definition"></a></dt>
+<dd><p>Set stock trading restrictions for the Oracle.</p>
+<p>This method updates the stock trading restrictions that will be applied across
+all strategies managed by this Oracle instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>stock_restrictions</strong> (<em>pd.DataFrame</em>) – DataFrame specifying which stocks can be
+bought/sold. The DataFrame should contain columns defining the trading
+restrictions for each security.</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The restrictions are initialized using the initialize_stock_restrictions
+helper function, which ensures the data is in the correct format and
+contains all necessary information for enforcing trading restrictions.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="service.oracle.Oracle.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/service/oracle.html#Oracle.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#service.oracle.Oracle.to_dict" title="Link to this definition"></a></dt>
+<dd><p>Convert Oracle state to a dictionary for serialization.</p>
+<p>This method serializes the current state of the Oracle instance into a dictionary
+format suitable for storage or transmission. It handles the conversion of complex
+data types (like DataFrames and dates) into JSON-serializable formats.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>A dictionary containing the Oracle state with the following keys:</dt><dd><ul class="simple">
+<li><p>current_date: The current date in ISO format</p></li>
+<li><p>recently_closed_lots: List of dictionaries representing closed lots</p></li>
+<li><p>stock_restrictions: List of dictionaries for stock trading restrictions</p></li>
+<li><p>tax_rates: List of dictionaries containing tax rate information</p></li>
+<li><p>strategies: List of dictionaries containing serialized strategy data</p></li>
+<li><p>timestamp: Current timestamp in YYYYMMDD_HHMMSS format</p></li>
+<li><p>identifier: Optional identifier (None by default)</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Special handling is performed for date fields, converting them to appropriate
+string formats. DataFrames are converted to lists of dictionaries using the
+‘records’ orient.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="optimization_types.html" class="btn btn-neutral float-left" title="Optimization Types" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="oracle_strategy.html" class="btn btn-neutral float-right" title="OracleStrategy" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

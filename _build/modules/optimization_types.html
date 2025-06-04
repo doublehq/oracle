@@ -1,0 +1,342 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Optimization Types &mdash; Oracle 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Oracle" href="oracle.html" />
+    <link rel="prev" title="Initializers" href="initializers.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Oracle
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Oracle Optimizer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="initializers.html">Initializers</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Optimization Types</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#hold">HOLD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#buy-only">BUY_ONLY</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tax-unaware">TAX_UNAWARE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tax-aware">TAX_AWARE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pairs-tlh">PAIRS_TLH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#direct-index">DIRECT_INDEX</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="oracle.html">Oracle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oracle_strategy.html">OracleStrategy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objectives.html">Objectives</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constraints.html">Constraints</a></li>
+<li class="toctree-l1"><a class="reference internal" href="helpers.html">Helpers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Oracle</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Optimization Types</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/modules/optimization_types.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="optimization-types">
+<h1>Optimization Types<a class="headerlink" href="#optimization-types" title="Link to this heading"></a></h1>
+<p>Oracle supports several optimization types for any given strategy through the <code class="docutils literal notranslate"><span class="pre">OracleOptimizationType</span></code> enum.
+Each type has specific behaviors and use cases.</p>
+<section id="hold">
+<h2>HOLD<a class="headerlink" href="#hold" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">HOLD</span></code> optimization type prevents any trading. It’s useful when you want to temporarily freeze a portfolio:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example: Create a HOLD strategy</span>
+<span class="n">strategy</span> <span class="o">=</span> <span class="n">OracleStrategy</span><span class="p">(</span>
+    <span class="n">tax_lots</span><span class="o">=</span><span class="n">tax_lots_df</span><span class="p">,</span>
+    <span class="n">targets</span><span class="o">=</span><span class="n">targets_df</span><span class="p">,</span>
+    <span class="n">prices</span><span class="o">=</span><span class="n">prices_df</span><span class="p">,</span>
+    <span class="n">cash</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">optimization_type</span><span class="o">=</span><span class="n">OracleOptimizationType</span><span class="o">.</span><span class="n">HOLD</span>
+<span class="p">)</span>
+
+<span class="c1"># No trades will be generated regardless of drift or other conditions</span>
+<span class="n">status</span><span class="p">,</span> <span class="n">should_trade</span><span class="p">,</span> <span class="n">trade_summary</span><span class="p">,</span> <span class="n">trades</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">compute_optimal_trades</span><span class="p">()</span>
+<span class="c1"># should_trade will be False, trades will be empty</span>
+</pre></div>
+</div>
+</section>
+<section id="buy-only">
+<h2>BUY_ONLY<a class="headerlink" href="#buy-only" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">BUY_ONLY</span></code> type only allows buy trades, no sells permitted. Useful for initial portfolio setup or adding new cash:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example: Create a BUY_ONLY strategy with $20,000 cash</span>
+<span class="n">strategy</span> <span class="o">=</span> <span class="n">OracleStrategy</span><span class="p">(</span>
+    <span class="n">tax_lots</span><span class="o">=</span><span class="n">tax_lots_df</span><span class="p">,</span>
+    <span class="n">targets</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>
+        <span class="p">{</span><span class="s1">&#39;asset_class&#39;</span><span class="p">:</span> <span class="s1">&#39;STOCK_A&#39;</span><span class="p">,</span> <span class="s1">&#39;identifiers&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;STOCK_A&#39;</span><span class="p">],</span> <span class="s1">&#39;target_weight&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span>
+        <span class="p">{</span><span class="s1">&#39;asset_class&#39;</span><span class="p">:</span> <span class="s1">&#39;STOCK_B&#39;</span><span class="p">,</span> <span class="s1">&#39;identifiers&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;STOCK_B&#39;</span><span class="p">],</span> <span class="s1">&#39;target_weight&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span>
+        <span class="p">{</span><span class="s1">&#39;asset_class&#39;</span><span class="p">:</span> <span class="s1">&#39;CASH&#39;</span><span class="p">,</span> <span class="s1">&#39;identifiers&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;CASH&#39;</span><span class="p">],</span> <span class="s1">&#39;target_weight&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">}</span>
+    <span class="p">]),</span>
+    <span class="n">prices</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>
+        <span class="p">{</span><span class="s1">&#39;identifier&#39;</span><span class="p">:</span> <span class="s1">&#39;STOCK_A&#39;</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="mf">100.0</span><span class="p">},</span>
+        <span class="p">{</span><span class="s1">&#39;identifier&#39;</span><span class="p">:</span> <span class="s1">&#39;STOCK_B&#39;</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="mf">80.0</span><span class="p">},</span>
+        <span class="p">{</span><span class="s1">&#39;identifier&#39;</span><span class="p">:</span> <span class="s1">&#39;CASH&#39;</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">}</span>
+    <span class="p">]),</span>
+    <span class="n">cash</span><span class="o">=</span><span class="mf">20000.0</span><span class="p">,</span>
+    <span class="n">optimization_type</span><span class="o">=</span><span class="n">OracleOptimizationType</span><span class="o">.</span><span class="n">BUY_ONLY</span>
+<span class="p">)</span>
+
+<span class="c1"># Only buy trades will be generated</span>
+<span class="n">status</span><span class="p">,</span> <span class="n">should_trade</span><span class="p">,</span> <span class="n">trade_summary</span><span class="p">,</span> <span class="n">trades</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">compute_optimal_trades</span><span class="p">()</span>
+<span class="c1"># trades will only contain &#39;buy&#39; actions</span>
+</pre></div>
+</div>
+</section>
+<section id="tax-unaware">
+<h2>TAX_UNAWARE<a class="headerlink" href="#tax-unaware" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">TAX_UNAWARE</span></code> type rebalances towards targets ignoring tax implications:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example: Create a TAX_UNAWARE strategy</span>
+<span class="n">strategy</span> <span class="o">=</span> <span class="n">OracleStrategy</span><span class="p">(</span>
+    <span class="n">tax_lots</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>
+        <span class="p">{</span><span class="s1">&#39;tax_lot_id&#39;</span><span class="p">:</span> <span class="s1">&#39;lot_a1&#39;</span><span class="p">,</span> <span class="s1">&#39;identifier&#39;</span><span class="p">:</span> <span class="s1">&#39;STOCK_A&#39;</span><span class="p">,</span> <span class="s1">&#39;quantity&#39;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span>
+         <span class="s1">&#39;cost_basis&#39;</span><span class="p">:</span> <span class="mi">100000</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span><span class="p">:</span> <span class="s1">&#39;2024-01-01&#39;</span><span class="p">},</span>  <span class="c1"># $100/share cost</span>
+        <span class="p">{</span><span class="s1">&#39;tax_lot_id&#39;</span><span class="p">:</span> <span class="s1">&#39;lot_b1&#39;</span><span class="p">,</span> <span class="s1">&#39;identifier&#39;</span><span class="p">:</span> <span class="s1">&#39;STOCK_B&#39;</span><span class="p">,</span> <span class="s1">&#39;quantity&#39;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span>
+         <span class="s1">&#39;cost_basis&#39;</span><span class="p">:</span> <span class="mi">100000</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span><span class="p">:</span> <span class="s1">&#39;2024-01-01&#39;</span><span class="p">}</span>   <span class="c1"># $100/share cost</span>
+    <span class="p">]),</span>
+    <span class="n">targets</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>
+        <span class="p">{</span><span class="s1">&#39;asset_class&#39;</span><span class="p">:</span> <span class="s1">&#39;STOCK_A&#39;</span><span class="p">,</span> <span class="s1">&#39;identifiers&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;STOCK_A&#39;</span><span class="p">],</span> <span class="s1">&#39;target_weight&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span>
+        <span class="p">{</span><span class="s1">&#39;asset_class&#39;</span><span class="p">:</span> <span class="s1">&#39;STOCK_B&#39;</span><span class="p">,</span> <span class="s1">&#39;identifiers&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;STOCK_B&#39;</span><span class="p">],</span> <span class="s1">&#39;target_weight&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span>
+        <span class="p">{</span><span class="s1">&#39;asset_class&#39;</span><span class="p">:</span> <span class="s1">&#39;CASH&#39;</span><span class="p">,</span> <span class="s1">&#39;identifiers&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;CASH&#39;</span><span class="p">],</span> <span class="s1">&#39;target_weight&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">}</span>
+    <span class="p">]),</span>
+    <span class="n">prices</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>
+        <span class="p">{</span><span class="s1">&#39;identifier&#39;</span><span class="p">:</span> <span class="s1">&#39;STOCK_A&#39;</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="mf">120.0</span><span class="p">},</span>  <span class="c1"># Up 20%</span>
+        <span class="p">{</span><span class="s1">&#39;identifier&#39;</span><span class="p">:</span> <span class="s1">&#39;STOCK_B&#39;</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="mf">80.0</span><span class="p">},</span>   <span class="c1"># Down 20%</span>
+        <span class="p">{</span><span class="s1">&#39;identifier&#39;</span><span class="p">:</span> <span class="s1">&#39;CASH&#39;</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">}</span>
+    <span class="p">]),</span>
+    <span class="n">optimization_type</span><span class="o">=</span><span class="n">OracleOptimizationType</span><span class="o">.</span><span class="n">TAX_UNAWARE</span>
+<span class="p">)</span>
+
+<span class="c1"># Will sell STOCK_A (despite gains) and buy STOCK_B to rebalance</span>
+<span class="n">status</span><span class="p">,</span> <span class="n">should_trade</span><span class="p">,</span> <span class="n">trade_summary</span><span class="p">,</span> <span class="n">trades</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">compute_optimal_trades</span><span class="p">(</span>
+    <span class="n">weight_tax</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">weight_drift</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">weight_transaction</span><span class="o">=</span><span class="mf">1.0</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="tax-aware">
+<h2>TAX_AWARE<a class="headerlink" href="#tax-aware" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">TAX_AWARE</span></code> type (default) rebalances considering tax implications:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example: Create a TAX_AWARE strategy with tax-loss harvesting opportunity</span>
+<span class="n">strategy</span> <span class="o">=</span> <span class="n">OracleStrategy</span><span class="p">(</span>
+    <span class="n">tax_lots</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>
+        <span class="p">{</span><span class="s1">&#39;tax_lot_id&#39;</span><span class="p">:</span> <span class="s1">&#39;lot_tlh&#39;</span><span class="p">,</span> <span class="s1">&#39;identifier&#39;</span><span class="p">:</span> <span class="s1">&#39;STOCK_TLH&#39;</span><span class="p">,</span> <span class="s1">&#39;quantity&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+         <span class="s1">&#39;cost_basis&#39;</span><span class="p">:</span> <span class="mi">10000</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span><span class="p">:</span> <span class="s1">&#39;2024-01-01&#39;</span><span class="p">},</span>  <span class="c1"># $100/share cost</span>
+        <span class="p">{</span><span class="s1">&#39;tax_lot_id&#39;</span><span class="p">:</span> <span class="s1">&#39;lot_gain&#39;</span><span class="p">,</span> <span class="s1">&#39;identifier&#39;</span><span class="p">:</span> <span class="s1">&#39;STOCK_GAIN&#39;</span><span class="p">,</span> <span class="s1">&#39;quantity&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+         <span class="s1">&#39;cost_basis&#39;</span><span class="p">:</span> <span class="mi">8000</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span><span class="p">:</span> <span class="s1">&#39;2024-01-01&#39;</span><span class="p">}</span>    <span class="c1"># $80/share cost</span>
+    <span class="p">]),</span>
+    <span class="n">targets</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>
+        <span class="p">{</span><span class="s1">&#39;asset_class&#39;</span><span class="p">:</span> <span class="s1">&#39;STOCK_TLH&#39;</span><span class="p">,</span> <span class="s1">&#39;identifiers&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;STOCK_TLH&#39;</span><span class="p">],</span> <span class="s1">&#39;target_weight&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span>
+        <span class="p">{</span><span class="s1">&#39;asset_class&#39;</span><span class="p">:</span> <span class="s1">&#39;STOCK_GAIN&#39;</span><span class="p">,</span> <span class="s1">&#39;identifiers&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;STOCK_GAIN&#39;</span><span class="p">],</span> <span class="s1">&#39;target_weight&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span>
+        <span class="p">{</span><span class="s1">&#39;asset_class&#39;</span><span class="p">:</span> <span class="s1">&#39;CASH&#39;</span><span class="p">,</span> <span class="s1">&#39;identifiers&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;CASH&#39;</span><span class="p">],</span> <span class="s1">&#39;target_weight&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">}</span>
+    <span class="p">]),</span>
+    <span class="n">prices</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>
+        <span class="p">{</span><span class="s1">&#39;identifier&#39;</span><span class="p">:</span> <span class="s1">&#39;STOCK_TLH&#39;</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="mf">85.0</span><span class="p">},</span>    <span class="c1"># Down 15%</span>
+        <span class="p">{</span><span class="s1">&#39;identifier&#39;</span><span class="p">:</span> <span class="s1">&#39;STOCK_GAIN&#39;</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="mf">100.0</span><span class="p">},</span>  <span class="c1"># Up 25%</span>
+        <span class="p">{</span><span class="s1">&#39;identifier&#39;</span><span class="p">:</span> <span class="s1">&#39;CASH&#39;</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">}</span>
+    <span class="p">]),</span>
+    <span class="n">optimization_type</span><span class="o">=</span><span class="n">OracleOptimizationType</span><span class="o">.</span><span class="n">TAX_AWARE</span>
+<span class="p">)</span>
+
+<span class="c1"># Will prioritize selling STOCK_TLH for tax loss harvesting</span>
+<span class="n">status</span><span class="p">,</span> <span class="n">should_trade</span><span class="p">,</span> <span class="n">trade_summary</span><span class="p">,</span> <span class="n">trades</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">compute_optimal_trades</span><span class="p">(</span>
+    <span class="n">weight_tax</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">weight_drift</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">,</span>  <span class="c1"># Low weight on drift to prioritize tax</span>
+    <span class="n">weight_transaction</span><span class="o">=</span><span class="mf">0.0</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="pairs-tlh">
+<h2>PAIRS_TLH<a class="headerlink" href="#pairs-tlh" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">PAIRS_TLH</span></code> type is specifically designed for tax-loss harvesting with pairs trading:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example: Create a PAIRS_TLH strategy with ETF pairs</span>
+<span class="n">strategy</span> <span class="o">=</span> <span class="n">OracleStrategy</span><span class="p">(</span>
+    <span class="n">tax_lots</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>
+        <span class="p">{</span><span class="s1">&#39;identifier&#39;</span><span class="p">:</span> <span class="s1">&#39;VTI&#39;</span><span class="p">,</span> <span class="s1">&#39;tax_lot_id&#39;</span><span class="p">:</span> <span class="s1">&#39;VTI_lot&#39;</span><span class="p">,</span> <span class="s1">&#39;quantity&#39;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+         <span class="s1">&#39;cost_basis&#39;</span><span class="p">:</span> <span class="mi">40000</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span><span class="p">:</span> <span class="s1">&#39;2024-01-01&#39;</span><span class="p">},</span>  <span class="c1"># $200/share cost</span>
+        <span class="p">{</span><span class="s1">&#39;identifier&#39;</span><span class="p">:</span> <span class="s1">&#39;VXUS&#39;</span><span class="p">,</span> <span class="s1">&#39;tax_lot_id&#39;</span><span class="p">:</span> <span class="s1">&#39;VXUS_lot&#39;</span><span class="p">,</span> <span class="s1">&#39;quantity&#39;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+         <span class="s1">&#39;cost_basis&#39;</span><span class="p">:</span> <span class="mi">40000</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span><span class="p">:</span> <span class="s1">&#39;2024-01-01&#39;</span><span class="p">}</span>   <span class="c1"># $200/share cost</span>
+    <span class="p">]),</span>
+    <span class="n">targets</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>
+        <span class="p">{</span><span class="s1">&#39;asset_class&#39;</span><span class="p">:</span> <span class="s1">&#39;US_Equity&#39;</span><span class="p">,</span> <span class="s1">&#39;identifiers&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;VTI&#39;</span><span class="p">,</span> <span class="s1">&#39;ITOT&#39;</span><span class="p">,</span> <span class="s1">&#39;SCHB&#39;</span><span class="p">],</span>
+         <span class="s1">&#39;target_weight&#39;</span><span class="p">:</span> <span class="mf">0.40</span><span class="p">},</span>  <span class="c1"># US stocks with alternates</span>
+        <span class="p">{</span><span class="s1">&#39;asset_class&#39;</span><span class="p">:</span> <span class="s1">&#39;Intl_Equity&#39;</span><span class="p">,</span> <span class="s1">&#39;identifiers&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;VXUS&#39;</span><span class="p">,</span> <span class="s1">&#39;IXUS&#39;</span><span class="p">],</span>
+         <span class="s1">&#39;target_weight&#39;</span><span class="p">:</span> <span class="mf">0.20</span><span class="p">},</span>  <span class="c1"># Int&#39;l with alternate</span>
+        <span class="p">{</span><span class="s1">&#39;asset_class&#39;</span><span class="p">:</span> <span class="s1">&#39;CASH&#39;</span><span class="p">,</span> <span class="s1">&#39;identifiers&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;CASH&#39;</span><span class="p">],</span> <span class="s1">&#39;target_weight&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">}</span>
+    <span class="p">]),</span>
+    <span class="n">prices</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>
+        <span class="p">{</span><span class="s1">&#39;identifier&#39;</span><span class="p">:</span> <span class="s1">&#39;VTI&#39;</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="mf">180.0</span><span class="p">},</span>    <span class="c1"># Down 10%</span>
+        <span class="p">{</span><span class="s1">&#39;identifier&#39;</span><span class="p">:</span> <span class="s1">&#39;ITOT&#39;</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="mf">180.0</span><span class="p">},</span>
+        <span class="p">{</span><span class="s1">&#39;identifier&#39;</span><span class="p">:</span> <span class="s1">&#39;SCHB&#39;</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="mf">180.0</span><span class="p">},</span>
+        <span class="p">{</span><span class="s1">&#39;identifier&#39;</span><span class="p">:</span> <span class="s1">&#39;VXUS&#39;</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="mf">170.0</span><span class="p">},</span>   <span class="c1"># Down 15%</span>
+        <span class="p">{</span><span class="s1">&#39;identifier&#39;</span><span class="p">:</span> <span class="s1">&#39;IXUS&#39;</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="mf">170.0</span><span class="p">},</span>
+        <span class="p">{</span><span class="s1">&#39;identifier&#39;</span><span class="p">:</span> <span class="s1">&#39;CASH&#39;</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">}</span>
+    <span class="p">]),</span>
+    <span class="n">optimization_type</span><span class="o">=</span><span class="n">OracleOptimizationType</span><span class="o">.</span><span class="n">PAIRS_TLH</span>
+<span class="p">)</span>
+
+<span class="c1"># Will sell VTI and VXUS at a loss and buy their alternates</span>
+<span class="n">status</span><span class="p">,</span> <span class="n">should_trade</span><span class="p">,</span> <span class="n">trade_summary</span><span class="p">,</span> <span class="n">trades</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">compute_optimal_trades</span><span class="p">(</span>
+    <span class="n">weight_tax</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">weight_drift</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">weight_transaction</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">weight_cash_drag</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">should_tlh</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">tlh_min_loss_threshold</span><span class="o">=</span><span class="mf">0.03</span><span class="p">,</span>  <span class="c1"># 3% loss threshold</span>
+    <span class="n">range_min_weight_multiplier</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">range_max_weight_multiplier</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span>
+    <span class="n">rank_penalty_factor</span><span class="o">=</span><span class="mf">0.5</span>  <span class="c1"># Prefer earlier alternates in the identifiers list</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="direct-index">
+<h2>DIRECT_INDEX<a class="headerlink" href="#direct-index" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">DIRECT_INDEX</span></code> type supports direct indexing with factor model considerations:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example: Create a DIRECT_INDEX strategy with factor model</span>
+<span class="c1"># Generate factor model data</span>
+<span class="n">num_stocks</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">num_factors</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">identifiers</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;STOCK</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_stocks</span><span class="p">)]</span>
+
+<span class="c1"># Create factor model DataFrame</span>
+<span class="n">factor_data</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">stock</span> <span class="ow">in</span> <span class="n">identifiers</span><span class="p">:</span>
+    <span class="n">exposures</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">num_factors</span><span class="p">)</span>
+    <span class="n">factor_data</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+        <span class="s1">&#39;identifier&#39;</span><span class="p">:</span> <span class="n">stock</span><span class="p">,</span>
+        <span class="s1">&#39;factor1&#39;</span><span class="p">:</span> <span class="n">exposures</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="s1">&#39;factor2&#39;</span><span class="p">:</span> <span class="n">exposures</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+        <span class="s1">&#39;factor3&#39;</span><span class="p">:</span> <span class="n">exposures</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+        <span class="s1">&#39;factor4&#39;</span><span class="p">:</span> <span class="n">exposures</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+        <span class="s1">&#39;factor5&#39;</span><span class="p">:</span> <span class="n">exposures</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+    <span class="p">})</span>
+<span class="c1"># Add cash with zero factor exposures</span>
+<span class="n">factor_data</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+    <span class="s1">&#39;identifier&#39;</span><span class="p">:</span> <span class="s1">&#39;CASH&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;factor1&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;factor2&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;factor3&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;factor4&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;factor5&#39;</span><span class="p">:</span> <span class="mi">0</span>
+<span class="p">})</span>
+<span class="n">factor_model</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">factor_data</span><span class="p">)</span>
+
+<span class="n">strategy</span> <span class="o">=</span> <span class="n">OracleStrategy</span><span class="p">(</span>
+    <span class="n">tax_lots</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>
+        <span class="p">{</span><span class="s1">&#39;identifier&#39;</span><span class="p">:</span> <span class="n">stock</span><span class="p">,</span> <span class="s1">&#39;tax_lot_id&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">stock</span><span class="si">}</span><span class="s1">_lot&#39;</span><span class="p">,</span>
+         <span class="s1">&#39;quantity&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;cost_basis&#39;</span><span class="p">:</span> <span class="mi">10000</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span><span class="p">:</span> <span class="s1">&#39;2024-01-01&#39;</span><span class="p">}</span>
+        <span class="k">for</span> <span class="n">stock</span> <span class="ow">in</span> <span class="n">identifiers</span>
+    <span class="p">]),</span>
+    <span class="n">targets</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>
+        <span class="p">{</span><span class="s1">&#39;identifiers&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">stock</span><span class="p">],</span> <span class="s1">&#39;target_weight&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="o">/</span><span class="n">num_stocks</span><span class="p">,</span>
+         <span class="s1">&#39;asset_class&#39;</span><span class="p">:</span> <span class="n">stock</span><span class="p">}</span> <span class="k">for</span> <span class="n">stock</span> <span class="ow">in</span> <span class="n">identifiers</span>
+    <span class="p">]</span> <span class="o">+</span> <span class="p">[{</span><span class="s1">&#39;identifiers&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;CASH&#39;</span><span class="p">],</span> <span class="s1">&#39;target_weight&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;asset_class&#39;</span><span class="p">:</span> <span class="s1">&#39;CASH&#39;</span><span class="p">}]),</span>
+    <span class="n">prices</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>
+        <span class="p">{</span><span class="s1">&#39;identifier&#39;</span><span class="p">:</span> <span class="n">stock</span><span class="p">,</span>
+         <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="mf">80.0</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">5</span> <span class="k">else</span> <span class="mf">120.0</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span> <span class="k">else</span> <span class="mf">100.0</span><span class="p">}</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">stock</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">identifiers</span><span class="p">)</span>
+    <span class="p">]</span> <span class="o">+</span> <span class="p">[{</span><span class="s1">&#39;identifier&#39;</span><span class="p">:</span> <span class="s1">&#39;CASH&#39;</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">}]),</span>
+    <span class="n">factor_model</span><span class="o">=</span><span class="n">factor_model</span><span class="p">,</span>
+    <span class="n">optimization_type</span><span class="o">=</span><span class="n">OracleOptimizationType</span><span class="o">.</span><span class="n">DIRECT_INDEX</span>
+<span class="p">)</span>
+
+<span class="c1"># Will optimize for both tax-loss harvesting and factor model alignment</span>
+<span class="n">status</span><span class="p">,</span> <span class="n">should_trade</span><span class="p">,</span> <span class="n">trade_summary</span><span class="p">,</span> <span class="n">trades</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">compute_optimal_trades</span><span class="p">(</span>
+    <span class="n">weight_tax</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">weight_drift</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">weight_transaction</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">weight_factor_model</span><span class="o">=</span><span class="mf">100.0</span><span class="p">,</span>  <span class="c1"># High weight on factor model alignment</span>
+    <span class="n">weight_cash_drag</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">should_tlh</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">tlh_min_loss_threshold</span><span class="o">=</span><span class="mf">0.015</span><span class="p">,</span>
+    <span class="n">range_min_weight_multiplier</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">range_max_weight_multiplier</span><span class="o">=</span><span class="mf">2.0</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="initializers.html" class="btn btn-neutral float-left" title="Initializers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="oracle.html" class="btn btn-neutral float-right" title="Oracle" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
