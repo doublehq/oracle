@@ -18,7 +18,16 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinx.ext.autosummary',
     'sphinx_rtd_theme',
+    'sphinx_autodoc_typehints',
 ]
+
+# Autodoc settings
+autodoc_default_options = {
+    'members': True,
+    'undoc-members': True,
+    'show-inheritance': True,
+    'special-members': '__init__',
+}
 
 # Autosummary settings
 autosummary_generate = True
@@ -42,4 +51,9 @@ napoleon_use_admonition_for_references = False
 napoleon_use_ivar = False
 napoleon_use_param = True
 napoleon_use_rtype = True
-napoleon_type_aliases = None 
+napoleon_type_aliases = None
+
+# Type hints settings
+autodoc_typehints = 'description'
+typehints_use_signature = True
+typehints_use_signature_return = True 
