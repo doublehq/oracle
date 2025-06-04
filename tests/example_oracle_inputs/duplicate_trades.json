@@ -1,0 +1,5057 @@
+{
+    "oracle": {
+        "current_date": "2025-04-30",
+        "recently_closed_lots": [
+            {
+                "identifier": "CTRE_14174T107",
+                "quantity": 0.25601,
+                "cost_basis": 6.87,
+                "date_acquired": "2025-01-08",
+                "date_sold": "2025-04-07",
+                "proceeds": 6.88,
+                "realized_gain": 0.01
+            },
+            {
+                "identifier": "CWEN_18539C204",
+                "quantity": 0.25409,
+                "cost_basis": 6.61,
+                "date_acquired": "2024-12-30",
+                "date_sold": "2025-04-09",
+                "proceeds": 6.6,
+                "realized_gain": -0.01
+            },
+            {
+                "identifier": "BXMT_09257W100",
+                "quantity": 0.03657,
+                "cost_basis": 0.64,
+                "date_acquired": "2025-01-08",
+                "date_sold": "2025-04-07",
+                "proceeds": 0.64,
+                "realized_gain": 0.0
+            },
+            {
+                "identifier": "CCI_22822V101",
+                "quantity": 0.06023,
+                "cost_basis": 5.39,
+                "date_acquired": "2024-12-30",
+                "date_sold": "2025-04-09",
+                "proceeds": 5.56,
+                "realized_gain": 0.17
+            },
+            {
+                "identifier": "FBRT_35243J101",
+                "quantity": 0.40174,
+                "cost_basis": 5.07,
+                "date_acquired": "2024-12-30",
+                "date_sold": "2025-03-31",
+                "proceeds": 5.08,
+                "realized_gain": 0.01
+            },
+            {
+                "identifier": "BXMT_09257W100",
+                "quantity": 0.25909,
+                "cost_basis": 4.61,
+                "date_acquired": "2024-12-30",
+                "date_sold": "2025-04-07",
+                "proceeds": 4.56,
+                "realized_gain": -0.05
+            },
+            {
+                "identifier": "FRO_M46528101",
+                "quantity": 0.34875,
+                "cost_basis": 5.58,
+                "date_acquired": "2025-01-08",
+                "date_sold": "2025-04-11",
+                "proceeds": 5.21,
+                "realized_gain": -0.37
+            },
+            {
+                "identifier": "PMT_70931T103",
+                "quantity": 0.46711,
+                "cost_basis": 5.84,
+                "date_acquired": "2024-12-30",
+                "date_sold": "2025-04-08",
+                "proceeds": 6.03,
+                "realized_gain": 0.19
+            },
+            {
+                "identifier": "GLPI_36467J108",
+                "quantity": 0.14203,
+                "cost_basis": 6.78,
+                "date_acquired": "2024-12-30",
+                "date_sold": "2025-04-04",
+                "proceeds": 6.81,
+                "realized_gain": 0.03
+            },
+            {
+                "identifier": "TWO_90187B804",
+                "quantity": 0.66465,
+                "cost_basis": 7.73,
+                "date_acquired": "2024-12-30",
+                "date_sold": "2025-04-04",
+                "proceeds": 7.65,
+                "realized_gain": -0.08
+            },
+            {
+                "identifier": "VICI_925652109",
+                "quantity": 0.17794,
+                "cost_basis": 5.15,
+                "date_acquired": "2025-01-14",
+                "date_sold": "2025-04-07",
+                "proceeds": 5.27,
+                "realized_gain": 0.12
+            },
+            {
+                "identifier": "F_345370860",
+                "quantity": 0.53987,
+                "cost_basis": 5.22,
+                "date_acquired": "2025-01-08",
+                "date_sold": "2025-04-22",
+                "proceeds": 5.2,
+                "realized_gain": -0.02
+            },
+            {
+                "identifier": "STWD_85571B105",
+                "quantity": 0.3125,
+                "cost_basis": 6.01,
+                "date_acquired": "2024-12-30",
+                "date_sold": "2025-04-03",
+                "proceeds": 6.06,
+                "realized_gain": 0.05
+            },
+            {
+                "identifier": "WPC_92936U109",
+                "quantity": 0.10526,
+                "cost_basis": 5.76,
+                "date_acquired": "2025-01-08",
+                "date_sold": "2025-04-08",
+                "proceeds": 5.92,
+                "realized_gain": 0.16
+            },
+            {
+                "identifier": "ICL_M53213100",
+                "quantity": 1.33829,
+                "cost_basis": 6.87,
+                "date_acquired": "2025-01-08",
+                "date_sold": "2025-04-04",
+                "proceeds": 7.09,
+                "realized_gain": 0.22
+            },
+            {
+                "identifier": "HE_419870100",
+                "quantity": 0.54441,
+                "cost_basis": 5.04,
+                "date_acquired": "2025-01-06",
+                "date_sold": "2025-04-04",
+                "proceeds": 5.33,
+                "realized_gain": 0.29
+            },
+            {
+                "identifier": "O_756109104",
+                "quantity": 0.10053,
+                "cost_basis": 5.35,
+                "date_acquired": "2025-01-14",
+                "date_sold": "2025-04-04",
+                "proceeds": 5.59,
+                "realized_gain": 0.24
+            }
+        ],
+        "stock_restrictions": [],
+        "tax_rates": [
+            {
+                "gain_type": "long_term",
+                "federal_rate": 0.23,
+                "state_rate": 0.03,
+                "total_rate": 0.26
+            },
+            {
+                "gain_type": "short_term",
+                "federal_rate": 0.35,
+                "state_rate": 0.03,
+                "total_rate": 0.38
+            },
+            {
+                "gain_type": "qualified_dividend",
+                "federal_rate": 0.15,
+                "state_rate": 0.0,
+                "total_rate": 0.15
+            }
+        ],
+        "percentage_protection_from_inadvertent_wash_sales": 0.003,
+        "strategies": 
+        {
+            "1839": {
+                "label": "1839:TEST:DIRECT_INDEX",
+                "tax_lots": [
+                    {
+                        "tax_lot_id": 873,
+                        "identifier": "AGNC_00123Q104",
+                        "quantity": 1.0106,
+                        "date": "2024-12-30",
+                        "cost_basis": 9.35
+                    },
+                    {
+                        "tax_lot_id": 874,
+                        "identifier": "AGNC_00123Q104",
+                        "quantity": 2.94984,
+                        "date": "2025-01-08",
+                        "cost_basis": 27.4
+                    },
+                    {
+                        "tax_lot_id": 878,
+                        "identifier": "T_00206R102",
+                        "quantity": 0.06963,
+                        "date": "2025-01-08",
+                        "cost_basis": 1.61
+                    },
+                    {
+                        "tax_lot_id": 879,
+                        "identifier": "T_00206R102",
+                        "quantity": 0.17786,
+                        "date": "2025-01-08",
+                        "cost_basis": 3.92
+                    },
+                    {
+                        "tax_lot_id": 880,
+                        "identifier": "T_00206R102",
+                        "quantity": 0.27678,
+                        "date": "2025-01-08",
+                        "cost_basis": 6.39
+                    },
+                    {
+                        "tax_lot_id": 881,
+                        "identifier": "T_00206R102",
+                        "quantity": 0.35409,
+                        "date": "2025-01-08",
+                        "cost_basis": 8.17
+                    },
+                    {
+                        "tax_lot_id": 882,
+                        "identifier": "T_00206R102",
+                        "quantity": 0.84152,
+                        "date": "2025-01-14",
+                        "cost_basis": 18.28
+                    },
+                    {
+                        "tax_lot_id": 913,
+                        "identifier": "MO_02209S103",
+                        "quantity": 0.01643,
+                        "date": "2025-01-08",
+                        "cost_basis": 0.89
+                    },
+                    {
+                        "tax_lot_id": 914,
+                        "identifier": "MO_02209S103",
+                        "quantity": 0.15327,
+                        "date": "2025-01-08",
+                        "cost_basis": 8.34
+                    },
+                    {
+                        "tax_lot_id": 915,
+                        "identifier": "MO_02209S103",
+                        "quantity": 0.09961,
+                        "date": "2025-01-08",
+                        "cost_basis": 5.1
+                    },
+                    {
+                        "tax_lot_id": 916,
+                        "identifier": "MO_02209S103",
+                        "quantity": 0.37237,
+                        "date": "2025-01-14",
+                        "cost_basis": 19.03
+                    },
+                    {
+                        "tax_lot_id": 923,
+                        "identifier": "AAT_024013104",
+                        "quantity": 0.19197,
+                        "date": "2024-12-30",
+                        "cost_basis": 4.96
+                    },
+                    {
+                        "tax_lot_id": 924,
+                        "identifier": "AAT_024013104",
+                        "quantity": 0.24445,
+                        "date": "2025-01-08",
+                        "cost_basis": 6.36
+                    },
+                    {
+                        "tax_lot_id": 925,
+                        "identifier": "AAT_024013104",
+                        "quantity": 1.14879,
+                        "date": "2025-01-08",
+                        "cost_basis": 28.2
+                    },
+                    {
+                        "tax_lot_id": 927,
+                        "identifier": "AAT_024013104",
+                        "quantity": 0.25777,
+                        "date": "2025-03-12",
+                        "cost_basis": 5.19
+                    },
+                    {
+                        "tax_lot_id": 951,
+                        "identifier": "NLY_035710839",
+                        "quantity": 0.51225,
+                        "date": "2024-12-30",
+                        "cost_basis": 9.59
+                    },
+                    {
+                        "tax_lot_id": 952,
+                        "identifier": "NLY_035710839",
+                        "quantity": 1.55873,
+                        "date": "2025-01-08",
+                        "cost_basis": 28.82
+                    },
+                    {
+                        "tax_lot_id": 961,
+                        "identifier": "ABR_038923108",
+                        "quantity": 0.75433,
+                        "date": "2024-12-30",
+                        "cost_basis": 10.27
+                    },
+                    {
+                        "tax_lot_id": 962,
+                        "identifier": "ABR_038923108",
+                        "quantity": 2.27843,
+                        "date": "2025-01-08",
+                        "cost_basis": 30.69
+                    },
+                    {
+                        "tax_lot_id": 988,
+                        "identifier": "BXMT_09257W100",
+                        "quantity": 1.99611,
+                        "date": "2025-01-08",
+                        "cost_basis": 35.11
+                    },
+                    {
+                        "tax_lot_id": 1002,
+                        "identifier": "BXP_101121101",
+                        "quantity": 0.20658,
+                        "date": "2025-01-08",
+                        "cost_basis": 15.29
+                    },
+                    {
+                        "tax_lot_id": 1003,
+                        "identifier": "BXP_101121101",
+                        "quantity": 0.35398,
+                        "date": "2025-01-08",
+                        "cost_basis": 24.96
+                    },
+                    {
+                        "tax_lot_id": 1021,
+                        "identifier": "CVI_12662P108",
+                        "quantity": 0.59011,
+                        "date": "2024-12-30",
+                        "cost_basis": 10.93
+                    },
+                    {
+                        "tax_lot_id": 1022,
+                        "identifier": "CVI_12662P108",
+                        "quantity": 1.32166,
+                        "date": "2025-01-08",
+                        "cost_basis": 24.52
+                    },
+                    {
+                        "tax_lot_id": 1035,
+                        "identifier": "CTRE_14174T107",
+                        "quantity": 0.27073,
+                        "date": "2024-12-30",
+                        "cost_basis": 7.24
+                    },
+                    {
+                        "tax_lot_id": 1036,
+                        "identifier": "CTRE_14174T107",
+                        "quantity": 0.53091,
+                        "date": "2025-01-08",
+                        "cost_basis": 14.26
+                    },
+                    {
+                        "tax_lot_id": 1037,
+                        "identifier": "CTRE_14174T107",
+                        "quantity": 0.43378,
+                        "date": "2025-01-14",
+                        "cost_basis": 11.53
+                    },
+                    {
+                        "tax_lot_id": 1044,
+                        "identifier": "CQP_16411Q101",
+                        "quantity": 0.12787,
+                        "date": "2024-12-30",
+                        "cost_basis": 6.84
+                    },
+                    {
+                        "tax_lot_id": 1045,
+                        "identifier": "CQP_16411Q101",
+                        "quantity": 0.38058,
+                        "date": "2025-01-08",
+                        "cost_basis": 21.36
+                    },
+                    {
+                        "tax_lot_id": 1046,
+                        "identifier": "CQP_16411Q101",
+                        "quantity": 0.13794,
+                        "date": "2025-01-14",
+                        "cost_basis": 8.21
+                    },
+                    {
+                        "tax_lot_id": 1060,
+                        "identifier": "CWEN_18539C204",
+                        "quantity": 0.0689,
+                        "date": "2024-12-30",
+                        "cost_basis": 1.79
+                    },
+                    {
+                        "tax_lot_id": 1061,
+                        "identifier": "CWEN_18539C204",
+                        "quantity": 0.95208,
+                        "date": "2025-01-08",
+                        "cost_basis": 24.53
+                    },
+                    {
+                        "tax_lot_id": 1062,
+                        "identifier": "CWEN_18539C204",
+                        "quantity": 0.23228,
+                        "date": "2025-01-14",
+                        "cost_basis": 5.86
+                    },
+                    {
+                        "tax_lot_id": 1081,
+                        "identifier": "CCI_22822V101",
+                        "quantity": 0.00397,
+                        "date": "2024-12-30",
+                        "cost_basis": 0.36
+                    },
+                    {
+                        "tax_lot_id": 1082,
+                        "identifier": "CCI_22822V101",
+                        "quantity": 0.20301,
+                        "date": "2025-01-08",
+                        "cost_basis": 17.59
+                    },
+                    {
+                        "tax_lot_id": 1083,
+                        "identifier": "CCI_22822V101",
+                        "quantity": 0.1652,
+                        "date": "2025-01-14",
+                        "cost_basis": 14.41
+                    },
+                    {
+                        "tax_lot_id": 1100,
+                        "identifier": "DVN_25179M103",
+                        "quantity": 0.29238,
+                        "date": "2024-12-30",
+                        "cost_basis": 9.33
+                    },
+                    {
+                        "tax_lot_id": 1101,
+                        "identifier": "DVN_25179M103",
+                        "quantity": 0.75524,
+                        "date": "2025-01-08",
+                        "cost_basis": 26.48
+                    },
+                    {
+                        "tax_lot_id": 1102,
+                        "identifier": "DVN_25179M103",
+                        "quantity": 0.20092,
+                        "date": "2025-04-07",
+                        "cost_basis": 5.65
+                    },
+                    {
+                        "tax_lot_id": 1103,
+                        "identifier": "FANG_25278X109",
+                        "quantity": 0.05752,
+                        "date": "2024-12-30",
+                        "cost_basis": 9.21
+                    },
+                    {
+                        "tax_lot_id": 1104,
+                        "identifier": "FANG_25278X109",
+                        "quantity": 0.12714,
+                        "date": "2025-01-08",
+                        "cost_basis": 21.63
+                    },
+                    {
+                        "tax_lot_id": 1105,
+                        "identifier": "FANG_25278X109",
+                        "quantity": 0.00784,
+                        "date": "2025-03-05",
+                        "cost_basis": 1.1
+                    },
+                    {
+                        "tax_lot_id": 1106,
+                        "identifier": "FANG_25278X109",
+                        "quantity": 0.03401,
+                        "date": "2025-03-05",
+                        "cost_basis": 5.13
+                    },
+                    {
+                        "tax_lot_id": 1108,
+                        "identifier": "FANG_25278X109",
+                        "quantity": 0.04307,
+                        "date": "2025-04-04",
+                        "cost_basis": 5.4
+                    },
+                    {
+                        "tax_lot_id": 1113,
+                        "identifier": "D_25746U109",
+                        "quantity": 0.20046,
+                        "date": "2025-01-06",
+                        "cost_basis": 10.79
+                    },
+                    {
+                        "tax_lot_id": 1114,
+                        "identifier": "D_25746U109",
+                        "quantity": 0.04433,
+                        "date": "2025-01-08",
+                        "cost_basis": 2.39
+                    },
+                    {
+                        "tax_lot_id": 1115,
+                        "identifier": "D_25746U109",
+                        "quantity": 0.33996,
+                        "date": "2025-01-14",
+                        "cost_basis": 18.3
+                    },
+                    {
+                        "tax_lot_id": 1119,
+                        "identifier": "DEI_25960P109",
+                        "quantity": 0.24721,
+                        "date": "2025-01-08",
+                        "cost_basis": 4.63
+                    },
+                    {
+                        "tax_lot_id": 1120,
+                        "identifier": "DEI_25960P109",
+                        "quantity": 0.66551,
+                        "date": "2025-01-08",
+                        "cost_basis": 12.11
+                    },
+                    {
+                        "tax_lot_id": 1121,
+                        "identifier": "DEI_25960P109",
+                        "quantity": 1.36841,
+                        "date": "2025-01-08",
+                        "cost_basis": 23.49
+                    },
+                    {
+                        "tax_lot_id": 1123,
+                        "identifier": "DEI_25960P109",
+                        "quantity": 0.41568,
+                        "date": "2025-04-04",
+                        "cost_basis": 5.84
+                    },
+                    {
+                        "tax_lot_id": 1126,
+                        "identifier": "DOW_260557103",
+                        "quantity": 0.17024,
+                        "date": "2024-12-17",
+                        "cost_basis": 6.935776268845667
+                    },
+                    {
+                        "tax_lot_id": 1127,
+                        "identifier": "DOW_260557103",
+                        "quantity": 0.17781,
+                        "date": "2025-01-06",
+                        "cost_basis": 7.09
+                    },
+                    {
+                        "tax_lot_id": 1128,
+                        "identifier": "DOW_260557103",
+                        "quantity": 0.64737,
+                        "date": "2025-01-08",
+                        "cost_basis": 25.1
+                    },
+                    {
+                        "tax_lot_id": 1129,
+                        "identifier": "DOW_260557103",
+                        "quantity": 0.00354,
+                        "date": "2024-12-17",
+                        "cost_basis": 0.14422373115433307
+                    },
+                    {
+                        "tax_lot_id": 1130,
+                        "identifier": "DOW_260557103",
+                        "quantity": 0.23706,
+                        "date": "2025-04-07",
+                        "cost_basis": 6.48
+                    },
+                    {
+                        "tax_lot_id": 1143,
+                        "identifier": "EPD_293792107",
+                        "quantity": 0.25564,
+                        "date": "2024-12-30",
+                        "cost_basis": 7.94
+                    },
+                    {
+                        "tax_lot_id": 1144,
+                        "identifier": "EPD_293792107",
+                        "quantity": 0.73635,
+                        "date": "2025-01-08",
+                        "cost_basis": 23.81
+                    },
+                    {
+                        "tax_lot_id": 1145,
+                        "identifier": "EPD_293792107",
+                        "quantity": 0.18357,
+                        "date": "2025-01-14",
+                        "cost_basis": 6.13
+                    },
+                    {
+                        "tax_lot_id": 1179,
+                        "identifier": "F_345370860",
+                        "quantity": 0.579,
+                        "date": "2025-01-08",
+                        "cost_basis": 5.92
+                    },
+                    {
+                        "tax_lot_id": 1180,
+                        "identifier": "F_345370860",
+                        "quantity": 1.06763,
+                        "date": "2025-01-08",
+                        "cost_basis": 10.46
+                    },
+                    {
+                        "tax_lot_id": 1181,
+                        "identifier": "F_345370860",
+                        "quantity": 1.96922,
+                        "date": "2025-01-08",
+                        "cost_basis": 19.02
+                    },
+                    {
+                        "tax_lot_id": 1191,
+                        "identifier": "FBRT_35243J101",
+                        "quantity": 0.40078,
+                        "date": "2024-12-30",
+                        "cost_basis": 5.06
+                    },
+                    {
+                        "tax_lot_id": 1192,
+                        "identifier": "FBRT_35243J101",
+                        "quantity": 2.45923,
+                        "date": "2025-01-08",
+                        "cost_basis": 30.42
+                    },
+                    {
+                        "tax_lot_id": 1194,
+                        "identifier": "BEN_354613101",
+                        "quantity": 0.21364,
+                        "date": "2024-12-30",
+                        "cost_basis": 4.34
+                    },
+                    {
+                        "tax_lot_id": 1195,
+                        "identifier": "BEN_354613101",
+                        "quantity": 0.35025,
+                        "date": "2025-01-08",
+                        "cost_basis": 7.2
+                    },
+                    {
+                        "tax_lot_id": 1196,
+                        "identifier": "BEN_354613101",
+                        "quantity": 1.41364,
+                        "date": "2025-01-08",
+                        "cost_basis": 27.69
+                    },
+                    {
+                        "tax_lot_id": 1198,
+                        "identifier": "GLPI_36467J108",
+                        "quantity": 0.03421,
+                        "date": "2024-12-30",
+                        "cost_basis": 1.63
+                    },
+                    {
+                        "tax_lot_id": 1199,
+                        "identifier": "GLPI_36467J108",
+                        "quantity": 0.53876,
+                        "date": "2025-01-08",
+                        "cost_basis": 25.11
+                    },
+                    {
+                        "tax_lot_id": 1200,
+                        "identifier": "GLPI_36467J108",
+                        "quantity": 0.11374,
+                        "date": "2025-01-14",
+                        "cost_basis": 5.35
+                    },
+                    {
+                        "tax_lot_id": 1226,
+                        "identifier": "HAS_418056107",
+                        "quantity": 0.16998,
+                        "date": "2024-12-30",
+                        "cost_basis": 9.49
+                    },
+                    {
+                        "tax_lot_id": 1227,
+                        "identifier": "HAS_418056107",
+                        "quantity": 0.48934,
+                        "date": "2025-01-08",
+                        "cost_basis": 27.66
+                    },
+                    {
+                        "tax_lot_id": 1228,
+                        "identifier": "HE_419870100",
+                        "quantity": 0.62055,
+                        "date": "2025-01-06",
+                        "cost_basis": 5.75
+                    },
+                    {
+                        "tax_lot_id": 1229,
+                        "identifier": "HE_419870100",
+                        "quantity": 1.02243,
+                        "date": "2025-01-08",
+                        "cost_basis": 9.06
+                    },
+                    {
+                        "tax_lot_id": 1230,
+                        "identifier": "HE_419870100",
+                        "quantity": 1.73382,
+                        "date": "2025-01-14",
+                        "cost_basis": 14.72
+                    },
+                    {
+                        "tax_lot_id": 1252,
+                        "identifier": "IEP_451100101",
+                        "quantity": 1.0559,
+                        "date": "2024-12-30",
+                        "cost_basis": 9.47
+                    },
+                    {
+                        "tax_lot_id": 1253,
+                        "identifier": "IEP_451100101",
+                        "quantity": 3.10751,
+                        "date": "2025-01-08",
+                        "cost_basis": 28.62
+                    },
+                    {
+                        "tax_lot_id": 1254,
+                        "identifier": "IEP_451100101",
+                        "quantity": 0.26067,
+                        "date": "2025-04-16",
+                        "cost_basis": 2.08
+                    },
+                    {
+                        "tax_lot_id": 1265,
+                        "identifier": "IP_460146103",
+                        "quantity": 0.15348,
+                        "date": "2024-12-30",
+                        "cost_basis": 8.25
+                    },
+                    {
+                        "tax_lot_id": 1266,
+                        "identifier": "IP_460146103",
+                        "quantity": 0.46243,
+                        "date": "2025-01-08",
+                        "cost_basis": 25.04
+                    },
+                    {
+                        "tax_lot_id": 1267,
+                        "identifier": "IP_460146103",
+                        "quantity": 0.0931,
+                        "date": "2025-02-04",
+                        "cost_basis": 5.11
+                    },
+                    {
+                        "tax_lot_id": 1290,
+                        "identifier": "KW_489398107",
+                        "quantity": 0.46289,
+                        "date": "2025-01-08",
+                        "cost_basis": 4.81
+                    },
+                    {
+                        "tax_lot_id": 1291,
+                        "identifier": "KW_489398107",
+                        "quantity": 0.70427,
+                        "date": "2025-01-08",
+                        "cost_basis": 6.95
+                    },
+                    {
+                        "tax_lot_id": 1292,
+                        "identifier": "KW_489398107",
+                        "quantity": 3.02346,
+                        "date": "2025-01-08",
+                        "cost_basis": 28.01
+                    },
+                    {
+                        "tax_lot_id": 1294,
+                        "identifier": "KW_489398107",
+                        "quantity": 0.91592,
+                        "date": "2025-04-09",
+                        "cost_basis": 6.0
+                    },
+                    {
+                        "tax_lot_id": 1297,
+                        "identifier": "KRC_49427F108",
+                        "quantity": 0.11244,
+                        "date": "2025-01-08",
+                        "cost_basis": 4.6
+                    },
+                    {
+                        "tax_lot_id": 1298,
+                        "identifier": "KRC_49427F108",
+                        "quantity": 0.33548,
+                        "date": "2025-01-08",
+                        "cost_basis": 13.22
+                    },
+                    {
+                        "tax_lot_id": 1299,
+                        "identifier": "KRC_49427F108",
+                        "quantity": 0.60557,
+                        "date": "2025-01-08",
+                        "cost_basis": 22.63
+                    },
+                    {
+                        "tax_lot_id": 1301,
+                        "identifier": "KRC_49427F108",
+                        "quantity": 0.16173,
+                        "date": "2025-02-19",
+                        "cost_basis": 5.48
+                    },
+                    {
+                        "tax_lot_id": 1307,
+                        "identifier": "LADR_505743104",
+                        "quantity": 0.86699,
+                        "date": "2024-12-30",
+                        "cost_basis": 9.74
+                    },
+                    {
+                        "tax_lot_id": 1308,
+                        "identifier": "LADR_505743104",
+                        "quantity": 2.64275,
+                        "date": "2025-01-08",
+                        "cost_basis": 29.2
+                    },
+                    {
+                        "tax_lot_id": 1329,
+                        "identifier": "LAZ_52110M109",
+                        "quantity": 0.08091,
+                        "date": "2025-01-08",
+                        "cost_basis": 4.44
+                    },
+                    {
+                        "tax_lot_id": 1330,
+                        "identifier": "LAZ_52110M109",
+                        "quantity": 0.2267,
+                        "date": "2025-01-08",
+                        "cost_basis": 11.8
+                    },
+                    {
+                        "tax_lot_id": 1331,
+                        "identifier": "LAZ_52110M109",
+                        "quantity": 0.44421,
+                        "date": "2025-01-08",
+                        "cost_basis": 22.06
+                    },
+                    {
+                        "tax_lot_id": 1334,
+                        "identifier": "LAZ_52110M109",
+                        "quantity": 0.11707,
+                        "date": "2025-02-24",
+                        "cost_basis": 5.77
+                    },
+                    {
+                        "tax_lot_id": 1335,
+                        "identifier": "LAZ_52110M109",
+                        "quantity": 0.12201,
+                        "date": "2025-03-27",
+                        "cost_basis": 5.46
+                    },
+                    {
+                        "tax_lot_id": 1336,
+                        "identifier": "LAZ_52110M109",
+                        "quantity": 0.19523,
+                        "date": "2025-04-04",
+                        "cost_basis": 6.96
+                    },
+                    {
+                        "tax_lot_id": 1347,
+                        "identifier": "LNC_534187109",
+                        "quantity": 0.5317,
+                        "date": "2025-01-08",
+                        "cost_basis": 16.72
+                    },
+                    {
+                        "tax_lot_id": 1348,
+                        "identifier": "LNC_534187109",
+                        "quantity": 0.73462,
+                        "date": "2025-01-08",
+                        "cost_basis": 22.93
+                    },
+                    {
+                        "tax_lot_id": 1355,
+                        "identifier": "MFA_55272X607",
+                        "quantity": 0.52927,
+                        "date": "2024-12-30",
+                        "cost_basis": 5.43
+                    },
+                    {
+                        "tax_lot_id": 1356,
+                        "identifier": "MFA_55272X607",
+                        "quantity": 0.5366,
+                        "date": "2025-01-08",
+                        "cost_basis": 5.35
+                    },
+                    {
+                        "tax_lot_id": 1357,
+                        "identifier": "MFA_55272X607",
+                        "quantity": 2.74544,
+                        "date": "2025-01-08",
+                        "cost_basis": 27.26
+                    },
+                    {
+                        "tax_lot_id": 1359,
+                        "identifier": "MPLX_55336V100",
+                        "quantity": 0.16415,
+                        "date": "2024-12-30",
+                        "cost_basis": 7.83
+                    },
+                    {
+                        "tax_lot_id": 1360,
+                        "identifier": "MPLX_55336V100",
+                        "quantity": 0.48929,
+                        "date": "2025-01-08",
+                        "cost_basis": 23.51
+                    },
+                    {
+                        "tax_lot_id": 1361,
+                        "identifier": "MPLX_55336V100",
+                        "quantity": 0.12963,
+                        "date": "2025-01-14",
+                        "cost_basis": 6.48
+                    },
+                    {
+                        "tax_lot_id": 1394,
+                        "identifier": "RITM_64828T201",
+                        "quantity": 0.9319,
+                        "date": "2024-12-30",
+                        "cost_basis": 10.11
+                    },
+                    {
+                        "tax_lot_id": 1395,
+                        "identifier": "RITM_64828T201",
+                        "quantity": 2.75907,
+                        "date": "2025-01-08",
+                        "cost_basis": 30.18
+                    },
+                    {
+                        "tax_lot_id": 1396,
+                        "identifier": "NWL_651229106",
+                        "quantity": 0.00409,
+                        "date": "2024-12-30",
+                        "cost_basis": 0.04
+                    },
+                    {
+                        "tax_lot_id": 1397,
+                        "identifier": "NWL_651229106",
+                        "quantity": 1.17112,
+                        "date": "2025-01-08",
+                        "cost_basis": 11.74
+                    },
+                    {
+                        "tax_lot_id": 1398,
+                        "identifier": "NWL_651229106",
+                        "quantity": 2.46246,
+                        "date": "2025-01-08",
+                        "cost_basis": 23.98
+                    },
+                    {
+                        "tax_lot_id": 1400,
+                        "identifier": "NWL_651229106",
+                        "quantity": 1.00599,
+                        "date": "2025-02-07",
+                        "cost_basis": 7.05
+                    },
+                    {
+                        "tax_lot_id": 1401,
+                        "identifier": "NWL_651229106",
+                        "quantity": 0.77446,
+                        "date": "2025-02-18",
+                        "cost_basis": 5.33
+                    },
+                    {
+                        "tax_lot_id": 1402,
+                        "identifier": "NWL_651229106",
+                        "quantity": 0.82126,
+                        "date": "2025-04-02",
+                        "cost_basis": 5.15
+                    },
+                    {
+                        "tax_lot_id": 1403,
+                        "identifier": "NWL_651229106",
+                        "quantity": 1.38108,
+                        "date": "2025-04-09",
+                        "cost_basis": 6.17
+                    },
+                    {
+                        "tax_lot_id": 1407,
+                        "identifier": "XIFR_65341B106",
+                        "quantity": 0.3136,
+                        "date": "2024-12-30",
+                        "cost_basis": 5.73
+                    },
+                    {
+                        "tax_lot_id": 1408,
+                        "identifier": "XIFR_65341B106",
+                        "quantity": 0.36141,
+                        "date": "2024-12-30",
+                        "cost_basis": 6.21
+                    },
+                    {
+                        "tax_lot_id": 1409,
+                        "identifier": "XIFR_65341B106",
+                        "quantity": 1.49236,
+                        "date": "2025-01-08",
+                        "cost_basis": 27.11
+                    },
+                    {
+                        "tax_lot_id": 1411,
+                        "identifier": "XIFR_65341B106",
+                        "quantity": 0.96946,
+                        "date": "2025-01-28",
+                        "cost_basis": 10.78
+                    },
+                    {
+                        "tax_lot_id": 1412,
+                        "identifier": "XIFR_65341B106",
+                        "quantity": 0.56349,
+                        "date": "2025-01-30",
+                        "cost_basis": 5.74
+                    },
+                    {
+                        "tax_lot_id": 1422,
+                        "identifier": "OHI_681936100",
+                        "quantity": 0.16998,
+                        "date": "2024-12-30",
+                        "cost_basis": 6.33
+                    },
+                    {
+                        "tax_lot_id": 1423,
+                        "identifier": "OHI_681936100",
+                        "quantity": 0.36293,
+                        "date": "2025-01-08",
+                        "cost_basis": 13.69
+                    },
+                    {
+                        "tax_lot_id": 1424,
+                        "identifier": "OHI_681936100",
+                        "quantity": 0.38592,
+                        "date": "2025-01-14",
+                        "cost_basis": 14.44
+                    },
+                    {
+                        "tax_lot_id": 1427,
+                        "identifier": "OKE_682680103",
+                        "quantity": 0.09771,
+                        "date": "2024-12-30",
+                        "cost_basis": 9.87
+                    },
+                    {
+                        "tax_lot_id": 1428,
+                        "identifier": "OKE_682680103",
+                        "quantity": 0.29198,
+                        "date": "2025-01-08",
+                        "cost_basis": 29.88
+                    },
+                    {
+                        "tax_lot_id": 1429,
+                        "identifier": "OKE_682680103",
+                        "quantity": 0.0859,
+                        "date": "2025-04-07",
+                        "cost_basis": 6.77
+                    },
+                    {
+                        "tax_lot_id": 1430,
+                        "identifier": "OMF_68268W103",
+                        "quantity": 0.2637,
+                        "date": "2024-12-30",
+                        "cost_basis": 13.82
+                    },
+                    {
+                        "tax_lot_id": 1431,
+                        "identifier": "OMF_68268W103",
+                        "quantity": 0.49896,
+                        "date": "2025-01-08",
+                        "cost_basis": 26.24
+                    },
+                    {
+                        "tax_lot_id": 1433,
+                        "identifier": "OMF_68268W103",
+                        "quantity": 0.10519,
+                        "date": "2025-03-17",
+                        "cost_basis": 5.11
+                    },
+                    {
+                        "tax_lot_id": 1442,
+                        "identifier": "OGN_68622V106",
+                        "quantity": 0.70613,
+                        "date": "2024-12-30",
+                        "cost_basis": 10.56
+                    },
+                    {
+                        "tax_lot_id": 1443,
+                        "identifier": "OGN_68622V106",
+                        "quantity": 1.51589,
+                        "date": "2025-01-08",
+                        "cost_basis": 23.75
+                    },
+                    {
+                        "tax_lot_id": 1445,
+                        "identifier": "OGN_68622V106",
+                        "quantity": 0.45636,
+                        "date": "2025-04-08",
+                        "cost_basis": 5.52
+                    },
+                    {
+                        "tax_lot_id": 1446,
+                        "identifier": "OGN_68622V106",
+                        "quantity": 0.46725,
+                        "date": "2025-04-16",
+                        "cost_basis": 5.1
+                    },
+                    {
+                        "tax_lot_id": 1452,
+                        "identifier": "OBDC_69121K104",
+                        "quantity": 0.4997,
+                        "date": "2024-12-30",
+                        "cost_basis": 7.78
+                    },
+                    {
+                        "tax_lot_id": 1453,
+                        "identifier": "OBDC_69121K104",
+                        "quantity": 1.58532,
+                        "date": "2025-01-08",
+                        "cost_basis": 23.37
+                    },
+                    {
+                        "tax_lot_id": 1454,
+                        "identifier": "OBDC_69121K104",
+                        "quantity": 0.4929,
+                        "date": "2025-01-14",
+                        "cost_basis": 7.44
+                    },
+                    {
+                        "tax_lot_id": 1457,
+                        "identifier": "PMT_70931T103",
+                        "quantity": 0.36641,
+                        "date": "2024-12-30",
+                        "cost_basis": 4.58
+                    },
+                    {
+                        "tax_lot_id": 1458,
+                        "identifier": "PMT_70931T103",
+                        "quantity": 2.50039,
+                        "date": "2025-01-08",
+                        "cost_basis": 31.03
+                    },
+                    {
+                        "tax_lot_id": 1471,
+                        "identifier": "PFE_717081103",
+                        "quantity": 0.25822,
+                        "date": "2024-12-13",
+                        "cost_basis": 6.606813771786726
+                    },
+                    {
+                        "tax_lot_id": 1472,
+                        "identifier": "PFE_717081103",
+                        "quantity": 0.44938,
+                        "date": "2025-01-08",
+                        "cost_basis": 12.02
+                    },
+                    {
+                        "tax_lot_id": 1473,
+                        "identifier": "PFE_717081103",
+                        "quantity": 0.09119,
+                        "date": "2024-12-13",
+                        "cost_basis": 2.3331862282132736
+                    },
+                    {
+                        "tax_lot_id": 1474,
+                        "identifier": "PFE_717081103",
+                        "quantity": 0.39905,
+                        "date": "2025-01-14",
+                        "cost_basis": 10.57
+                    },
+                    {
+                        "tax_lot_id": 1481,
+                        "identifier": "PM_718172109",
+                        "quantity": 0.00822,
+                        "date": "2025-01-08",
+                        "cost_basis": 1.0
+                    },
+                    {
+                        "tax_lot_id": 1482,
+                        "identifier": "PM_718172109",
+                        "quantity": 0.01511,
+                        "date": "2025-01-08",
+                        "cost_basis": 1.93
+                    },
+                    {
+                        "tax_lot_id": 1483,
+                        "identifier": "PM_718172109",
+                        "quantity": 0.0598,
+                        "date": "2025-01-08",
+                        "cost_basis": 7.68
+                    },
+                    {
+                        "tax_lot_id": 1484,
+                        "identifier": "PM_718172109",
+                        "quantity": 0.07689,
+                        "date": "2025-01-08",
+                        "cost_basis": 9.75
+                    },
+                    {
+                        "tax_lot_id": 1485,
+                        "identifier": "PM_718172109",
+                        "quantity": 0.167,
+                        "date": "2025-01-14",
+                        "cost_basis": 19.75
+                    },
+                    {
+                        "tax_lot_id": 1486,
+                        "identifier": "PAA_726503105",
+                        "quantity": 0.55106,
+                        "date": "2024-12-30",
+                        "cost_basis": 9.23
+                    },
+                    {
+                        "tax_lot_id": 1487,
+                        "identifier": "PAA_726503105",
+                        "quantity": 1.43928,
+                        "date": "2025-01-08",
+                        "cost_basis": 26.86
+                    },
+                    {
+                        "tax_lot_id": 1488,
+                        "identifier": "PAGP_72651A207",
+                        "quantity": 0.51719,
+                        "date": "2024-12-30",
+                        "cost_basis": 9.16
+                    },
+                    {
+                        "tax_lot_id": 1489,
+                        "identifier": "PAGP_72651A207",
+                        "quantity": 1.38486,
+                        "date": "2025-01-08",
+                        "cost_basis": 26.91
+                    },
+                    {
+                        "tax_lot_id": 1506,
+                        "identifier": "O_756109104",
+                        "quantity": 0.11534,
+                        "date": "2024-12-30",
+                        "cost_basis": 6.06
+                    },
+                    {
+                        "tax_lot_id": 1507,
+                        "identifier": "O_756109104",
+                        "quantity": 0.32904,
+                        "date": "2025-01-08",
+                        "cost_basis": 17.18
+                    },
+                    {
+                        "tax_lot_id": 1508,
+                        "identifier": "O_756109104",
+                        "quantity": 0.1756,
+                        "date": "2025-01-14",
+                        "cost_basis": 9.34
+                    },
+                    {
+                        "tax_lot_id": 1527,
+                        "identifier": "SPG_828806109",
+                        "quantity": 0.03053,
+                        "date": "2024-12-30",
+                        "cost_basis": 5.21
+                    },
+                    {
+                        "tax_lot_id": 1529,
+                        "identifier": "SPG_828806109",
+                        "quantity": 0.03132,
+                        "date": "2024-12-13",
+                        "cost_basis": 5.606553935860059
+                    },
+                    {
+                        "tax_lot_id": 1530,
+                        "identifier": "SPG_828806109",
+                        "quantity": 0.17595,
+                        "date": "2025-01-08",
+                        "cost_basis": 30.72
+                    },
+                    {
+                        "tax_lot_id": 1531,
+                        "identifier": "SPG_828806109",
+                        "quantity": 0.00298,
+                        "date": "2024-12-13",
+                        "cost_basis": 0.5334460641399417
+                    },
+                    {
+                        "tax_lot_id": 1532,
+                        "identifier": "SBGI_829242106",
+                        "quantity": 0.85646,
+                        "date": "2024-12-30",
+                        "cost_basis": 14.26
+                    },
+                    {
+                        "tax_lot_id": 1533,
+                        "identifier": "SBGI_829242106",
+                        "quantity": 1.37146,
+                        "date": "2025-01-08",
+                        "cost_basis": 22.66
+                    },
+                    {
+                        "tax_lot_id": 1535,
+                        "identifier": "SBGI_829242106",
+                        "quantity": 0.39321,
+                        "date": "2025-02-26",
+                        "cost_basis": 5.66
+                    },
+                    {
+                        "tax_lot_id": 1550,
+                        "identifier": "STWD_85571B105",
+                        "quantity": 0.22849,
+                        "date": "2024-12-30",
+                        "cost_basis": 4.39
+                    },
+                    {
+                        "tax_lot_id": 1551,
+                        "identifier": "STWD_85571B105",
+                        "quantity": 1.62792,
+                        "date": "2025-01-08",
+                        "cost_basis": 30.65
+                    },
+                    {
+                        "tax_lot_id": 1586,
+                        "identifier": "TX_880890108",
+                        "quantity": 0.31114,
+                        "date": "2024-12-30",
+                        "cost_basis": 8.9
+                    },
+                    {
+                        "tax_lot_id": 1587,
+                        "identifier": "TX_880890108",
+                        "quantity": 0.91702,
+                        "date": "2025-01-08",
+                        "cost_basis": 26.59
+                    },
+                    {
+                        "tax_lot_id": 1600,
+                        "identifier": "MMM_88579Y101",
+                        "quantity": 0.05643,
+                        "date": "2024-12-13",
+                        "cost_basis": 7.300514851485149
+                    },
+                    {
+                        "tax_lot_id": 1601,
+                        "identifier": "MMM_88579Y101",
+                        "quantity": 0.05624,
+                        "date": "2025-01-06",
+                        "cost_basis": 7.33
+                    },
+                    {
+                        "tax_lot_id": 1602,
+                        "identifier": "MMM_88579Y101",
+                        "quantity": 0.19262,
+                        "date": "2025-01-08",
+                        "cost_basis": 25.79
+                    },
+                    {
+                        "tax_lot_id": 1603,
+                        "identifier": "MMM_88579Y101",
+                        "quantity": 0.00417,
+                        "date": "2024-12-13",
+                        "cost_basis": 0.5394851485148515
+                    },
+                    {
+                        "tax_lot_id": 1608,
+                        "identifier": "TWO_90187B804",
+                        "quantity": 0.2044,
+                        "date": "2024-12-30",
+                        "cost_basis": 2.38
+                    },
+                    {
+                        "tax_lot_id": 1609,
+                        "identifier": "TWO_90187B804",
+                        "quantity": 2.67468,
+                        "date": "2025-01-08",
+                        "cost_basis": 30.14
+                    },
+                    {
+                        "tax_lot_id": 1630,
+                        "identifier": "VFC_918204108",
+                        "quantity": 0.46945,
+                        "date": "2024-12-30",
+                        "cost_basis": 9.9
+                    },
+                    {
+                        "tax_lot_id": 1631,
+                        "identifier": "VFC_918204108",
+                        "quantity": 1.2867,
+                        "date": "2025-01-08",
+                        "cost_basis": 27.52
+                    },
+                    {
+                        "tax_lot_id": 1632,
+                        "identifier": "VFC_918204108",
+                        "quantity": 0.39813,
+                        "date": "2025-03-11",
+                        "cost_basis": 6.8
+                    },
+                    {
+                        "tax_lot_id": 1633,
+                        "identifier": "VFC_918204108",
+                        "quantity": 0.33597,
+                        "date": "2025-03-31",
+                        "cost_basis": 5.24
+                    },
+                    {
+                        "tax_lot_id": 1634,
+                        "identifier": "VFC_918204108",
+                        "quantity": 0.49046,
+                        "date": "2025-04-03",
+                        "cost_basis": 6.01
+                    },
+                    {
+                        "tax_lot_id": 1635,
+                        "identifier": "VFC_918204108",
+                        "quantity": 0.72492,
+                        "date": "2025-04-11",
+                        "cost_basis": 7.68
+                    },
+                    {
+                        "tax_lot_id": 1641,
+                        "identifier": "VZ_92343V104",
+                        "quantity": 0.03377,
+                        "date": "2025-01-08",
+                        "cost_basis": 1.4
+                    },
+                    {
+                        "tax_lot_id": 1642,
+                        "identifier": "VZ_92343V104",
+                        "quantity": 0.21065,
+                        "date": "2025-01-08",
+                        "cost_basis": 8.61
+                    },
+                    {
+                        "tax_lot_id": 1643,
+                        "identifier": "VZ_92343V104",
+                        "quantity": 0.49803,
+                        "date": "2025-01-14",
+                        "cost_basis": 19.01
+                    },
+                    {
+                        "tax_lot_id": 1648,
+                        "identifier": "VICI_925652109",
+                        "quantity": 0.28695,
+                        "date": "2024-12-30",
+                        "cost_basis": 8.27
+                    },
+                    {
+                        "tax_lot_id": 1649,
+                        "identifier": "VICI_925652109",
+                        "quantity": 0.85025,
+                        "date": "2025-01-08",
+                        "cost_basis": 24.4
+                    },
+                    {
+                        "tax_lot_id": 1650,
+                        "identifier": "VICI_925652109",
+                        "quantity": 0.02137,
+                        "date": "2025-01-14",
+                        "cost_basis": 0.62
+                    },
+                    {
+                        "tax_lot_id": 1659,
+                        "identifier": "WPC_92936U109",
+                        "quantity": 0.14665,
+                        "date": "2024-12-30",
+                        "cost_basis": 7.97
+                    },
+                    {
+                        "tax_lot_id": 1660,
+                        "identifier": "WPC_92936U109",
+                        "quantity": 0.30903,
+                        "date": "2025-01-08",
+                        "cost_basis": 16.92
+                    },
+                    {
+                        "tax_lot_id": 1661,
+                        "identifier": "WPC_92936U109",
+                        "quantity": 0.13926,
+                        "date": "2025-01-14",
+                        "cost_basis": 7.56
+                    },
+                    {
+                        "tax_lot_id": 1665,
+                        "identifier": "WBA_931427108",
+                        "quantity": 0.9828,
+                        "date": "2024-12-30",
+                        "cost_basis": 9.22
+                    },
+                    {
+                        "tax_lot_id": 1666,
+                        "identifier": "WBA_931427108",
+                        "quantity": 2.8908,
+                        "date": "2025-01-08",
+                        "cost_basis": 27.17
+                    },
+                    {
+                        "tax_lot_id": 1669,
+                        "identifier": "WEN_95058W100",
+                        "quantity": 0.1755,
+                        "date": "2024-12-30",
+                        "cost_basis": 2.86
+                    },
+                    {
+                        "tax_lot_id": 1670,
+                        "identifier": "WEN_95058W100",
+                        "quantity": 1.60383,
+                        "date": "2025-01-08",
+                        "cost_basis": 24.47
+                    },
+                    {
+                        "tax_lot_id": 1671,
+                        "identifier": "WEN_95058W100",
+                        "quantity": 0.40115,
+                        "date": "2025-01-14",
+                        "cost_basis": 6.04
+                    },
+                    {
+                        "tax_lot_id": 1673,
+                        "identifier": "WES_958669103",
+                        "quantity": 0.2423,
+                        "date": "2024-12-30",
+                        "cost_basis": 9.5
+                    },
+                    {
+                        "tax_lot_id": 1674,
+                        "identifier": "WES_958669103",
+                        "quantity": 0.7172,
+                        "date": "2025-01-08",
+                        "cost_basis": 28.6
+                    },
+                    {
+                        "tax_lot_id": 1675,
+                        "identifier": "WU_959802109",
+                        "quantity": 0.20122,
+                        "date": "2024-12-30",
+                        "cost_basis": 2.13
+                    },
+                    {
+                        "tax_lot_id": 1676,
+                        "identifier": "WU_959802109",
+                        "quantity": 2.19841,
+                        "date": "2025-01-08",
+                        "cost_basis": 22.89
+                    },
+                    {
+                        "tax_lot_id": 1677,
+                        "identifier": "WU_959802109",
+                        "quantity": 0.66069,
+                        "date": "2025-01-14",
+                        "cost_basis": 6.92
+                    },
+                    {
+                        "tax_lot_id": 1679,
+                        "identifier": "WHR_963320106",
+                        "quantity": 0.05015,
+                        "date": "2024-12-30",
+                        "cost_basis": 5.69
+                    },
+                    {
+                        "tax_lot_id": 1680,
+                        "identifier": "WHR_963320106",
+                        "quantity": 0.05086,
+                        "date": "2025-01-08",
+                        "cost_basis": 6.09
+                    },
+                    {
+                        "tax_lot_id": 1681,
+                        "identifier": "WHR_963320106",
+                        "quantity": 0.25264,
+                        "date": "2025-01-08",
+                        "cost_basis": 28.44
+                    },
+                    {
+                        "tax_lot_id": 1683,
+                        "identifier": "WHR_963320106",
+                        "quantity": 0.06731,
+                        "date": "2025-04-22",
+                        "cost_basis": 5.23
+                    },
+                    {
+                        "tax_lot_id": 1686,
+                        "identifier": "WMB_969457100",
+                        "quantity": 0.16978,
+                        "date": "2024-12-30",
+                        "cost_basis": 9.23
+                    },
+                    {
+                        "tax_lot_id": 1687,
+                        "identifier": "WMB_969457100",
+                        "quantity": 0.49724,
+                        "date": "2025-01-08",
+                        "cost_basis": 27.76
+                    },
+                    {
+                        "tax_lot_id": 1692,
+                        "identifier": "XRX_98421M106",
+                        "quantity": 0.48499,
+                        "date": "2025-01-08",
+                        "cost_basis": 4.3
+                    },
+                    {
+                        "tax_lot_id": 1693,
+                        "identifier": "XRX_98421M106",
+                        "quantity": 0.92244,
+                        "date": "2025-01-08",
+                        "cost_basis": 8.75
+                    },
+                    {
+                        "tax_lot_id": 1694,
+                        "identifier": "XRX_98421M106",
+                        "quantity": 2.92419,
+                        "date": "2025-01-08",
+                        "cost_basis": 25.85
+                    },
+                    {
+                        "tax_lot_id": 1696,
+                        "identifier": "XRX_98421M106",
+                        "quantity": 0.69382,
+                        "date": "2025-02-21",
+                        "cost_basis": 5.39
+                    },
+                    {
+                        "tax_lot_id": 1697,
+                        "identifier": "XRX_98421M106",
+                        "quantity": 1.06886,
+                        "date": "2025-03-13",
+                        "cost_basis": 6.29
+                    },
+                    {
+                        "tax_lot_id": 1698,
+                        "identifier": "XRX_98421M106",
+                        "quantity": 0.95417,
+                        "date": "2025-03-24",
+                        "cost_basis": 5.11
+                    },
+                    {
+                        "tax_lot_id": 1699,
+                        "identifier": "XRX_98421M106",
+                        "quantity": 1.58491,
+                        "date": "2025-04-04",
+                        "cost_basis": 6.22
+                    },
+                    {
+                        "tax_lot_id": 1707,
+                        "identifier": "AMCR_G0250X107",
+                        "quantity": 0.89882,
+                        "date": "2024-12-30",
+                        "cost_basis": 8.41
+                    },
+                    {
+                        "tax_lot_id": 1708,
+                        "identifier": "AMCR_G0250X107",
+                        "quantity": 2.60466,
+                        "date": "2025-01-08",
+                        "cost_basis": 24.8
+                    },
+                    {
+                        "tax_lot_id": 1717,
+                        "identifier": "JHG_G4474Y214",
+                        "quantity": 0.37168,
+                        "date": "2025-01-08",
+                        "cost_basis": 16.45
+                    },
+                    {
+                        "tax_lot_id": 1718,
+                        "identifier": "JHG_G4474Y214",
+                        "quantity": 0.61732,
+                        "date": "2025-01-08",
+                        "cost_basis": 26.13
+                    },
+                    {
+                        "tax_lot_id": 1720,
+                        "identifier": "JHG_G4474Y214",
+                        "quantity": 0.17223,
+                        "date": "2025-03-07",
+                        "cost_basis": 6.38
+                    },
+                    {
+                        "tax_lot_id": 1721,
+                        "identifier": "JHG_G4474Y214",
+                        "quantity": 0.19593,
+                        "date": "2025-04-04",
+                        "cost_basis": 5.97
+                    },
+                    {
+                        "tax_lot_id": 1746,
+                        "identifier": "FRO_M46528101",
+                        "quantity": 0.679,
+                        "date": "2024-12-30",
+                        "cost_basis": 9.34
+                    },
+                    {
+                        "tax_lot_id": 1747,
+                        "identifier": "FRO_M46528101",
+                        "quantity": 1.23306,
+                        "date": "2025-01-08",
+                        "cost_basis": 19.71
+                    },
+                    {
+                        "tax_lot_id": 1748,
+                        "identifier": "FRO_M46528101",
+                        "quantity": 0.05,
+                        "date": "2025-04-04",
+                        "cost_basis": 0.63
+                    },
+                    {
+                        "tax_lot_id": 1749,
+                        "identifier": "FRO_M46528101",
+                        "quantity": 0.34875,
+                        "date": "2025-04-04",
+                        "cost_basis": 4.79
+                    },
+                    {
+                        "tax_lot_id": 1751,
+                        "identifier": "ICL_M53213100",
+                        "quantity": 2.24123,
+                        "date": "2024-12-30",
+                        "cost_basis": 10.69
+                    },
+                    {
+                        "tax_lot_id": 1752,
+                        "identifier": "ICL_M53213100",
+                        "quantity": 4.92293,
+                        "date": "2025-01-08",
+                        "cost_basis": 25.25
+                    },
+                    {
+                        "tax_lot_id": 1758,
+                        "identifier": "LYB_N53745100",
+                        "quantity": 0.12409,
+                        "date": "2024-12-30",
+                        "cost_basis": 9.11
+                    },
+                    {
+                        "tax_lot_id": 1759,
+                        "identifier": "LYB_N53745100",
+                        "quantity": 0.37979,
+                        "date": "2025-01-08",
+                        "cost_basis": 27.64
+                    },
+                    {
+                        "tax_lot_id": 1760,
+                        "identifier": "LYB_N53745100",
+                        "quantity": 0.09808,
+                        "date": "2025-04-08",
+                        "cost_basis": 5.27
+                    },
+                    {
+                        "tax_lot_id": 1763,
+                        "identifier": "SBLK_Y8162K204",
+                        "quantity": 0.58289,
+                        "date": "2024-12-30",
+                        "cost_basis": 8.55
+                    },
+                    {
+                        "tax_lot_id": 1764,
+                        "identifier": "SBLK_Y8162K204",
+                        "quantity": 1.76582,
+                        "date": "2025-01-08",
+                        "cost_basis": 25.92
+                    }
+                ],
+                "targets": [
+                    {
+                        "asset_class": "NWL_651229106",
+                        "identifiers": [
+                            "NWL_651229106"
+                        ],
+                        "target_weight": 0.013938850922280194
+                    },
+                    {
+                        "asset_class": "WHR_963320106",
+                        "identifiers": [
+                            "WHR_963320106"
+                        ],
+                        "target_weight": 0.013938850922280194
+                    },
+                    {
+                        "asset_class": "MPLX_55336V100",
+                        "identifiers": [
+                            "MPLX_55336V100"
+                        ],
+                        "target_weight": 0.013938850922280194
+                    },
+                    {
+                        "asset_class": "IEP_451100101",
+                        "identifiers": [
+                            "IEP_451100101"
+                        ],
+                        "target_weight": 0.013938850922280194
+                    },
+                    {
+                        "asset_class": "TWO_90187B804",
+                        "identifiers": [
+                            "TWO_90187B804"
+                        ],
+                        "target_weight": 0.013938850922280194
+                    },
+                    {
+                        "asset_class": "LNC_534187109",
+                        "identifiers": [
+                            "LNC_534187109"
+                        ],
+                        "target_weight": 0.013938850922280194
+                    },
+                    {
+                        "asset_class": "VFC_918204108",
+                        "identifiers": [
+                            "VFC_918204108"
+                        ],
+                        "target_weight": 0.013938850922280194
+                    },
+                    {
+                        "asset_class": "ABR_038923108",
+                        "identifiers": [
+                            "ABR_038923108"
+                        ],
+                        "target_weight": 0.013938850922280194
+                    },
+                    {
+                        "asset_class": "OHI_681936100",
+                        "identifiers": [
+                            "OHI_681936100"
+                        ],
+                        "target_weight": 0.013938850922280194
+                    },
+                    {
+                        "asset_class": "DVN_25179M103",
+                        "identifiers": [
+                            "DVN_25179M103"
+                        ],
+                        "target_weight": 0.013938850922280194
+                    },
+                    {
+                        "asset_class": "WBA_931427108",
+                        "identifiers": [
+                            "WBA_931427108"
+                        ],
+                        "target_weight": 0.013938850922280194
+                    },
+                    {
+                        "asset_class": "MMM_88579Y101",
+                        "identifiers": [
+                            "MMM_88579Y101"
+                        ],
+                        "target_weight": 0.013938850922280194
+                    },
+                    {
+                        "asset_class": "OBDC_69121K104",
+                        "identifiers": [
+                            "OBDC_69121K104"
+                        ],
+                        "target_weight": 0.013938850922280194
+                    },
+                    {
+                        "asset_class": "PMT_70931T103",
+                        "identifiers": [
+                            "PMT_70931T103"
+                        ],
+                        "target_weight": 0.013938850922280194
+                    },
+                    {
+                        "asset_class": "AGNC_00123Q104",
+                        "identifiers": [
+                            "AGNC_00123Q104"
+                        ],
+                        "target_weight": 0.013938850922280194
+                    },
+                    {
+                        "asset_class": "PAGP_72651A207",
+                        "identifiers": [
+                            "PAGP_72651A207"
+                        ],
+                        "target_weight": 0.013938850922280194
+                    },
+                    {
+                        "asset_class": "OGN_68622V106",
+                        "identifiers": [
+                            "OGN_68622V106"
+                        ],
+                        "target_weight": 0.013938850922280194
+                    },
+                    {
+                        "asset_class": "LAZ_52110M109",
+                        "identifiers": [
+                            "LAZ_52110M109"
+                        ],
+                        "target_weight": 0.013938850922280194
+                    },
+                    {
+                        "asset_class": "HAS_418056107",
+                        "identifiers": [
+                            "HAS_418056107"
+                        ],
+                        "target_weight": 0.013938850922280194
+                    },
+                    {
+                        "asset_class": "JHG_G4474Y214",
+                        "identifiers": [
+                            "JHG_G4474Y214"
+                        ],
+                        "target_weight": 0.013938850922280194
+                    },
+                    {
+                        "asset_class": "SPG_828806109",
+                        "identifiers": [
+                            "SPG_828806109"
+                        ],
+                        "target_weight": 0.013938850922280194
+                    },
+                    {
+                        "asset_class": "IP_460146103",
+                        "identifiers": [
+                            "IP_460146103"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "FBRT_35243J101",
+                        "identifiers": [
+                            "FBRT_35243J101"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "CCI_22822V101",
+                        "identifiers": [
+                            "CCI_22822V101"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "FANG_25278X109",
+                        "identifiers": [
+                            "FANG_25278X109"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "AAT_024013104",
+                        "identifiers": [
+                            "AAT_024013104"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "PAA_726503105",
+                        "identifiers": [
+                            "PAA_726503105"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "LADR_505743104",
+                        "identifiers": [
+                            "LADR_505743104"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "GLPI_36467J108",
+                        "identifiers": [
+                            "GLPI_36467J108"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "WPC_92936U109",
+                        "identifiers": [
+                            "WPC_92936U109"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "MFA_55272X607",
+                        "identifiers": [
+                            "MFA_55272X607"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "XRX_98421M106",
+                        "identifiers": [
+                            "XRX_98421M106"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "BXP_101121101",
+                        "identifiers": [
+                            "BXP_101121101"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "KRC_49427F108",
+                        "identifiers": [
+                            "KRC_49427F108"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "FRO_M46528101",
+                        "identifiers": [
+                            "FRO_M46528101"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "SBLK_Y8162K204",
+                        "identifiers": [
+                            "SBLK_Y8162K204"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "RITM_64828T201",
+                        "identifiers": [
+                            "RITM_64828T201"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "VZ_92343V104",
+                        "identifiers": [
+                            "VZ_92343V104"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "PFE_717081103",
+                        "identifiers": [
+                            "PFE_717081103"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "BEN_354613101",
+                        "identifiers": [
+                            "BEN_354613101"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "KW_489398107",
+                        "identifiers": [
+                            "KW_489398107"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "DEI_25960P109",
+                        "identifiers": [
+                            "DEI_25960P109"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "NLY_035710839",
+                        "identifiers": [
+                            "NLY_035710839"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "CTRE_14174T107",
+                        "identifiers": [
+                            "CTRE_14174T107"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "SBGI_829242106",
+                        "identifiers": [
+                            "SBGI_829242106"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "VICI_925652109",
+                        "identifiers": [
+                            "VICI_925652109"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "LYB_N53745100",
+                        "identifiers": [
+                            "LYB_N53745100"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "MO_02209S103",
+                        "identifiers": [
+                            "MO_02209S103"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "F_345370860",
+                        "identifiers": [
+                            "F_345370860"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "PM_718172109",
+                        "identifiers": [
+                            "PM_718172109"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "DOW_260557103",
+                        "identifiers": [
+                            "DOW_260557103"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "STWD_85571B105",
+                        "identifiers": [
+                            "STWD_85571B105"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "AMCR_G0250X107",
+                        "identifiers": [
+                            "AMCR_G0250X107"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "WMB_969457100",
+                        "identifiers": [
+                            "WMB_969457100"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "WU_959802109",
+                        "identifiers": [
+                            "WU_959802109"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "WEN_95058W100",
+                        "identifiers": [
+                            "WEN_95058W100"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "OMF_68268W103",
+                        "identifiers": [
+                            "OMF_68268W103"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "WES_958669103",
+                        "identifiers": [
+                            "WES_958669103"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "BXMT_09257W100",
+                        "identifiers": [
+                            "BXMT_09257W100"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "XIFR_65341B106",
+                        "identifiers": [
+                            "XIFR_65341B106"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "CQP_16411Q101",
+                        "identifiers": [
+                            "CQP_16411Q101"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "HE_419870100",
+                        "identifiers": [
+                            "HE_419870100"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "EPD_293792107",
+                        "identifiers": [
+                            "EPD_293792107"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "CVI_12662P108",
+                        "identifiers": [
+                            "CVI_12662P108"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "OKE_682680103",
+                        "identifiers": [
+                            "OKE_682680103"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "T_00206R102",
+                        "identifiers": [
+                            "T_00206R102"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "O_756109104",
+                        "identifiers": [
+                            "O_756109104"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "D_25746U109",
+                        "identifiers": [
+                            "D_25746U109"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "CWEN_18539C204",
+                        "identifiers": [
+                            "CWEN_18539C204"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "TX_880890108",
+                        "identifiers": [
+                            "TX_880890108"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "ICL_M53213100",
+                        "identifiers": [
+                            "ICL_M53213100"
+                        ],
+                        "target_weight": 0.013938860818869298
+                    },
+                    {
+                        "asset_class": "_CASH_123",
+                        "identifiers": [
+                            "_CASH_123"
+                        ],
+                        "target_weight": 0.010341089688651
+                    }
+                ],
+                "prices": [
+                    {
+                        "identifier": "AGNC_00123Q104",
+                        "price": 8.775
+                    },
+                    {
+                        "identifier": "T_00206R102",
+                        "price": 27.475
+                    },
+                    {
+                        "identifier": "MO_02209S103",
+                        "price": 59.14
+                    },
+                    {
+                        "identifier": "AAT_024013104",
+                        "price": 18.625
+                    },
+                    {
+                        "identifier": "NLY_035710839",
+                        "price": 19.445
+                    },
+                    {
+                        "identifier": "ABR_038923108",
+                        "price": 11.505
+                    },
+                    {
+                        "identifier": "BXMT_09257W100",
+                        "price": 18.92
+                    },
+                    {
+                        "identifier": "BXP_101121101",
+                        "price": 63.0
+                    },
+                    {
+                        "identifier": "CVI_12662P108",
+                        "price": 19.01
+                    },
+                    {
+                        "identifier": "CTRE_14174T107",
+                        "price": 29.12
+                    },
+                    {
+                        "identifier": "CQP_16411Q101",
+                        "price": 58.375
+                    },
+                    {
+                        "identifier": "CWEN_18539C204",
+                        "price": 29.08
+                    },
+                    {
+                        "identifier": "CCI_22822V101",
+                        "price": 105.21
+                    },
+                    {
+                        "identifier": "DVN_25179M103",
+                        "price": 30.2
+                    },
+                    {
+                        "identifier": "FANG_25278X109",
+                        "price": 131.6315
+                    },
+                    {
+                        "identifier": "D_25746U109",
+                        "price": 53.97
+                    },
+                    {
+                        "identifier": "DEI_25960P109",
+                        "price": 13.62
+                    },
+                    {
+                        "identifier": "DOW_260557103",
+                        "price": 30.14
+                    },
+                    {
+                        "identifier": "EPD_293792107",
+                        "price": 29.815
+                    },
+                    {
+                        "identifier": "F_345370860",
+                        "price": 9.9199
+                    },
+                    {
+                        "identifier": "FBRT_35243J101",
+                        "price": 11.31
+                    },
+                    {
+                        "identifier": "BEN_354613101",
+                        "price": 18.645
+                    },
+                    {
+                        "identifier": "GLPI_36467J108",
+                        "price": 47.85
+                    },
+                    {
+                        "identifier": "HAS_418056107",
+                        "price": 61.525
+                    },
+                    {
+                        "identifier": "HE_419870100",
+                        "price": 10.33
+                    },
+                    {
+                        "identifier": "IEP_451100101",
+                        "price": 8.67
+                    },
+                    {
+                        "identifier": "IP_460146103",
+                        "price": 45.2
+                    },
+                    {
+                        "identifier": "KW_489398107",
+                        "price": 6.4
+                    },
+                    {
+                        "identifier": "KRC_49427F108",
+                        "price": 31.16
+                    },
+                    {
+                        "identifier": "LADR_505743104",
+                        "price": 10.45
+                    },
+                    {
+                        "identifier": "LAZ_52110M109",
+                        "price": 38.34
+                    },
+                    {
+                        "identifier": "LNC_534187109",
+                        "price": 31.33
+                    },
+                    {
+                        "identifier": "MFA_55272X607",
+                        "price": 9.785
+                    },
+                    {
+                        "identifier": "MPLX_55336V100",
+                        "price": 50.57
+                    },
+                    {
+                        "identifier": "RITM_64828T201",
+                        "price": 11.09
+                    },
+                    {
+                        "identifier": "NWL_651229106",
+                        "price": 4.83
+                    },
+                    {
+                        "identifier": "XIFR_65341B106",
+                        "price": 8.05
+                    },
+                    {
+                        "identifier": "OHI_681936100",
+                        "price": 38.69
+                    },
+                    {
+                        "identifier": "OKE_682680103",
+                        "price": 81.52
+                    },
+                    {
+                        "identifier": "OMF_68268W103",
+                        "price": 46.37
+                    },
+                    {
+                        "identifier": "OGN_68622V106",
+                        "price": 13.0
+                    },
+                    {
+                        "identifier": "OBDC_69121K104",
+                        "price": 13.955
+                    },
+                    {
+                        "identifier": "PMT_70931T103",
+                        "price": 12.865
+                    },
+                    {
+                        "identifier": "PFE_717081103",
+                        "price": 24.1958
+                    },
+                    {
+                        "identifier": "PM_718172109",
+                        "price": 170.09
+                    },
+                    {
+                        "identifier": "PAA_726503105",
+                        "price": 17.325
+                    },
+                    {
+                        "identifier": "PAGP_72651A207",
+                        "price": 18.545
+                    },
+                    {
+                        "identifier": "O_756109104",
+                        "price": 57.49
+                    },
+                    {
+                        "identifier": "SPG_828806109",
+                        "price": 155.01
+                    },
+                    {
+                        "identifier": "SBGI_829242106",
+                        "price": 14.4
+                    },
+                    {
+                        "identifier": "STWD_85571B105",
+                        "price": 19.0499
+                    },
+                    {
+                        "identifier": "TX_880890108",
+                        "price": 29.05
+                    },
+                    {
+                        "identifier": "MMM_88579Y101",
+                        "price": 137.7
+                    },
+                    {
+                        "identifier": "TWO_90187B804",
+                        "price": 11.88
+                    },
+                    {
+                        "identifier": "VFC_918204108",
+                        "price": 11.7941
+                    },
+                    {
+                        "identifier": "VZ_92343V104",
+                        "price": 43.821
+                    },
+                    {
+                        "identifier": "VICI_925652109",
+                        "price": 31.975
+                    },
+                    {
+                        "identifier": "WPC_92936U109",
+                        "price": 61.93
+                    },
+                    {
+                        "identifier": "WBA_931427108",
+                        "price": 10.95
+                    },
+                    {
+                        "identifier": "WEN_95058W100",
+                        "price": 12.465
+                    },
+                    {
+                        "identifier": "WES_958669103",
+                        "price": 37.34
+                    },
+                    {
+                        "identifier": "WU_959802109",
+                        "price": 9.875
+                    },
+                    {
+                        "identifier": "WHR_963320106",
+                        "price": 75.985
+                    },
+                    {
+                        "identifier": "WMB_969457100",
+                        "price": 58.095
+                    },
+                    {
+                        "identifier": "XRX_98421M106",
+                        "price": 4.375
+                    },
+                    {
+                        "identifier": "AMCR_G0250X107",
+                        "price": 9.185
+                    },
+                    {
+                        "identifier": "JHG_G4474Y214",
+                        "price": 32.56
+                    },
+                    {
+                        "identifier": "FRO_M46528101",
+                        "price": 16.795
+                    },
+                    {
+                        "identifier": "ICL_M53213100",
+                        "price": 6.635
+                    },
+                    {
+                        "identifier": "LYB_N53745100",
+                        "price": 57.995
+                    },
+                    {
+                        "identifier": "SBLK_Y8162K204",
+                        "price": 14.71
+                    },
+                    {
+                        "identifier": "TXMD_88338N206",
+                        "price": 1.225
+                    },
+                    {
+                        "identifier": "AVGO_11135F101",
+                        "price": 190.6
+                    },
+                    {
+                        "identifier": "NEE_65339F101",
+                        "price": 66.02
+                    },
+                    {
+                        "identifier": "EBS_29089Q105",
+                        "price": 5.34
+                    },
+                    {
+                        "identifier": "JOUT_479167108",
+                        "price": 22.96
+                    },
+                    {
+                        "identifier": "INTU_461202103",
+                        "price": 623.31
+                    },
+                    {
+                        "identifier": "FMTO_31447N204",
+                        "price": 6.3
+                    },
+                    {
+                        "identifier": "WRLD_981419104",
+                        "price": 128.89
+                    },
+                    {
+                        "identifier": "PRT_714254109",
+                        "price": 3.934
+                    },
+                    {
+                        "identifier": "MCD_580135101",
+                        "price": 317.625
+                    },
+                    {
+                        "identifier": "ZCMD_G9897X115",
+                        "price": 1.18
+                    },
+                    {
+                        "identifier": "MA_57636Q104",
+                        "price": 540.465
+                    },
+                    {
+                        "identifier": "SCHW_808513105",
+                        "price": 80.51
+                    },
+                    {
+                        "identifier": "PYPL_70450Y103",
+                        "price": 64.88
+                    },
+                    {
+                        "identifier": "GOOG_02079K107",
+                        "price": 159.2
+                    },
+                    {
+                        "identifier": "DHR_235851102",
+                        "price": 198.26
+                    },
+                    {
+                        "identifier": "LIN_G54950103",
+                        "price": 453.0125
+                    },
+                    {
+                        "identifier": "FLXS_339382103",
+                        "price": 33.5865
+                    },
+                    {
+                        "identifier": "NGS_63886Q109",
+                        "price": 18.04
+                    },
+                    {
+                        "identifier": "BKNG_09857L108",
+                        "price": 4943.98
+                    },
+                    {
+                        "identifier": "TXN_882508104",
+                        "price": 158.69
+                    },
+                    {
+                        "identifier": "KOD_50015M109",
+                        "price": 4.34
+                    },
+                    {
+                        "identifier": "BK_064058100",
+                        "price": 79.33
+                    },
+                    {
+                        "identifier": "NERV_603380205",
+                        "price": 1.6774
+                    },
+                    {
+                        "identifier": "EMR_291011104",
+                        "price": 104.275
+                    },
+                    {
+                        "identifier": "EDSA_27966L306",
+                        "price": 2.345
+                    },
+                    {
+                        "identifier": "AMWL_03044L204",
+                        "price": 7.2699
+                    },
+                    {
+                        "identifier": "AXP_025816109",
+                        "price": 263.53
+                    },
+                    {
+                        "identifier": "APRE_03836J201",
+                        "price": 1.7085
+                    },
+                    {
+                        "identifier": "INSG_45782B302",
+                        "price": 8.18
+                    },
+                    {
+                        "identifier": "HOFT_439038100",
+                        "price": 9.565
+                    },
+                    {
+                        "identifier": "COF_14040H105",
+                        "price": 177.9725
+                    },
+                    {
+                        "identifier": "MRK_58933Y105",
+                        "price": 84.565
+                    },
+                    {
+                        "identifier": "MCFT_57637H103",
+                        "price": 16.5
+                    },
+                    {
+                        "identifier": "GHM_384556106",
+                        "price": 30.45
+                    },
+                    {
+                        "identifier": "SLQT_816307300",
+                        "price": 3.17
+                    },
+                    {
+                        "identifier": "NEUE_10920V404",
+                        "price": 6.7181
+                    },
+                    {
+                        "identifier": "AOMR_03464Y108",
+                        "price": 9.49
+                    },
+                    {
+                        "identifier": "LITB_53225G201",
+                        "price": 1.25
+                    },
+                    {
+                        "identifier": "ADBE_00724F101",
+                        "price": 371.65
+                    },
+                    {
+                        "identifier": "CRMD_21900C308",
+                        "price": 9.2
+                    },
+                    {
+                        "identifier": "TRC_879080109",
+                        "price": 17.07
+                    },
+                    {
+                        "identifier": "GD_369550108",
+                        "price": 270.65
+                    },
+                    {
+                        "identifier": "JNJ_478160104",
+                        "price": 155.5825
+                    },
+                    {
+                        "identifier": "AOUT_02875D109",
+                        "price": 11.298
+                    },
+                    {
+                        "identifier": "CVX_166764100",
+                        "price": 135.38
+                    },
+                    {
+                        "identifier": "SNCR_87157B400",
+                        "price": 10.47
+                    },
+                    {
+                        "identifier": "ATNI_00215F107",
+                        "price": 17.77
+                    },
+                    {
+                        "identifier": "MET_59156R108",
+                        "price": 74.2
+                    },
+                    {
+                        "identifier": "V_92826C839",
+                        "price": 341.56
+                    },
+                    {
+                        "identifier": "SKLZ_83067L208",
+                        "price": 5.16
+                    },
+                    {
+                        "identifier": "MDT_G5960L103",
+                        "price": 84.005
+                    },
+                    {
+                        "identifier": "STG_86740P207",
+                        "price": 5.0265
+                    },
+                    {
+                        "identifier": "CRDF_14147L108",
+                        "price": 2.7
+                    },
+                    {
+                        "identifier": "CMLS_231082801",
+                        "price": 0.2331
+                    },
+                    {
+                        "identifier": "DNTH_252828108",
+                        "price": 21.61
+                    },
+                    {
+                        "identifier": "WLDN_96924N100",
+                        "price": 39.21
+                    },
+                    {
+                        "identifier": "LOW_548661107",
+                        "price": 221.93
+                    },
+                    {
+                        "identifier": "UFI_904677200",
+                        "price": 5.1005
+                    },
+                    {
+                        "identifier": "STHO_85512G106",
+                        "price": 6.71
+                    },
+                    {
+                        "identifier": "JAKK_47012E403",
+                        "price": 19.528
+                    },
+                    {
+                        "identifier": "NVDA_67066G104",
+                        "price": 107.155
+                    },
+                    {
+                        "identifier": "BTCT_G6055H155",
+                        "price": 3.75
+                    },
+                    {
+                        "identifier": "UNH_91324P102",
+                        "price": 410.88
+                    },
+                    {
+                        "identifier": "USB_902973304",
+                        "price": 39.9476
+                    },
+                    {
+                        "identifier": "PSNL_71535D106",
+                        "price": 3.785
+                    },
+                    {
+                        "identifier": "CAT_149123101",
+                        "price": 304.1508
+                    },
+                    {
+                        "identifier": "TGT_87612E106",
+                        "price": 96.265
+                    },
+                    {
+                        "identifier": "AAPL_037833100",
+                        "price": 210.53
+                    },
+                    {
+                        "identifier": "AIG_026874784",
+                        "price": 80.63
+                    },
+                    {
+                        "identifier": "TMUS_872590104",
+                        "price": 246.11
+                    },
+                    {
+                        "identifier": "ARIS_04041L106",
+                        "price": 24.73
+                    },
+                    {
+                        "identifier": "AMT_03027X100",
+                        "price": 223.715
+                    },
+                    {
+                        "identifier": "GS_38141G104",
+                        "price": 542.14
+                    },
+                    {
+                        "identifier": "BOC_101044105",
+                        "price": 15.64
+                    },
+                    {
+                        "identifier": "DE_244199105",
+                        "price": 458.83
+                    },
+                    {
+                        "identifier": "ACRS_00461U105",
+                        "price": 1.365
+                    },
+                    {
+                        "identifier": "QURE_N90064101",
+                        "price": 14.66
+                    },
+                    {
+                        "identifier": "CSCO_17275R102",
+                        "price": 57.3
+                    },
+                    {
+                        "identifier": "JPM_46625H100",
+                        "price": 241.62
+                    },
+                    {
+                        "identifier": "MSFT_594918104",
+                        "price": 389.9454
+                    },
+                    {
+                        "identifier": "SMC_86614G101",
+                        "price": 27.58
+                    },
+                    {
+                        "identifier": "EVGO_30052F100",
+                        "price": 2.755
+                    },
+                    {
+                        "identifier": "ORKA_687604108",
+                        "price": 10.36
+                    },
+                    {
+                        "identifier": "COP_20825C104",
+                        "price": 88.6301
+                    },
+                    {
+                        "identifier": "HD_437076102",
+                        "price": 357.33
+                    },
+                    {
+                        "identifier": "BAC_060505104",
+                        "price": 39.4526
+                    },
+                    {
+                        "identifier": "OPAD_67623L307",
+                        "price": 1.11
+                    },
+                    {
+                        "identifier": "CANG_137586103",
+                        "price": 4.01
+                    },
+                    {
+                        "identifier": "LMT_539830109",
+                        "price": 474.69
+                    },
+                    {
+                        "identifier": "MPAA_620071100",
+                        "price": 8.83
+                    },
+                    {
+                        "identifier": "OMER_682143102",
+                        "price": 7.19
+                    },
+                    {
+                        "identifier": "TSLA_88160R101",
+                        "price": 278.6896
+                    },
+                    {
+                        "identifier": "HIHO_G4481U106",
+                        "price": 1.5835
+                    },
+                    {
+                        "identifier": "ABT_002824100",
+                        "price": 129.88
+                    },
+                    {
+                        "identifier": "PULM_74584P301",
+                        "price": 6.6
+                    },
+                    {
+                        "identifier": "ANIK_035255108",
+                        "price": 14.56
+                    },
+                    {
+                        "identifier": "AMD_007903107",
+                        "price": 96.4203
+                    },
+                    {
+                        "identifier": "AIXI_98423X209",
+                        "price": 3.2
+                    },
+                    {
+                        "identifier": "DLTH_26443V101",
+                        "price": 1.7196
+                    },
+                    {
+                        "identifier": "ARQ_00770C101",
+                        "price": 3.79
+                    },
+                    {
+                        "identifier": "QQQ_46090E103",
+                        "price": 471.2409
+                    },
+                    {
+                        "identifier": "KHC_500754106",
+                        "price": 29.085
+                    },
+                    {
+                        "identifier": "MS_617446448",
+                        "price": 114.17
+                    },
+                    {
+                        "identifier": "DIS_254687106",
+                        "price": 90.01
+                    },
+                    {
+                        "identifier": "INNV_45784A104",
+                        "price": 3.07
+                    },
+                    {
+                        "identifier": "TECX_878972108",
+                        "price": 20.23
+                    },
+                    {
+                        "identifier": "SYPR_871655106",
+                        "price": 1.63
+                    },
+                    {
+                        "identifier": "INTC_458140100",
+                        "price": 19.9213
+                    },
+                    {
+                        "identifier": "GRVY_38911N206",
+                        "price": 59.695
+                    },
+                    {
+                        "identifier": "UNP_907818108",
+                        "price": 213.57
+                    },
+                    {
+                        "identifier": "C_172967424",
+                        "price": 67.67
+                    },
+                    {
+                        "identifier": "BRK.B_084670702",
+                        "price": 529.95
+                    },
+                    {
+                        "identifier": "CHTR_16119P108",
+                        "price": 386.77
+                    },
+                    {
+                        "identifier": "SO_842587107",
+                        "price": 91.19
+                    },
+                    {
+                        "identifier": "GHG_39579V100",
+                        "price": 2.07
+                    },
+                    {
+                        "identifier": "BACK_44967K302",
+                        "price": 0.04
+                    },
+                    {
+                        "identifier": "HON_438516106",
+                        "price": 210.51
+                    },
+                    {
+                        "identifier": "LUNR_46125A100",
+                        "price": 8.2882
+                    },
+                    {
+                        "identifier": "USNA_90328M107",
+                        "price": 27.985
+                    },
+                    {
+                        "identifier": "APEI_02913V103",
+                        "price": 23.56
+                    },
+                    {
+                        "identifier": "XGN_30068X103",
+                        "price": 6.28
+                    },
+                    {
+                        "identifier": "NTZ_63905A200",
+                        "price": 4.045
+                    },
+                    {
+                        "identifier": "NKE_654106103",
+                        "price": 56.045
+                    },
+                    {
+                        "identifier": "HIPO_433539202",
+                        "price": 23.23
+                    },
+                    {
+                        "identifier": "ONEW_68280L101",
+                        "price": 14.855
+                    },
+                    {
+                        "identifier": "FARM_307675108",
+                        "price": 1.88
+                    },
+                    {
+                        "identifier": "CL_194162103",
+                        "price": 91.83
+                    },
+                    {
+                        "identifier": "LFWD_M8216Q119",
+                        "price": 1.415
+                    },
+                    {
+                        "identifier": "DUK_26441C204",
+                        "price": 121.3382
+                    },
+                    {
+                        "identifier": "CLPT_18507C103",
+                        "price": 14.36
+                    },
+                    {
+                        "identifier": "PG_742718109",
+                        "price": 161.65
+                    },
+                    {
+                        "identifier": "RCKY_774515100",
+                        "price": 20.65
+                    },
+                    {
+                        "identifier": "GORV_52110H100",
+                        "price": 0.212
+                    },
+                    {
+                        "identifier": "AXGN_05463X106",
+                        "price": 16.24
+                    },
+                    {
+                        "identifier": "API_00851L103",
+                        "price": 3.295
+                    },
+                    {
+                        "identifier": "CPSH_12619F104",
+                        "price": 1.6
+                    },
+                    {
+                        "identifier": "CMCSA_20030N101",
+                        "price": 33.84
+                    },
+                    {
+                        "identifier": "BYRN_12448X201",
+                        "price": 22.4
+                    },
+                    {
+                        "identifier": "XOM_30231G102",
+                        "price": 105.005
+                    },
+                    {
+                        "identifier": "DAKT_234264109",
+                        "price": 12.76
+                    },
+                    {
+                        "identifier": "LFVN_53222K205",
+                        "price": 12.575
+                    },
+                    {
+                        "identifier": "GILD_375558103",
+                        "price": 105.135
+                    },
+                    {
+                        "identifier": "GE_369604301",
+                        "price": 199.825
+                    },
+                    {
+                        "identifier": "MDLZ_609207105",
+                        "price": 68.3
+                    },
+                    {
+                        "identifier": "GCI_36472T109",
+                        "price": 3.28
+                    },
+                    {
+                        "identifier": "FET_34984V209",
+                        "price": 14.535
+                    },
+                    {
+                        "identifier": "VSTA_G9440A109",
+                        "price": 4.39
+                    },
+                    {
+                        "identifier": "SBUX_855244109",
+                        "price": 79.22
+                    },
+                    {
+                        "identifier": "RVP_76129W105",
+                        "price": 0.7499
+                    },
+                    {
+                        "identifier": "OXBR_G6856M106",
+                        "price": 1.38
+                    },
+                    {
+                        "identifier": "QCOM_747525103",
+                        "price": 147.32
+                    },
+                    {
+                        "identifier": "WFC_949746101",
+                        "price": 70.49
+                    },
+                    {
+                        "identifier": "CVS_126650100",
+                        "price": 66.23
+                    },
+                    {
+                        "identifier": "GM_37045V100",
+                        "price": 44.925
+                    },
+                    {
+                        "identifier": "CAPR_14070B309",
+                        "price": 12.595
+                    },
+                    {
+                        "identifier": "CRM_79466L302",
+                        "price": 265.89
+                    },
+                    {
+                        "identifier": "BMY_110122108",
+                        "price": 49.96
+                    },
+                    {
+                        "identifier": "ETON_29772L108",
+                        "price": 16.71
+                    },
+                    {
+                        "identifier": "DOGZ_G2788T111",
+                        "price": 16.215
+                    },
+                    {
+                        "identifier": "TLYS_886885102",
+                        "price": 1.52
+                    },
+                    {
+                        "identifier": "HNST_438333106",
+                        "price": 4.83
+                    },
+                    {
+                        "identifier": "BVS_09075A108",
+                        "price": 7.24
+                    },
+                    {
+                        "identifier": "ORCL_68389X105",
+                        "price": 139.31
+                    },
+                    {
+                        "identifier": "UONEK_91705J204",
+                        "price": 0.4803
+                    },
+                    {
+                        "identifier": "ACN_G1151C101",
+                        "price": 296.77
+                    },
+                    {
+                        "identifier": "PEP_713448108",
+                        "price": 135.44
+                    },
+                    {
+                        "identifier": "RTX_75513E101",
+                        "price": 125.27
+                    },
+                    {
+                        "identifier": "BLK_09290D101",
+                        "price": 902.47
+                    },
+                    {
+                        "identifier": "ORN_68628V308",
+                        "price": 6.5
+                    },
+                    {
+                        "identifier": "CASI_G1933S101",
+                        "price": 1.995
+                    },
+                    {
+                        "identifier": "AWH_04537Y208",
+                        "price": 0.082
+                    },
+                    {
+                        "identifier": "ABBV_00287Y109",
+                        "price": 192.325
+                    },
+                    {
+                        "identifier": "LE_51509F105",
+                        "price": 9.07
+                    },
+                    {
+                        "identifier": "FORR_346563109",
+                        "price": 9.38
+                    },
+                    {
+                        "identifier": "DSP_92557A101",
+                        "price": 14.3
+                    },
+                    {
+                        "identifier": "QLD_74347R206",
+                        "price": 87.03
+                    },
+                    {
+                        "identifier": "FAT_30258N105",
+                        "price": 2.75
+                    },
+                    {
+                        "identifier": "XOS_98423B306",
+                        "price": 3.83
+                    },
+                    {
+                        "identifier": "KO_191216100",
+                        "price": 72.205
+                    },
+                    {
+                        "identifier": "NFLX_64110L106",
+                        "price": 1119.03
+                    },
+                    {
+                        "identifier": "COST_22160K105",
+                        "price": 989.545
+                    },
+                    {
+                        "identifier": "BA_097023105",
+                        "price": 181.72
+                    },
+                    {
+                        "identifier": "AMGN_031162100",
+                        "price": 288.8
+                    },
+                    {
+                        "identifier": "CRIS_231269309",
+                        "price": 2.0
+                    },
+                    {
+                        "identifier": "META_30303M102",
+                        "price": 539.475
+                    },
+                    {
+                        "identifier": "TMO_883556102",
+                        "price": 424.895
+                    },
+                    {
+                        "identifier": "WMT_931142103",
+                        "price": 97.0
+                    },
+                    {
+                        "identifier": "VHC_92823T207",
+                        "price": 7.8098
+                    },
+                    {
+                        "identifier": "KLXE_48253L205",
+                        "price": 2.015
+                    },
+                    {
+                        "identifier": "GOOGL_02079K305",
+                        "price": 157.05
+                    },
+                    {
+                        "identifier": "ALLT_M0854Q105",
+                        "price": 5.85
+                    },
+                    {
+                        "identifier": "CDXS_192005106",
+                        "price": 2.315
+                    },
+                    {
+                        "identifier": "PSTX_73730P108",
+                        "price": 9.5
+                    },
+                    {
+                        "identifier": "CREG_168913309",
+                        "price": 0.635
+                    },
+                    {
+                        "identifier": "BARK_68622E104",
+                        "price": 1.126
+                    },
+                    {
+                        "identifier": "IBM_459200101",
+                        "price": 240.355
+                    },
+                    {
+                        "identifier": "CRNT_M22013102",
+                        "price": 2.175
+                    },
+                    {
+                        "identifier": "LX_528877103",
+                        "price": 7.805
+                    },
+                    {
+                        "identifier": "SUP_868168105",
+                        "price": 2.44
+                    },
+                    {
+                        "identifier": "UPS_911312106",
+                        "price": 94.87
+                    },
+                    {
+                        "identifier": "SEI_83418M103",
+                        "price": 20.5
+                    },
+                    {
+                        "identifier": "AMZN_023135106",
+                        "price": 181.94
+                    },
+                    {
+                        "identifier": "STOK_86150R107",
+                        "price": 9.83
+                    },
+                    {
+                        "identifier": "FDX_31428X106",
+                        "price": 207.83
+                    },
+                    {
+                        "identifier": "LLY_532457108",
+                        "price": 897.0
+                    },
+                    {
+                        "identifier": "LTRN_51654W101",
+                        "price": 3.44
+                    },
+                    {
+                        "identifier": "RYAM_75508B104",
+                        "price": 4.25
+                    },
+                    {
+                        "identifier": "PAHC_71742Q106",
+                        "price": 18.62
+                    },
+                    {
+                        "identifier": "SSTI_82536T107",
+                        "price": 15.885
+                    },
+                    {
+                        "identifier": "CDMO_05368M106",
+                        "price": 12.3299
+                    },
+                    {
+                        "identifier": "BCOV_10921T101",
+                        "price": 4.3499
+                    },
+                    {
+                        "identifier": "USAP_913837100",
+                        "price": 44.2699
+                    }
+                ],
+                "cash": 28.66,
+                "spreads": [
+                    {
+                        "identifier": "TXMD_88338N206",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "AVGO_11135F101",
+                        "spread": 0.00053152
+                    },
+                    {
+                        "identifier": "NEE_65339F101",
+                        "spread": 0.00029338000000000004
+                    },
+                    {
+                        "identifier": "EBS_29089Q105",
+                        "spread": 0.00561798
+                    },
+                    {
+                        "identifier": "JOUT_479167108",
+                        "spread": 0.02526132
+                    },
+                    {
+                        "identifier": "INTU_461202103",
+                        "spread": 0.00143716
+                    },
+                    {
+                        "identifier": "WRLD_981419104",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "PRT_714254109",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "LAZ_52110M109",
+                        "spread": 0.0031290700000000003
+                    },
+                    {
+                        "identifier": "OHI_681936100",
+                        "spread": 0.0006795600000000001
+                    },
+                    {
+                        "identifier": "TWO_90187B804",
+                        "spread": 0.00084175
+                    },
+                    {
+                        "identifier": "MA_57636Q104",
+                        "spread": 0.00102638
+                    },
+                    {
+                        "identifier": "SCHW_808513105",
+                        "spread": 0.00028693
+                    },
+                    {
+                        "identifier": "MPLX_55336V100",
+                        "spread": 0.0008901199999999999
+                    },
+                    {
+                        "identifier": "PYPL_70450Y103",
+                        "spread": 0.00032088
+                    },
+                    {
+                        "identifier": "LIN_G54950103",
+                        "spread": 0.0011056100000000001
+                    },
+                    {
+                        "identifier": "FLXS_339382103",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "SBLK_Y8162K204",
+                        "spread": 0.00067981
+                    },
+                    {
+                        "identifier": "NGS_63886Q109",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "BKNG_09857L108",
+                        "spread": 0.0043374400000000006
+                    },
+                    {
+                        "identifier": "TXN_882508104",
+                        "spread": 0.00075355
+                    },
+                    {
+                        "identifier": "NERV_603380205",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "EMR_291011104",
+                        "spread": 0.00083311
+                    },
+                    {
+                        "identifier": "EDSA_27966L306",
+                        "spread": 0.00426439
+                    },
+                    {
+                        "identifier": "AMWL_03044L204",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "AXP_025816109",
+                        "spread": 0.00127486
+                    },
+                    {
+                        "identifier": "BXMT_09257W100",
+                        "spread": 0.00067358
+                    },
+                    {
+                        "identifier": "HOFT_439038100",
+                        "spread": 0.012545740000000001
+                    },
+                    {
+                        "identifier": "MCFT_57637H103",
+                        "spread": 0.00848485
+                    },
+                    {
+                        "identifier": "SLQT_816307300",
+                        "spread": 0.00315457
+                    },
+                    {
+                        "identifier": "NEUE_10920V404",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "AOMR_03464Y108",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "LITB_53225G201",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "SBGI_829242106",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "GD_369550108",
+                        "spread": 0.0012377599999999999
+                    },
+                    {
+                        "identifier": "VZ_92343V104",
+                        "spread": 0.00022805
+                    },
+                    {
+                        "identifier": "AOUT_02875D109",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "AAT_024013104",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "CVX_166764100",
+                        "spread": 0.00030166
+                    },
+                    {
+                        "identifier": "SNCR_87157B400",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "ATNI_00215F107",
+                        "spread": 0.00970737
+                    },
+                    {
+                        "identifier": "MET_59156R108",
+                        "spread": 0.00063581
+                    },
+                    {
+                        "identifier": "WPC_92936U109",
+                        "spread": 0.0008873799999999999
+                    },
+                    {
+                        "identifier": "SKLZ_83067L208",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "MDT_G5960L103",
+                        "spread": 0.0003122
+                    },
+                    {
+                        "identifier": "STG_86740P207",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "CMLS_231082801",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "DNTH_252828108",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "EPD_293792107",
+                        "spread": 0.00034956
+                    },
+                    {
+                        "identifier": "STHO_85512G106",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "JAKK_47012E403",
+                        "spread": 0.00640107
+                    },
+                    {
+                        "identifier": "MMM_88579Y101",
+                        "spread": 0.0008186500000000001
+                    },
+                    {
+                        "identifier": "PFE_717081103",
+                        "spread": 0.0004128
+                    },
+                    {
+                        "identifier": "PSNL_71535D106",
+                        "spread": 0.00527704
+                    },
+                    {
+                        "identifier": "AGNC_00123Q104",
+                        "spread": 0.00113895
+                    },
+                    {
+                        "identifier": "CAT_149123101",
+                        "spread": 0.00117245
+                    },
+                    {
+                        "identifier": "AAPL_037833100",
+                        "spread": 0.00012945
+                    },
+                    {
+                        "identifier": "WHR_963320106",
+                        "spread": 0.00241165
+                    },
+                    {
+                        "identifier": "JHG_G4474Y214",
+                        "spread": 0.00132057
+                    },
+                    {
+                        "identifier": "FBRT_35243J101",
+                        "spread": 0.00088417
+                    },
+                    {
+                        "identifier": "NLY_035710839",
+                        "spread": 0.00051387
+                    },
+                    {
+                        "identifier": "TX_880890108",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "QURE_N90064101",
+                        "spread": 0.00306748
+                    },
+                    {
+                        "identifier": "HE_419870100",
+                        "spread": 0.00096759
+                    },
+                    {
+                        "identifier": "MSFT_594918104",
+                        "spread": 0.00022893
+                    },
+                    {
+                        "identifier": "SMC_86614G101",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "ORKA_687604108",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "COP_20825C104",
+                        "spread": 0.00040027
+                    },
+                    {
+                        "identifier": "LMT_539830109",
+                        "spread": 0.00162607
+                    },
+                    {
+                        "identifier": "ANIK_035255108",
+                        "spread": 0.03296703
+                    },
+                    {
+                        "identifier": "DVN_25179M103",
+                        "spread": 0.00033091
+                    },
+                    {
+                        "identifier": "DLTH_26443V101",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "KHC_500754106",
+                        "spread": 0.00034364
+                    },
+                    {
+                        "identifier": "MS_617446448",
+                        "spread": 0.00047576
+                    },
+                    {
+                        "identifier": "INNV_45784A104",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "WEN_95058W100",
+                        "spread": 0.00080192
+                    },
+                    {
+                        "identifier": "TECX_878972108",
+                        "spread": 0.02422145
+                    },
+                    {
+                        "identifier": "SYPR_871655106",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "INTC_458140100",
+                        "spread": 0.00050113
+                    },
+                    {
+                        "identifier": "CCI_22822V101",
+                        "spread": 0.00059988
+                    },
+                    {
+                        "identifier": "GRVY_38911N206",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "C_172967424",
+                        "spread": 0.00019465
+                    },
+                    {
+                        "identifier": "WES_958669103",
+                        "spread": 0.0018726600000000002
+                    },
+                    {
+                        "identifier": "XRX_98421M106",
+                        "spread": 0.00228571
+                    },
+                    {
+                        "identifier": "SO_842587107",
+                        "spread": 0.00037459
+                    },
+                    {
+                        "identifier": "GHG_39579V100",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "BACK_44967K302",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "USNA_90328M107",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "APEI_02913V103",
+                        "spread": 0.00807137
+                    },
+                    {
+                        "identifier": "XIFR_65341B106",
+                        "spread": 0.00155376
+                    },
+                    {
+                        "identifier": "NKE_654106103",
+                        "spread": 0.00032297
+                    },
+                    {
+                        "identifier": "HIPO_433539202",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "FARM_307675108",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "CL_194162103",
+                        "spread": 0.00037862
+                    },
+                    {
+                        "identifier": "LFWD_M8216Q119",
+                        "spread": 0.00706714
+                    },
+                    {
+                        "identifier": "DUK_26441C204",
+                        "spread": 0.00034543
+                    },
+                    {
+                        "identifier": "BEN_354613101",
+                        "spread": 0.00053562
+                    },
+                    {
+                        "identifier": "CMCSA_20030N101",
+                        "spread": 0.00029533
+                    },
+                    {
+                        "identifier": "BYRN_12448X201",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "XOM_30231G102",
+                        "spread": 0.00020015
+                    },
+                    {
+                        "identifier": "DAKT_234264109",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "MO_02209S103",
+                        "spread": 0.00017622999999999998
+                    },
+                    {
+                        "identifier": "GILD_375558103",
+                        "spread": 0.00032761
+                    },
+                    {
+                        "identifier": "GE_369604301",
+                        "spread": 0.0008158099999999999
+                    },
+                    {
+                        "identifier": "VSTA_G9440A109",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "SBUX_855244109",
+                        "spread": 0.00036473
+                    },
+                    {
+                        "identifier": "OKE_682680103",
+                        "spread": 0.00089308
+                    },
+                    {
+                        "identifier": "FRO_M46528101",
+                        "spread": 0.00059542
+                    },
+                    {
+                        "identifier": "RVP_76129W105",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "CTRE_14174T107",
+                        "spread": 0.00096022
+                    },
+                    {
+                        "identifier": "QCOM_747525103",
+                        "spread": 0.00063294
+                    },
+                    {
+                        "identifier": "GM_37045V100",
+                        "spread": 0.00033104
+                    },
+                    {
+                        "identifier": "CAPR_14070B309",
+                        "spread": 0.00476569
+                    },
+                    {
+                        "identifier": "BMY_110122108",
+                        "spread": 0.00023741
+                    },
+                    {
+                        "identifier": "ETON_29772L108",
+                        "spread": 0.005386
+                    },
+                    {
+                        "identifier": "CQP_16411Q101",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "HNST_438333106",
+                        "spread": 0.00207039
+                    },
+                    {
+                        "identifier": "BVS_09075A108",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "ORN_68628V308",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "CASI_G1933S101",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "LADR_505743104",
+                        "spread": 0.00095648
+                    },
+                    {
+                        "identifier": "AWH_04537Y208",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "ABBV_00287Y109",
+                        "spread": 0.00074856
+                    },
+                    {
+                        "identifier": "FORR_346563109",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "FAT_30258N105",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "NFLX_64110L106",
+                        "spread": 0.00102749
+                    },
+                    {
+                        "identifier": "KRC_49427F108",
+                        "spread": 0.00170776
+                    },
+                    {
+                        "identifier": "COST_22160K105",
+                        "spread": 0.00120389
+                    },
+                    {
+                        "identifier": "META_30303M102",
+                        "spread": 0.0005806600000000001
+                    },
+                    {
+                        "identifier": "WMT_931142103",
+                        "spread": 0.00012880000000000001
+                    },
+                    {
+                        "identifier": "VHC_92823T207",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "OMF_68268W103",
+                        "spread": 0.00214777
+                    },
+                    {
+                        "identifier": "GOOGL_02079K305",
+                        "spread": 0.00014712000000000001
+                    },
+                    {
+                        "identifier": "ALLT_M0854Q105",
+                        "spread": 0.005982909999999999
+                    },
+                    {
+                        "identifier": "CREG_168913309",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "BARK_68622E104",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "IBM_459200101",
+                        "spread": 0.0008338200000000001
+                    },
+                    {
+                        "identifier": "CRNT_M22013102",
+                        "spread": 0.0045977
+                    },
+                    {
+                        "identifier": "UPS_911312106",
+                        "spread": 0.00052226
+                    },
+                    {
+                        "identifier": "SEI_83418M103",
+                        "spread": 0.0037669400000000003
+                    },
+                    {
+                        "identifier": "LTRN_51654W101",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "RITM_64828T201",
+                        "spread": 0.0009005
+                    },
+                    {
+                        "identifier": "PAHC_71742Q106",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "SSTI_82536T107",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "FMTO_31447N204",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "DOW_260557103",
+                        "spread": 0.00036585999999999997
+                    },
+                    {
+                        "identifier": "T_00206R102",
+                        "spread": 0.00036377
+                    },
+                    {
+                        "identifier": "MCD_580135101",
+                        "spread": 0.00075925
+                    },
+                    {
+                        "identifier": "OGN_68622V106",
+                        "spread": 0.0008177
+                    },
+                    {
+                        "identifier": "ZCMD_G9897X115",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "GOOG_02079K107",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "DHR_235851102",
+                        "spread": 0.0010321999999999998
+                    },
+                    {
+                        "identifier": "F_345370860",
+                        "spread": 0.00100705
+                    },
+                    {
+                        "identifier": "KW_489398107",
+                        "spread": 0.00156006
+                    },
+                    {
+                        "identifier": "WBA_931427108",
+                        "spread": 0.0009128299999999999
+                    },
+                    {
+                        "identifier": "CWEN_18539C204",
+                        "spread": 0.0011447
+                    },
+                    {
+                        "identifier": "KOD_50015M109",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "ABR_038923108",
+                        "spread": 0.00086843
+                    },
+                    {
+                        "identifier": "BK_064058100",
+                        "spread": 0.00044889999999999996
+                    },
+                    {
+                        "identifier": "APRE_03836J201",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "INSG_45782B302",
+                        "spread": 0.009779949999999999
+                    },
+                    {
+                        "identifier": "COF_14040H105",
+                        "spread": 0.00115946
+                    },
+                    {
+                        "identifier": "PMT_70931T103",
+                        "spread": 0.0007773
+                    },
+                    {
+                        "identifier": "MRK_58933Y105",
+                        "spread": 0.00025641
+                    },
+                    {
+                        "identifier": "GHM_384556106",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "VFC_918204108",
+                        "spread": 0.0009529899999999999
+                    },
+                    {
+                        "identifier": "ADBE_00724F101",
+                        "spread": 0.00103926
+                    },
+                    {
+                        "identifier": "CRMD_21900C308",
+                        "spread": 0.0028985499999999997
+                    },
+                    {
+                        "identifier": "TRC_879080109",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "JNJ_478160104",
+                        "spread": 0.00023643999999999998
+                    },
+                    {
+                        "identifier": "STWD_85571B105",
+                        "spread": 0.00052493
+                    },
+                    {
+                        "identifier": "V_92826C839",
+                        "spread": 0.0006324
+                    },
+                    {
+                        "identifier": "LNC_534187109",
+                        "spread": 0.00106974
+                    },
+                    {
+                        "identifier": "DEI_25960P109",
+                        "spread": 0.00120056
+                    },
+                    {
+                        "identifier": "CRDF_14147L108",
+                        "spread": 0.00369686
+                    },
+                    {
+                        "identifier": "WLDN_96924N100",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "IEP_451100101",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "PM_718172109",
+                        "spread": 0.00037768000000000003
+                    },
+                    {
+                        "identifier": "LOW_548661107",
+                        "spread": 0.00126137
+                    },
+                    {
+                        "identifier": "UFI_904677200",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "NVDA_67066G104",
+                        "spread": 0.0001019
+                    },
+                    {
+                        "identifier": "BTCT_G6055H155",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "UNH_91324P102",
+                        "spread": 0.00112328
+                    },
+                    {
+                        "identifier": "LYB_N53745100",
+                        "spread": 0.00084924
+                    },
+                    {
+                        "identifier": "USB_902973304",
+                        "spread": 0.00025006
+                    },
+                    {
+                        "identifier": "TGT_87612E106",
+                        "spread": 0.0006108
+                    },
+                    {
+                        "identifier": "AIG_026874784",
+                        "spread": 0.00047975000000000003
+                    },
+                    {
+                        "identifier": "TMUS_872590104",
+                        "spread": 0.00077857
+                    },
+                    {
+                        "identifier": "D_25746U109",
+                        "spread": 0.00040137999999999996
+                    },
+                    {
+                        "identifier": "ARIS_04041L106",
+                        "spread": 0.00202184
+                    },
+                    {
+                        "identifier": "FANG_25278X109",
+                        "spread": 0.0014461399999999998
+                    },
+                    {
+                        "identifier": "OBDC_69121K104",
+                        "spread": 0.00071582
+                    },
+                    {
+                        "identifier": "AMT_03027X100",
+                        "spread": 0.00097249
+                    },
+                    {
+                        "identifier": "GS_38141G104",
+                        "spread": 0.00119758
+                    },
+                    {
+                        "identifier": "BOC_101044105",
+                        "spread": 0.0031948899999999997
+                    },
+                    {
+                        "identifier": "DE_244199105",
+                        "spread": 0.00212498
+                    },
+                    {
+                        "identifier": "ACRS_00461U105",
+                        "spread": 0.00735294
+                    },
+                    {
+                        "identifier": "CSCO_17275R102",
+                        "spread": 0.00017438
+                    },
+                    {
+                        "identifier": "GLPI_36467J108",
+                        "spread": 0.00068338
+                    },
+                    {
+                        "identifier": "JPM_46625H100",
+                        "spread": 0.00042199999999999996
+                    },
+                    {
+                        "identifier": "EVGO_30052F100",
+                        "spread": 0.00362976
+                    },
+                    {
+                        "identifier": "HD_437076102",
+                        "spread": 0.00087173
+                    },
+                    {
+                        "identifier": "BAC_060505104",
+                        "spread": 0.00025326
+                    },
+                    {
+                        "identifier": "OPAD_67623L307",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "VICI_925652109",
+                        "spread": 0.0003123
+                    },
+                    {
+                        "identifier": "ICL_M53213100",
+                        "spread": 0.00150716
+                    },
+                    {
+                        "identifier": "PAA_726503105",
+                        "spread": 0.00057704
+                    },
+                    {
+                        "identifier": "CANG_137586103",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "MPAA_620071100",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "OMER_682143102",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "TSLA_88160R101",
+                        "spread": 0.00033878
+                    },
+                    {
+                        "identifier": "HIHO_G4481U106",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "ABT_002824100",
+                        "spread": 0.00034225
+                    },
+                    {
+                        "identifier": "PULM_74584P301",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "AMD_007903107",
+                        "spread": 0.00020931000000000001
+                    },
+                    {
+                        "identifier": "AIXI_98423X209",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "ARQ_00770C101",
+                        "spread": 0.00395778
+                    },
+                    {
+                        "identifier": "DIS_254687106",
+                        "spread": 0.00038365999999999997
+                    },
+                    {
+                        "identifier": "IP_460146103",
+                        "spread": 0.00062094
+                    },
+                    {
+                        "identifier": "WU_959802109",
+                        "spread": 0.0010116300000000001
+                    },
+                    {
+                        "identifier": "BXP_101121101",
+                        "spread": 0.00145823
+                    },
+                    {
+                        "identifier": "WMB_969457100",
+                        "spread": 0.00039045000000000003
+                    },
+                    {
+                        "identifier": "UNP_907818108",
+                        "spread": 0.0009747
+                    },
+                    {
+                        "identifier": "BRK.B_084670702",
+                        "spread": 0.00077864
+                    },
+                    {
+                        "identifier": "CHTR_16119P108",
+                        "spread": 0.00190306
+                    },
+                    {
+                        "identifier": "HON_438516106",
+                        "spread": 0.00065488
+                    },
+                    {
+                        "identifier": "LUNR_46125A100",
+                        "spread": 0.00175809
+                    },
+                    {
+                        "identifier": "XGN_30068X103",
+                        "spread": 0.01577287
+                    },
+                    {
+                        "identifier": "NTZ_63905A200",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "ONEW_68280L101",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "CLPT_18507C103",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "PG_742718109",
+                        "spread": 0.0003116
+                    },
+                    {
+                        "identifier": "RCKY_774515100",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "GORV_52110H100",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "CVI_12662P108",
+                        "spread": 0.0016666699999999999
+                    },
+                    {
+                        "identifier": "AXGN_05463X106",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "CPSH_12619F104",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "API_00851L103",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "LFVN_53222K205",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "MDLZ_609207105",
+                        "spread": 0.00018363
+                    },
+                    {
+                        "identifier": "GCI_36472T109",
+                        "spread": 0.0030441400000000003
+                    },
+                    {
+                        "identifier": "FET_34984V209",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "NWL_651229106",
+                        "spread": 0.00208764
+                    },
+                    {
+                        "identifier": "OXBR_G6856M106",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "AMCR_G0250X107",
+                        "spread": 0.00108755
+                    },
+                    {
+                        "identifier": "WFC_949746101",
+                        "spread": 0.00017477
+                    },
+                    {
+                        "identifier": "CVS_126650100",
+                        "spread": 0.00034935
+                    },
+                    {
+                        "identifier": "PAGP_72651A207",
+                        "spread": 0.0006005
+                    },
+                    {
+                        "identifier": "CRM_79466L302",
+                        "spread": 0.00088091
+                    },
+                    {
+                        "identifier": "DOGZ_G2788T111",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "MFA_55272X607",
+                        "spread": 0.0010219699999999999
+                    },
+                    {
+                        "identifier": "TLYS_886885102",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "ORCL_68389X105",
+                        "spread": 0.0007046
+                    },
+                    {
+                        "identifier": "UONEK_91705J204",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "ACN_G1151C101",
+                        "spread": 0.00118939
+                    },
+                    {
+                        "identifier": "PEP_713448108",
+                        "spread": 0.00030903999999999995
+                    },
+                    {
+                        "identifier": "RTX_75513E101",
+                        "spread": 0.0004868
+                    },
+                    {
+                        "identifier": "BLK_09290D101",
+                        "spread": 0.00252366
+                    },
+                    {
+                        "identifier": "O_756109104",
+                        "spread": 0.00022179000000000003
+                    },
+                    {
+                        "identifier": "LE_51509F105",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "DSP_92557A101",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "XOS_98423B306",
+                        "spread": 0.00522193
+                    },
+                    {
+                        "identifier": "SPG_828806109",
+                        "spread": 0.00159897
+                    },
+                    {
+                        "identifier": "KO_191216100",
+                        "spread": 0.00013843000000000001
+                    },
+                    {
+                        "identifier": "HAS_418056107",
+                        "spread": 0.00113673
+                    },
+                    {
+                        "identifier": "BA_097023105",
+                        "spread": 0.0006473200000000001
+                    },
+                    {
+                        "identifier": "AMGN_031162100",
+                        "spread": 0.00125738
+                    },
+                    {
+                        "identifier": "CRIS_231269309",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "TMO_883556102",
+                        "spread": 0.00156934
+                    },
+                    {
+                        "identifier": "KLXE_48253L205",
+                        "spread": 0.0248139
+                    },
+                    {
+                        "identifier": "CDXS_192005106",
+                        "spread": 0.00431965
+                    },
+                    {
+                        "identifier": "PSTX_73730P108",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "LX_528877103",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "SUP_868168105",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "AMZN_023135106",
+                        "spread": 0.00017046
+                    },
+                    {
+                        "identifier": "STOK_86150R107",
+                        "spread": 0.0003
+                    },
+                    {
+                        "identifier": "FDX_31428X106",
+                        "spread": 0.00152686
+                    },
+                    {
+                        "identifier": "LLY_532457108",
+                        "spread": 0.00118551
+                    },
+                    {
+                        "identifier": "RYAM_75508B104",
+                        "spread": 0.00470588
+                    },
+                    {
+                        "identifier": "QQQ_46090E103",
+                        "spread": 5.806e-05
+                    },
+                    {
+                        "identifier": "QLD_74347R206",
+                        "spread": 0.00024746
+                    }
+                ],
+                "factor_model": [
+                    {
+                        "identifier": "DVN_25179M103",
+                        "quality": 1.716533,
+                        "momentum": 2.071641,
+                        "value": 1.980758,
+                        "min_volatility": 1.13183
+                    },
+                    {
+                        "identifier": "WEN_95058W100",
+                        "quality": 0.693142,
+                        "momentum": 0.551502,
+                        "value": 0.939443,
+                        "min_volatility": 0.652068
+                    },
+                    {
+                        "identifier": "IP_460146103",
+                        "quality": 1.159566,
+                        "momentum": 1.569944,
+                        "value": 1.364552,
+                        "min_volatility": 0.715811
+                    },
+                    {
+                        "identifier": "DOW_260557103",
+                        "quality": 1.617135,
+                        "momentum": 1.798976,
+                        "value": 1.868992,
+                        "min_volatility": 1.066918
+                    },
+                    {
+                        "identifier": "T_00206R102",
+                        "quality": 0.164707,
+                        "momentum": 0.106162,
+                        "value": 0.488624,
+                        "min_volatility": 0.492245
+                    },
+                    {
+                        "identifier": "WU_959802109",
+                        "quality": 0.785024,
+                        "momentum": 0.784333,
+                        "value": 1.084503,
+                        "min_volatility": 0.714542
+                    },
+                    {
+                        "identifier": "LAZ_52110M109",
+                        "quality": 2.183397,
+                        "momentum": 3.005898,
+                        "value": 2.519409,
+                        "min_volatility": 1.3656
+                    },
+                    {
+                        "identifier": "BXP_101121101",
+                        "quality": 1.3321,
+                        "momentum": 1.620925,
+                        "value": 1.562488,
+                        "min_volatility": 0.966695
+                    },
+                    {
+                        "identifier": "OGN_68622V106",
+                        "quality": 1.25684,
+                        "momentum": 1.26588,
+                        "value": 1.618475,
+                        "min_volatility": 1.087146
+                    },
+                    {
+                        "identifier": "TWO_90187B804",
+                        "quality": 0.972517,
+                        "momentum": 1.165148,
+                        "value": 1.12522,
+                        "min_volatility": 0.785839
+                    },
+                    {
+                        "identifier": "OHI_681936100",
+                        "quality": 0.308391,
+                        "momentum": 0.314269,
+                        "value": 0.330356,
+                        "min_volatility": 0.457435
+                    },
+                    {
+                        "identifier": "WMB_969457100",
+                        "quality": 1.016182,
+                        "momentum": 1.593084,
+                        "value": 1.092971,
+                        "min_volatility": 0.723359
+                    },
+                    {
+                        "identifier": "CCI_22822V101",
+                        "quality": 0.164887,
+                        "momentum": -0.030019,
+                        "value": 0.389308,
+                        "min_volatility": 0.506042
+                    },
+                    {
+                        "identifier": "WES_958669103",
+                        "quality": 0.921004,
+                        "momentum": 1.245297,
+                        "value": 1.044394,
+                        "min_volatility": 0.662227
+                    },
+                    {
+                        "identifier": "MPLX_55336V100",
+                        "quality": 0.780942,
+                        "momentum": 1.060191,
+                        "value": 0.868416,
+                        "min_volatility": 0.605749
+                    },
+                    {
+                        "identifier": "XRX_98421M106",
+                        "quality": 1.764224,
+                        "momentum": 1.959301,
+                        "value": 2.120124,
+                        "min_volatility": 1.044705
+                    },
+                    {
+                        "identifier": "F_345370860",
+                        "quality": 1.269008,
+                        "momentum": 1.462618,
+                        "value": 1.697691,
+                        "min_volatility": 0.873125
+                    },
+                    {
+                        "identifier": "WBA_931427108",
+                        "quality": 0.31925,
+                        "momentum": 0.207555,
+                        "value": 0.786961,
+                        "min_volatility": 0.300297
+                    },
+                    {
+                        "identifier": "KW_489398107",
+                        "quality": 1.265249,
+                        "momentum": 1.396022,
+                        "value": 1.449428,
+                        "min_volatility": 0.961085
+                    },
+                    {
+                        "identifier": "XIFR_65341B106",
+                        "quality": 1.23695,
+                        "momentum": 1.123507,
+                        "value": 1.446618,
+                        "min_volatility": 0.972275
+                    },
+                    {
+                        "identifier": "CWEN_18539C204",
+                        "quality": 0.70701,
+                        "momentum": 0.876313,
+                        "value": 0.826324,
+                        "min_volatility": 0.667266
+                    },
+                    {
+                        "identifier": "SBLK_Y8162K204",
+                        "quality": 1.051879,
+                        "momentum": 1.280665,
+                        "value": 1.112048,
+                        "min_volatility": 0.52466
+                    },
+                    {
+                        "identifier": "ABR_038923108",
+                        "quality": 1.095647,
+                        "momentum": 1.324549,
+                        "value": 1.143504,
+                        "min_volatility": 0.733623
+                    },
+                    {
+                        "identifier": "BEN_354613101",
+                        "quality": 1.271024,
+                        "momentum": 1.536621,
+                        "value": 1.498625,
+                        "min_volatility": 0.858698
+                    },
+                    {
+                        "identifier": "CVI_12662P108",
+                        "quality": 1.170501,
+                        "momentum": 1.399487,
+                        "value": 1.65512,
+                        "min_volatility": 0.946841
+                    },
+                    {
+                        "identifier": "BXMT_09257W100",
+                        "quality": 1.062264,
+                        "momentum": 1.303637,
+                        "value": 1.20146,
+                        "min_volatility": 0.76427
+                    },
+                    {
+                        "identifier": "MO_02209S103",
+                        "quality": 0.037211,
+                        "momentum": -0.101256,
+                        "value": 0.251864,
+                        "min_volatility": 0.336835
+                    },
+                    {
+                        "identifier": "PMT_70931T103",
+                        "quality": 0.860999,
+                        "momentum": 0.968175,
+                        "value": 0.92588,
+                        "min_volatility": 0.691768
+                    },
+                    {
+                        "identifier": "VFC_918204108",
+                        "quality": 2.470904,
+                        "momentum": 2.81178,
+                        "value": 2.579416,
+                        "min_volatility": 1.330847
+                    },
+                    {
+                        "identifier": "NWL_651229106",
+                        "quality": 1.952851,
+                        "momentum": 1.950353,
+                        "value": 2.235341,
+                        "min_volatility": 1.262886
+                    },
+                    {
+                        "identifier": "FRO_M46528101",
+                        "quality": 1.267751,
+                        "momentum": 1.711515,
+                        "value": 1.277855,
+                        "min_volatility": 0.586299
+                    },
+                    {
+                        "identifier": "SBGI_829242106",
+                        "quality": 1.365425,
+                        "momentum": 1.617085,
+                        "value": 1.880033,
+                        "min_volatility": 1.049122
+                    },
+                    {
+                        "identifier": "OKE_682680103",
+                        "quality": 1.308228,
+                        "momentum": 1.87043,
+                        "value": 1.479587,
+                        "min_volatility": 1.012035
+                    },
+                    {
+                        "identifier": "VZ_92343V104",
+                        "quality": 0.13251,
+                        "momentum": -0.035036,
+                        "value": 0.442624,
+                        "min_volatility": 0.465062
+                    },
+                    {
+                        "identifier": "STWD_85571B105",
+                        "quality": 1.015421,
+                        "momentum": 1.189892,
+                        "value": 1.179702,
+                        "min_volatility": 0.769567
+                    },
+                    {
+                        "identifier": "CTRE_14174T107",
+                        "quality": 0.341992,
+                        "momentum": 0.446224,
+                        "value": 0.349214,
+                        "min_volatility": 0.400099
+                    },
+                    {
+                        "identifier": "AAT_024013104",
+                        "quality": 1.034359,
+                        "momentum": 1.198246,
+                        "value": 1.193651,
+                        "min_volatility": 0.795586
+                    },
+                    {
+                        "identifier": "AMCR_G0250X107",
+                        "quality": 0.703361,
+                        "momentum": 0.658314,
+                        "value": 0.886871,
+                        "min_volatility": 0.632312
+                    },
+                    {
+                        "identifier": "PAGP_72651A207",
+                        "quality": 1.061615,
+                        "momentum": 1.392289,
+                        "value": 1.188856,
+                        "min_volatility": 0.79092
+                    },
+                    {
+                        "identifier": "WPC_92936U109",
+                        "quality": 0.505068,
+                        "momentum": 0.502434,
+                        "value": 0.772219,
+                        "min_volatility": 0.592021
+                    },
+                    {
+                        "identifier": "CQP_16411Q101",
+                        "quality": 0.991095,
+                        "momentum": 1.371361,
+                        "value": 1.189514,
+                        "min_volatility": 0.807958
+                    },
+                    {
+                        "identifier": "MFA_55272X607",
+                        "quality": 1.136938,
+                        "momentum": 1.320887,
+                        "value": 1.242458,
+                        "min_volatility": 0.857994
+                    },
+                    {
+                        "identifier": "LNC_534187109",
+                        "quality": 1.909978,
+                        "momentum": 2.587034,
+                        "value": 2.217644,
+                        "min_volatility": 1.285011
+                    },
+                    {
+                        "identifier": "DEI_25960P109",
+                        "quality": 1.484726,
+                        "momentum": 1.806113,
+                        "value": 1.698449,
+                        "min_volatility": 0.969964
+                    },
+                    {
+                        "identifier": "IEP_451100101",
+                        "quality": 1.029575,
+                        "momentum": 1.285292,
+                        "value": 1.358178,
+                        "min_volatility": 0.788322
+                    },
+                    {
+                        "identifier": "PM_718172109",
+                        "quality": 0.24199,
+                        "momentum": 0.273307,
+                        "value": 0.325716,
+                        "min_volatility": 0.430877
+                    },
+                    {
+                        "identifier": "EPD_293792107",
+                        "quality": 0.680245,
+                        "momentum": 0.854404,
+                        "value": 0.797666,
+                        "min_volatility": 0.608431
+                    },
+                    {
+                        "identifier": "MMM_88579Y101",
+                        "quality": 1.382351,
+                        "momentum": 1.711343,
+                        "value": 1.488242,
+                        "min_volatility": 1.059892
+                    },
+                    {
+                        "identifier": "LYB_N53745100",
+                        "quality": 1.417321,
+                        "momentum": 1.524181,
+                        "value": 1.666816,
+                        "min_volatility": 0.967394
+                    },
+                    {
+                        "identifier": "LADR_505743104",
+                        "quality": 0.784884,
+                        "momentum": 0.901036,
+                        "value": 0.951369,
+                        "min_volatility": 0.64928
+                    },
+                    {
+                        "identifier": "O_756109104",
+                        "quality": 0.272573,
+                        "momentum": 0.195211,
+                        "value": 0.432889,
+                        "min_volatility": 0.454578
+                    },
+                    {
+                        "identifier": "PFE_717081103",
+                        "quality": 0.518653,
+                        "momentum": 0.420476,
+                        "value": 0.773523,
+                        "min_volatility": 0.56389
+                    },
+                    {
+                        "identifier": "AGNC_00123Q104",
+                        "quality": 0.905899,
+                        "momentum": 1.068731,
+                        "value": 0.94122,
+                        "min_volatility": 0.660399
+                    },
+                    {
+                        "identifier": "SPG_828806109",
+                        "quality": 1.265223,
+                        "momentum": 1.635186,
+                        "value": 1.334472,
+                        "min_volatility": 0.851268
+                    },
+                    {
+                        "identifier": "WHR_963320106",
+                        "quality": 1.11228,
+                        "momentum": 1.131446,
+                        "value": 1.481467,
+                        "min_volatility": 0.687217
+                    },
+                    {
+                        "identifier": "JHG_G4474Y214",
+                        "quality": 1.900961,
+                        "momentum": 2.582355,
+                        "value": 1.921407,
+                        "min_volatility": 1.164455
+                    },
+                    {
+                        "identifier": "D_25746U109",
+                        "quality": 0.377663,
+                        "momentum": 0.316258,
+                        "value": 0.62887,
+                        "min_volatility": 0.653536
+                    },
+                    {
+                        "identifier": "OBDC_69121K104",
+                        "quality": 1.026006,
+                        "momentum": 1.243912,
+                        "value": 1.093388,
+                        "min_volatility": 0.744439
+                    },
+                    {
+                        "identifier": "HAS_418056107",
+                        "quality": 1.241921,
+                        "momentum": 1.328282,
+                        "value": 1.375815,
+                        "min_volatility": 0.768882
+                    },
+                    {
+                        "identifier": "FANG_25278X109",
+                        "quality": 1.564891,
+                        "momentum": 1.997755,
+                        "value": 1.785195,
+                        "min_volatility": 1.001207
+                    },
+                    {
+                        "identifier": "KRC_49427F108",
+                        "quality": 1.390411,
+                        "momentum": 1.768339,
+                        "value": 1.654165,
+                        "min_volatility": 0.955788
+                    },
+                    {
+                        "identifier": "FBRT_35243J101",
+                        "quality": 0.789757,
+                        "momentum": 0.922834,
+                        "value": 0.990659,
+                        "min_volatility": 0.599525
+                    },
+                    {
+                        "identifier": "OMF_68268W103",
+                        "quality": 1.859141,
+                        "momentum": 2.564023,
+                        "value": 2.176936,
+                        "min_volatility": 1.143467
+                    },
+                    {
+                        "identifier": "NLY_035710839",
+                        "quality": 0.978308,
+                        "momentum": 1.151542,
+                        "value": 1.057188,
+                        "min_volatility": 0.712648
+                    },
+                    {
+                        "identifier": "TX_880890108",
+                        "quality": 0.96457,
+                        "momentum": 1.109128,
+                        "value": 1.194375,
+                        "min_volatility": 0.625969
+                    },
+                    {
+                        "identifier": "HE_419870100",
+                        "quality": 0.436696,
+                        "momentum": 0.473926,
+                        "value": 1.038824,
+                        "min_volatility": 0.617009
+                    },
+                    {
+                        "identifier": "GLPI_36467J108",
+                        "quality": 0.579365,
+                        "momentum": 0.648196,
+                        "value": 0.700425,
+                        "min_volatility": 0.546585
+                    },
+                    {
+                        "identifier": "VICI_925652109",
+                        "quality": 0.541257,
+                        "momentum": 0.541358,
+                        "value": 0.709868,
+                        "min_volatility": 0.585609
+                    },
+                    {
+                        "identifier": "ICL_M53213100",
+                        "quality": 1.008212,
+                        "momentum": 1.24979,
+                        "value": 1.057004,
+                        "min_volatility": 0.623396
+                    },
+                    {
+                        "identifier": "PAA_726503105",
+                        "quality": 1.119686,
+                        "momentum": 1.445634,
+                        "value": 1.254832,
+                        "min_volatility": 0.821796
+                    },
+                    {
+                        "identifier": "RITM_64828T201",
+                        "quality": 1.093031,
+                        "momentum": 1.357084,
+                        "value": 1.224579,
+                        "min_volatility": 0.824643
+                    }
+                ],
+                "strategy_id": 1839,
+                "optimization_type": "DIRECT_INDEX"
+            }
+          }
+    },
+    "settings": {
+        "strategies": {
+          "1839": {
+            "weight_tax": 1.0,
+            "weight_drift": 1.0,
+            "weight_transaction": 0.1,
+            "weight_factor_model": 0.6,
+            "weight_cash_drag": 1,
+            "rebalance_threshold": 2.0,
+            "buy_threshold": 0.1,
+            "holding_time_days": 1,
+            "should_tlh": true,
+            "tlh_min_loss_threshold": 0.0005,
+            "range_min_weight_multiplier": 0.5,
+            "range_max_weight_multiplier": 2,
+            "min_notional": 5.1,
+            "rank_penalty_factor": 1e-06
+            }
+        }
+    }
+}

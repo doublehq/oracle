@@ -1,0 +1,1536 @@
+{
+    "input": {
+      "now": "2025-04-07T16:37:10",
+      "multipleHouseholdSpecific": {
+        "marketInfo": {
+          "dailyMarketInfo": {
+            "stockIndexes": {},
+            "allInstrumentInfo": {
+              "etfInfo": {
+                "VV": {
+                  "expenseRatioBps": 4,
+                  "historicalSpreadBps": 3.1869
+                },
+                "IVV": {
+                  "expenseRatioBps": 3,
+                  "historicalSpreadBps": 0.8924
+                },
+                "IWB": {
+                  "expenseRatioBps": 15,
+                  "historicalSpreadBps": 2.514
+                },
+                "VBR": {
+                  "expenseRatioBps": 7.000000000000001,
+                  "historicalSpreadBps": 9.296
+                },
+                "VEA": {
+                  "expenseRatioBps": 3,
+                  "historicalSpreadBps": 2.1995
+                },
+                "VEU": {
+                  "expenseRatioBps": 4,
+                  "historicalSpreadBps": 1.8483
+                },
+                "VIG": {
+                  "expenseRatioBps": 5,
+                  "historicalSpreadBps": 2.3043
+                },
+                "VOO": {
+                  "expenseRatioBps": 3,
+                  "historicalSpreadBps": 0.8058
+                },
+                "VSS": {
+                  "expenseRatioBps": 7.000000000000001,
+                  "historicalSpreadBps": 12.6096
+                },
+                "VWO": {
+                  "expenseRatioBps": 7.000000000000001,
+                  "historicalSpreadBps": 2.4935
+                },
+                "AVUV": {
+                  "expenseRatioBps": 25,
+                  "historicalSpreadBps": 5.3533
+                },
+                "DFSI": {
+                  "expenseRatioBps": 24,
+                  "historicalSpreadBps": 3
+                },
+                "DFSV": {
+                  "expenseRatioBps": 31,
+                  "historicalSpreadBps": 4.0631
+                },
+                "IDEV": {
+                  "expenseRatioBps": 4,
+                  "historicalSpreadBps": 1.6247
+                },
+                "IEFA": {
+                  "expenseRatioBps": 7.000000000000001,
+                  "historicalSpreadBps": 1.4842
+                },
+                "IEMG": {
+                  "expenseRatioBps": 9,
+                  "historicalSpreadBps": 2.0812
+                },
+                "SCHD": {
+                  "expenseRatioBps": 6,
+                  "historicalSpreadBps": 4.051
+                },
+                "SCHE": {
+                  "expenseRatioBps": 11,
+                  "historicalSpreadBps": 4.0866
+                },
+                "SCHF": {
+                  "expenseRatioBps": 6,
+                  "historicalSpreadBps": 5.6513
+                },
+                "SCHK": {
+                  "expenseRatioBps": 5,
+                  "historicalSpreadBps": 4.1789
+                },
+                "SCHX": {
+                  "expenseRatioBps": 3,
+                  "historicalSpreadBps": 5.0994
+                },
+                "SLYV": {
+                  "expenseRatioBps": 15,
+                  "historicalSpreadBps": 7.9055
+                },
+                "SPLG": {
+                  "expenseRatioBps": 2,
+                  "historicalSpreadBps": 1.7104
+                },
+                "SPTM": {
+                  "expenseRatioBps": 3,
+                  "historicalSpreadBps": 2.0054
+                },
+                "VIOV": {
+                  "expenseRatioBps": 10,
+                  "historicalSpreadBps": 19.0554
+                },
+                "VONE": {
+                  "expenseRatioBps": 7.000000000000001,
+                  "historicalSpreadBps": 5.9276
+                },
+                "S2424": {},
+                "_CASH_": {}
+              },
+              "stockInfo": {}
+            }
+          },
+          "currentMarketInfo": {
+            "priceMap": {
+              "VV": 227.571,
+              "IVV": 498.03,
+              "IWB": 271.73,
+              "VBR": 164.645,
+              "VEA": 45.385,
+              "VEU": 54.05,
+              "VIG": 173.015,
+              "VOO": 455.49,
+              "VSS": 103.65,
+              "VWO": 40.09,
+              "AVUV": 76.005,
+              "DFSI": 31.36,
+              "DFSV": 24.53,
+              "IDEV": 61.46,
+              "IEFA": 67.27,
+              "IEMG": 48.02,
+              "SCHD": 24.6,
+              "SCHE": 24.46,
+              "SCHF": 17.66,
+              "SCHK": 23.84,
+              "SCHX": 19.55,
+              "SLYV": 68.36,
+              "SPLG": 58.3065,
+              "SPTM": 60.26,
+              "VIOV": 73.28,
+              "VONE": 225.22,
+              "S2424": 1,
+              "_CASH_": 1
+            }
+          }
+        },
+        "modelingInfo": {}
+      },
+      "mapOfSingleHouseholdPartial": {
+        "h1": {
+          "singleHouseholdSpecific": {
+            "closedTaxLotHistories": {
+              "forTaxableAccounts": {
+                "dailyClosedLotsWithinWashSaleWindow": {
+                  "2025-04-03": {
+                    "AVUV": [
+                      {
+                        "idB": 11,
+                        "pxB": 88.01032335284546,
+                        "pxS": 82.8860503824503,
+                        "dayB": "2025-03-21",
+                        "dayS": "2025-04-03",
+                        "qtyB": 0.53471
+                      }
+                    ],
+                    "VIOV": [
+                      {
+                        "idB": 7,
+                        "pxB": 85.26921406860616,
+                        "pxS": 80.20335793892025,
+                        "dayB": "2025-03-21",
+                        "dayS": "2025-04-03",
+                        "qtyB": 0.55272
+                      }
+                    ]
+                  },
+                  "2025-04-04": {
+                    "IVV": [
+                      {
+                        "idB": 26,
+                        "pxB": 565.4211221915175,
+                        "pxS": 513.3966117986303,
+                        "dayB": "2025-03-21",
+                        "dayS": "2025-04-04",
+                        "qtyB": 0.08323
+                      }
+                    ],
+                    "IDEV": [
+                      {
+                        "idB": 25,
+                        "pxB": 70.44444776878544,
+                        "pxS": 63.54810238305384,
+                        "dayB": "2025-03-21",
+                        "dayS": "2025-04-04",
+                        "qtyB": 0.66847
+                      }
+                    ],
+                    "VONE": [
+                      {
+                        "idB": 17,
+                        "pxB": 256.6366857454347,
+                        "pxS": 231.56173344235486,
+                        "dayB": "2025-03-21",
+                        "dayS": "2025-04-04",
+                        "qtyB": 0.18345
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "mapOfSingleAccountPartial": {
+            "8QD05288": {
+              "singleAccountSpecific": {
+                "taxSituation": {
+                  "taxability": "ACCOUNT_IS_TAXABLE",
+                  "capitalGainsTaxRates": {
+                    "marginalLongTermState": 6.26,
+                    "marginalOrdinaryIncome": 32,
+                    "marginalShortTermState": 6.26,
+                    "marginalLongTermFederal": 15
+                  },
+                  "marginalQualifiedDividend": 15
+                },
+                "singleAccountSpecificInvestorSettings": {},
+                "singleAccountSpecificClientRestrictionSettings": {
+                  "holdingTimeRestrictions": {
+                    "holdingTimeRestrictionsWithDefaultsByInstrumentType": {
+                      "defaultValues": {
+                        "etf": {
+                          "type": "onlySellLotsHeldForAtLeastThisManyDays",
+                          "dayDifference": {
+                            "nDays": 1,
+                            "dayDifferenceType": "marketDays"
+                          }
+                        },
+                        "stock": {
+                          "type": "onlySellLotsHeldForAtLeastThisManyDays",
+                          "dayDifference": {
+                            "nDays": 1,
+                            "dayDifferenceType": "marketDays"
+                          }
+                        },
+                        "mutualFund": {
+                          "type": "onlySellLotsHeldForAtLeastThisManyDays",
+                          "dayDifference": {
+                            "nDays": 1,
+                            "dayDifferenceType": "marketDays"
+                          }
+                        },
+                        "structuredProduct": {
+                          "type": "onlySellLotsHeldForAtLeastThisManyDays",
+                          "dayDifference": {
+                            "nDays": 1,
+                            "dayDifferenceType": "marketDays"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "clientHardTradingRestrictions": {
+                    "cannotBuyOrSell": [],
+                    "unbuyableButSellable": [],
+                    "unsellableButBuyable": []
+                  }
+                }
+              },
+              "mapOfSingleSubAccountPartial": {
+                "2424:ETF_TLH:PAIRS_TLH": {
+                  "singleSubAccountSpecific": {
+                    "investorSettings": {
+                      "mode": "pairsTlh",
+                      "taxAwareSettings": {
+                        "mode": "taxAware",
+                        "taxUnawareSettings": {
+                          "mode": "taxUnaware",
+                          "buyOnlySettings": {
+                            "mode": "buyOnly",
+                            "buyThreshold": {
+                              "type": "globalObjectiveBased",
+                              "improvementMustExceed": 10
+                            },
+                            "rawOptimizerSettings": {
+                              "objectiveTreeWeights": {
+                                "tax": 100,
+                                "entireTracking": 100,
+                                "detailedTracking": {
+                                  "betaBased": 100
+                                }
+                              },
+                              "linearProgrammingSolverSettings": {
+                                "type": "CLP"
+                              },
+                              "globalObjectiveNormalizationMultipliers": {
+                                "taxSubObjectiveNormalizationMultiplier": 1000000,
+                                "trackingSubObjectiveNormalizationMultipliers": {
+                                  "naiveSubObjectiveNormalizationMultiplier": 33333
+                                }
+                              },
+                              "preOptimizationConstraintViolationHandlingInstructions": {
+                                "type": "doNotForceTradingEvenIfPreOptimizationPortfolioViolatesConstraints"
+                              }
+                            },
+                            "sharedInvestorSettings": {
+                              "label": "TradeFractionalShares",
+                              "quantizationStrategy": {
+                                "strategy": "objectiveUnawareQuantization",
+                                "orderMinimumNotional": {
+                                  "forBuy": {
+                                    "overrides": {
+                                      "_CASH_": 0
+                                    },
+                                    "defaultValues": {
+                                      "etf": 5.1,
+                                      "stock": 5.1,
+                                      "mutualFund": 100,
+                                      "structuredProduct": 0
+                                    }
+                                  },
+                                  "forSell": {
+                                    "overrides": {},
+                                    "defaultValues": {
+                                      "etf": 5.1,
+                                      "stock": 5.1,
+                                      "mutualFund": 100,
+                                      "structuredProduct": 0
+                                    }
+                                  }
+                                },
+                                "orderRoundingNDigits": {
+                                  "overrides": {},
+                                  "defaultValues": {
+                                    "etf": 5,
+                                    "stock": 5,
+                                    "mutualFund": 0,
+                                    "structuredProduct": 0
+                                  }
+                                },
+                                "quantizationRelaxationInstructionsToAvoidNegativeCash": {
+                                  "maxRelaxationSteps": 25
+                                }
+                              },
+                              "washSalePreventionStrategy": "prohibitWashSales",
+                              "nonTargetInstrumentSettings": {
+                                "sellPermissionsInstructions": {
+                                  "default": {
+                                    "forLongTerm": {
+                                      "regardlessOfReturn": "canAlwaysSell"
+                                    },
+                                    "forShortTerm": {
+                                      "regardlessOfReturn": "canAlwaysSell"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "rebalanceThreshold": {
+                            "type": "globalObjectiveBased",
+                            "improvementMustExceed": 200
+                          }
+                        },
+                        "sellPermissionsInstructions": {
+                          "default": {
+                            "forLongTerm": {
+                              "regardlessOfReturn": "canAlwaysSell"
+                            },
+                            "forShortTerm": {
+                              "regardlessOfReturn": "canAlwaysSell"
+                            }
+                          }
+                        },
+                        "singleInstrumentLotSortingStrategy": "GREEDILY_SELL_HIGHER_TAX_LOSSES_PER_DOLLAR_HELD"
+                      },
+                      "tlhSellOrderSortingStrategy": "BIGGEST_TAX_SAVINGS_AMOUNT_FIRST",
+                      "averageLossHarvestThresholdInstructions": {
+                        "default": -1.5
+                      }
+                    },
+                    "subAccountSpecificClientSettings": {
+                      "targetAllocation": {
+                        "allAssetClasses": {
+                          "AC_025072877": {
+                            "instruments": [
+                              "AVUV",
+                              "DFSV"
+                            ]
+                          },
+                          "AC_464287200": {
+                            "instruments": [
+                              "IVV",
+                              "SPLG"
+                            ]
+                          },
+                          "AC_46432F842": {
+                            "instruments": [
+                              "IEFA"
+                            ]
+                          },
+                          "AC_46434G103": {
+                            "instruments": [
+                              "IEMG"
+                            ]
+                          },
+                          "AC_46435G326": {
+                            "instruments": [
+                              "IDEV",
+                              "DFSI"
+                            ]
+                          },
+                          "AC_78464A805": {
+                            "instruments": [
+                              "SPTM"
+                            ]
+                          },
+                          "AC_808524201": {
+                            "instruments": [
+                              "SCHX"
+                            ]
+                          },
+                          "AC_808524706": {
+                            "instruments": [
+                              "SCHE"
+                            ]
+                          },
+                          "AC_808524722": {
+                            "instruments": [
+                              "SCHK"
+                            ]
+                          },
+                          "AC_808524797": {
+                            "instruments": [
+                              "SCHD"
+                            ]
+                          },
+                          "AC_808524805": {
+                            "instruments": [
+                              "SCHF"
+                            ]
+                          },
+                          "AC_921908844": {
+                            "instruments": [
+                              "VIG"
+                            ]
+                          },
+                          "AC_921932778": {
+                            "instruments": [
+                              "VIOV",
+                              "SLYV"
+                            ]
+                          },
+                          "AC_921943858": {
+                            "instruments": [
+                              "VEA"
+                            ]
+                          },
+                          "AC_922042718": {
+                            "instruments": [
+                              "VSS"
+                            ]
+                          },
+                          "AC_922042775": {
+                            "instruments": [
+                              "VEU"
+                            ]
+                          },
+                          "AC_922042858": {
+                            "instruments": [
+                              "VWO"
+                            ]
+                          },
+                          "AC_92206C730": {
+                            "instruments": [
+                              "VONE",
+                              "IWB"
+                            ]
+                          },
+                          "AC_922908363": {
+                            "instruments": [
+                              "VOO"
+                            ]
+                          },
+                          "AC_922908611": {
+                            "instruments": [
+                              "VBR"
+                            ]
+                          },
+                          "AC_922908637": {
+                            "instruments": [
+                              "VV"
+                            ]
+                          }
+                        },
+                        "targetWithRanges": {
+                          "assetClassRanges": {
+                            "AC_025072877": {
+                              "softMax": 9.40835522,
+                              "softMin": 2.352088805
+                            },
+                            "AC_464287200": {
+                              "softMax": 9.40835522,
+                              "softMin": 2.352088805
+                            },
+                            "AC_46432F842": {
+                              "softMax": 9.40835522,
+                              "softMin": 2.352088805
+                            },
+                            "AC_46434G103": {
+                              "softMax": 9.40835522,
+                              "softMin": 2.352088805
+                            },
+                            "AC_46435G326": {
+                              "softMax": 9.40835522,
+                              "softMin": 2.352088805
+                            },
+                            "AC_78464A805": {
+                              "softMax": 9.40835718,
+                              "softMin": 2.352089295
+                            },
+                            "AC_808524201": {
+                              "softMax": 9.40835718,
+                              "softMin": 2.352089295
+                            },
+                            "AC_808524706": {
+                              "softMax": 9.4083572,
+                              "softMin": 2.3520893
+                            },
+                            "AC_808524722": {
+                              "softMax": 9.4083572,
+                              "softMin": 2.3520893
+                            },
+                            "AC_808524797": {
+                              "softMax": 9.4083572,
+                              "softMin": 2.3520893
+                            },
+                            "AC_808524805": {
+                              "softMax": 9.4083572,
+                              "softMin": 2.3520893
+                            },
+                            "AC_921908844": {
+                              "softMax": 9.40835718,
+                              "softMin": 2.352089295
+                            },
+                            "AC_921932778": {
+                              "softMax": 9.40835718,
+                              "softMin": 2.352089295
+                            },
+                            "AC_921943858": {
+                              "softMax": 9.40835718,
+                              "softMin": 2.352089295
+                            },
+                            "AC_922042718": {
+                              "softMax": 9.40835718,
+                              "softMin": 2.352089295
+                            },
+                            "AC_922042775": {
+                              "softMax": 9.40835718,
+                              "softMin": 2.352089295
+                            },
+                            "AC_922042858": {
+                              "softMax": 9.40835718,
+                              "softMin": 2.352089295
+                            },
+                            "AC_92206C730": {
+                              "softMax": 9.40835718,
+                              "softMin": 2.352089295
+                            },
+                            "AC_922908363": {
+                              "softMax": 9.4083572,
+                              "softMin": 2.3520893
+                            },
+                            "AC_922908611": {
+                              "softMax": 9.40835718,
+                              "softMin": 2.352089295
+                            },
+                            "AC_922908637": {
+                              "softMax": 9.40835718,
+                              "softMin": 2.352089295
+                            }
+                          },
+                          "assetClassTargets": {
+                            "cash": 1.21225446,
+                            "AC_025072877": 4.70417761,
+                            "AC_464287200": 4.70417761,
+                            "AC_46432F842": 4.70417761,
+                            "AC_46434G103": 4.70417761,
+                            "AC_46435G326": 4.70417761,
+                            "AC_78464A805": 4.70417859,
+                            "AC_808524201": 4.70417859,
+                            "AC_808524706": 4.7041786,
+                            "AC_808524722": 4.7041786,
+                            "AC_808524797": 4.7041786,
+                            "AC_808524805": 4.7041786,
+                            "AC_921908844": 4.70417859,
+                            "AC_921932778": 4.70417859,
+                            "AC_921943858": 4.70417859,
+                            "AC_922042718": 4.70417859,
+                            "AC_922042775": 4.70417859,
+                            "AC_922042858": 4.70417859,
+                            "AC_92206C730": 4.70417859,
+                            "AC_922908363": 4.7041786,
+                            "AC_922908611": 4.70417859,
+                            "AC_922908637": 4.70417859
+                          }
+                        }
+                      },
+                      "assetsAndLiabilities": {
+                        "clientAssets": {
+                          "portfoliosByType": {
+                            "heldByUs": {
+                              "cash": 10.86,
+                              "taxLots": {
+                                "VV": [
+                                  {
+                                    "id": 27,
+                                    "pxB": 259.87205,
+                                    "dayB": "2025-03-21",
+                                    "qtyB": 0.18132
+                                  }
+                                ],
+                                "IWB": [
+                                  {
+                                    "id": 39,
+                                    "pxB": 280.24602,
+                                    "dayB": "2025-04-04",
+                                    "qtyB": 0.15283
+                                  }
+                                ],
+                                "VBR": [
+                                  {
+                                    "id": 42,
+                                    "pxB": 188.5259,
+                                    "dayB": "2025-03-21",
+                                    "qtyB": 0.24978
+                                  }
+                                ],
+                                "VEA": [
+                                  {
+                                    "id": 45,
+                                    "pxB": 52.07101,
+                                    "dayB": "2025-03-21",
+                                    "qtyB": 0.90415
+                                  }
+                                ],
+                                "VEU": [
+                                  {
+                                    "id": 32,
+                                    "pxB": 61.98396,
+                                    "dayB": "2025-03-21",
+                                    "qtyB": 0.75939
+                                  }
+                                ],
+                                "VIG": [
+                                  {
+                                    "id": 30,
+                                    "pxB": 193.95113,
+                                    "dayB": "2025-03-21",
+                                    "qtyB": 0.24269
+                                  }
+                                ],
+                                "VOO": [
+                                  {
+                                    "id": 37,
+                                    "pxB": 519.08229,
+                                    "dayB": "2025-03-21",
+                                    "qtyB": 0.09066
+                                  }
+                                ],
+                                "VSS": [
+                                  {
+                                    "id": 33,
+                                    "pxB": 118.70685,
+                                    "dayB": "2025-03-21",
+                                    "qtyB": 0.39686
+                                  }
+                                ],
+                                "VWO": [
+                                  {
+                                    "id": 40,
+                                    "pxB": 46.04201,
+                                    "dayB": "2025-03-21",
+                                    "qtyB": 1.02211
+                                  }
+                                ],
+                                "DFSI": [
+                                  {
+                                    "id": 35,
+                                    "pxB": 32.41183,
+                                    "dayB": "2025-04-04",
+                                    "qtyB": 1.31958
+                                  }
+                                ],
+                                "DFSV": [
+                                  {
+                                    "id": 34,
+                                    "pxB": 26.73471,
+                                    "dayB": "2025-04-03",
+                                    "qtyB": 1.69293
+                                  }
+                                ],
+                                "IEFA": [
+                                  {
+                                    "id": 36,
+                                    "pxB": 77.59644,
+                                    "dayB": "2025-03-21",
+                                    "qtyB": 0.6066
+                                  }
+                                ],
+                                "IEMG": [
+                                  {
+                                    "id": 44,
+                                    "pxB": 55.08271,
+                                    "dayB": "2025-03-21",
+                                    "qtyB": 0.85417
+                                  }
+                                ],
+                                "SCHD": [
+                                  {
+                                    "id": 38,
+                                    "pxB": 27.74669,
+                                    "dayB": "2025-03-21",
+                                    "qtyB": 1.69786
+                                  }
+                                ],
+                                "SCHE": [
+                                  {
+                                    "id": 31,
+                                    "pxB": 28.06969,
+                                    "dayB": "2025-03-21",
+                                    "qtyB": 1.67761
+                                  }
+                                ],
+                                "SCHF": [
+                                  {
+                                    "id": 41,
+                                    "pxB": 20.26963,
+                                    "dayB": "2025-03-21",
+                                    "qtyB": 2.32318
+                                  }
+                                ],
+                                "SCHK": [
+                                  {
+                                    "id": 43,
+                                    "pxB": 27.20943,
+                                    "dayB": "2025-03-21",
+                                    "qtyB": 1.73065
+                                  }
+                                ],
+                                "SCHX": [
+                                  {
+                                    "id": 29,
+                                    "pxB": 22.31533,
+                                    "dayB": "2025-03-21",
+                                    "qtyB": 2.10976
+                                  }
+                                ],
+                                "SLYV": [
+                                  {
+                                    "id": 46,
+                                    "pxB": 74.97764,
+                                    "dayB": "2025-04-03",
+                                    "qtyB": 0.60378
+                                  }
+                                ],
+                                "SPLG": [
+                                  {
+                                    "id": 47,
+                                    "pxB": 60.13792,
+                                    "dayB": "2025-04-04",
+                                    "qtyB": 0.71203
+                                  }
+                                ],
+                                "SPTM": [
+                                  {
+                                    "id": 28,
+                                    "pxB": 68.68224,
+                                    "dayB": "2025-03-21",
+                                    "qtyB": 0.68533
+                                  }
+                                ]
+                              },
+                              "withoutLots": {}
+                            }
+                          }
+                        }
+                      },
+                      "singleSubAccountSpecificClientRestrictionSettings": {
+                        "cashRestrictions": {
+                          "mustLeaveAsideHardCashPercentage": 1.1819481004625774,
+                          "mustLeaveAsideSoftCashPercentage": 1.2122544620128999
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "accountsInHouseholdOrderingInstructions": {}
+        }
+      }
+    },
+    "output": {
+      "mapOfDetailedSingleHouseholdInvestingActions": {
+        "h1": {
+          "mapOfDetailedSingleAccountInvestingActions": {
+            "8QD05288": {
+              "singleAccountInvestingActions": {
+                "mapOfSubAccounts": {
+                  "2424:ETF_TLH:PAIRS_TLH": {
+                    "orders": {},
+                    "explanation": "We first tried to rebalance (i.e. allow selling), but did not suggest any orders at that step, which said that we will not trade because the suggested orders cause an improvement that is too small; it is less than the threshold of 200.0 and in this case were are only buying and not selling, so there is nothing to do. We then tried to see if it's worth just investing (i.e. with selling disallowed), which said that we will not trade because the suggested orders cause an improvement that is too small; it is less than the threshold of 10.0 and in this case were are only buying and not selling, so there is nothing to do.",
+                    "ordersByReasonCode": {
+                      "commonReasons": [
+                        "invest"
+                      ]
+                    },
+                    "orderGenerationDetails": {
+                      "rebalanceThresholdResult": {
+                        "portfolioRestrictions": {
+                          "detailed": {
+                            "byReason": {
+                              "fromIndividualUnsellableTaxLots": {
+                                "IVV": {
+                                  "max": 0
+                                },
+                                "AVUV": {
+                                  "max": 0
+                                },
+                                "IDEV": {
+                                  "max": 0
+                                },
+                                "VIOV": {
+                                  "max": 0
+                                },
+                                "VONE": {
+                                  "max": 0
+                                }
+                              }
+                            },
+                            "mergedHeldByUs": {
+                              "IVV": {
+                                "max": 0
+                              },
+                              "AVUV": {
+                                "max": 0
+                              },
+                              "IDEV": {
+                                "max": 0
+                              },
+                              "VIOV": {
+                                "max": 0
+                              },
+                              "VONE": {
+                                "max": 0
+                              }
+                            },
+                            "mergedAllClientAssets": {
+                              "IVV": {
+                                "max": 0
+                              },
+                              "AVUV": {
+                                "max": 0
+                              },
+                              "IDEV": {
+                                "max": 0
+                              },
+                              "VIOV": {
+                                "max": 0
+                              },
+                              "VONE": {
+                                "max": 0
+                              }
+                            }
+                          },
+                          "nonStrategySpecific": {
+                            "washSaleRestrictions": {
+                              "type": "withTaxLotDetail",
+                              "doNotBuy": [
+                                "AVUV",
+                                "IDEV",
+                                "IVV",
+                                "VIOV",
+                                "VONE"
+                              ],
+                              "restrictions": {}
+                            }
+                          }
+                        },
+                        "tradingThresholdPredicateResult": {
+                          "type": "globalObjectiveBased",
+                          "objectiveValues": {
+                            "afterTrading": {
+                              "tax": 46011.39253798,
+                              "entire": 46011.39253798,
+                              "detailedTracking": {
+                                "betaBased": 0,
+                                "entireTracking": 0
+                              }
+                            },
+                            "beforeTrading": {
+                              "tax": 46097.44176652,
+                              "entire": 46106.31129686,
+                              "detailedTracking": {
+                                "betaBased": 8.86953034,
+                                "entireTracking": 8.86953034
+                              }
+                            }
+                          },
+                          "tradingDecision": {
+                            "details": {
+                              "reasonNotToTrade": "tradesMakePortfolioOnlySlightlyBetter",
+                              "globalObjectiveThreshold": {
+                                "type": "globalObjectiveBased",
+                                "improvementMustExceed": 200
+                              },
+                              "suggestedOrderQuantities": {
+                                "buyQuantities": {
+                                  "VBR": 0.00090933,
+                                  "VEA": 0.00528582,
+                                  "VEU": 0.00425005,
+                                  "VSS": 0.00135268,
+                                  "VWO": 0.00744212,
+                                  "IEFA": 0.00696825,
+                                  "IEMG": 0.0053622,
+                                  "SCHE": 0.00982846,
+                                  "SCHF": 0.01400826,
+                                  "SCHK": 0.00067318,
+                                  "SCHX": 0.00148013
+                                },
+                                "sellQuantities": {
+                                  "IWB": 0.00093384,
+                                  "VIG": 0.00412835,
+                                  "DFSI": 0.00342133,
+                                  "DFSV": 0.01030725,
+                                  "SCHD": 0.02002485,
+                                  "SPLG": 0.00413747,
+                                  "SPTM": 0.00038568
+                                }
+                              }
+                            },
+                            "willTrade": false
+                          }
+                        },
+                        "preQuantizationNonEmptyOrderQuantities": {
+                          "buyQuantities": {
+                            "VBR": 0.00090933,
+                            "VEA": 0.00528582,
+                            "VEU": 0.00425005,
+                            "VSS": 0.00135268,
+                            "VWO": 0.00744212,
+                            "IEFA": 0.00696825,
+                            "IEMG": 0.0053622,
+                            "SCHE": 0.00982846,
+                            "SCHF": 0.01400826,
+                            "SCHK": 0.00067318,
+                            "SCHX": 0.00148013
+                          },
+                          "sellQuantities": {
+                            "IWB": 0.00093384,
+                            "VIG": 0.00412835,
+                            "DFSI": 0.00342133,
+                            "DFSV": 0.01030725,
+                            "SCHD": 0.02002485,
+                            "SPLG": 0.00413747,
+                            "SPTM": 0.00038568
+                          }
+                        }
+                      },
+                      "subsequentBuyOnlyThresholdResult": {
+                        "portfolioRestrictions": {
+                          "detailed": {
+                            "byReason": {
+                              "fromIndividualUnsellableTaxLots": {
+                                "VV": {
+                                  "min": 0.18132
+                                },
+                                "IVV": {
+                                  "max": 0
+                                },
+                                "IWB": {
+                                  "min": 0.15283
+                                },
+                                "VBR": {
+                                  "min": 0.24978
+                                },
+                                "VEA": {
+                                  "min": 0.90415
+                                },
+                                "VEU": {
+                                  "min": 0.75939
+                                },
+                                "VIG": {
+                                  "min": 0.24269
+                                },
+                                "VOO": {
+                                  "min": 0.09066
+                                },
+                                "VSS": {
+                                  "min": 0.39686
+                                },
+                                "VWO": {
+                                  "min": 1.02211
+                                },
+                                "AVUV": {
+                                  "max": 0
+                                },
+                                "DFSI": {
+                                  "min": 1.31958
+                                },
+                                "DFSV": {
+                                  "min": 1.69293
+                                },
+                                "IDEV": {
+                                  "max": 0
+                                },
+                                "IEFA": {
+                                  "min": 0.6066
+                                },
+                                "IEMG": {
+                                  "min": 0.85417
+                                },
+                                "SCHD": {
+                                  "min": 1.69786
+                                },
+                                "SCHE": {
+                                  "min": 1.67761
+                                },
+                                "SCHF": {
+                                  "min": 2.32318
+                                },
+                                "SCHK": {
+                                  "min": 1.73065
+                                },
+                                "SCHX": {
+                                  "min": 2.10976
+                                },
+                                "SLYV": {
+                                  "min": 0.60378
+                                },
+                                "SPLG": {
+                                  "min": 0.71203
+                                },
+                                "SPTM": {
+                                  "min": 0.68533
+                                },
+                                "VIOV": {
+                                  "max": 0
+                                },
+                                "VONE": {
+                                  "max": 0
+                                }
+                              }
+                            },
+                            "mergedHeldByUs": {
+                              "VV": {
+                                "min": 0.18132
+                              },
+                              "IVV": {
+                                "max": 0
+                              },
+                              "IWB": {
+                                "min": 0.15283
+                              },
+                              "VBR": {
+                                "min": 0.24978
+                              },
+                              "VEA": {
+                                "min": 0.90415
+                              },
+                              "VEU": {
+                                "min": 0.75939
+                              },
+                              "VIG": {
+                                "min": 0.24269
+                              },
+                              "VOO": {
+                                "min": 0.09066
+                              },
+                              "VSS": {
+                                "min": 0.39686
+                              },
+                              "VWO": {
+                                "min": 1.02211
+                              },
+                              "AVUV": {
+                                "max": 0
+                              },
+                              "DFSI": {
+                                "min": 1.31958
+                              },
+                              "DFSV": {
+                                "min": 1.69293
+                              },
+                              "IDEV": {
+                                "max": 0
+                              },
+                              "IEFA": {
+                                "min": 0.6066
+                              },
+                              "IEMG": {
+                                "min": 0.85417
+                              },
+                              "SCHD": {
+                                "min": 1.69786
+                              },
+                              "SCHE": {
+                                "min": 1.67761
+                              },
+                              "SCHF": {
+                                "min": 2.32318
+                              },
+                              "SCHK": {
+                                "min": 1.73065
+                              },
+                              "SCHX": {
+                                "min": 2.10976
+                              },
+                              "SLYV": {
+                                "min": 0.60378
+                              },
+                              "SPLG": {
+                                "min": 0.71203
+                              },
+                              "SPTM": {
+                                "min": 0.68533
+                              },
+                              "VIOV": {
+                                "max": 0
+                              },
+                              "VONE": {
+                                "max": 0
+                              }
+                            },
+                            "mergedAllClientAssets": {
+                              "VV": {
+                                "min": 0.18132
+                              },
+                              "IVV": {
+                                "max": 0
+                              },
+                              "IWB": {
+                                "min": 0.15283
+                              },
+                              "VBR": {
+                                "min": 0.24978
+                              },
+                              "VEA": {
+                                "min": 0.90415
+                              },
+                              "VEU": {
+                                "min": 0.75939
+                              },
+                              "VIG": {
+                                "min": 0.24269
+                              },
+                              "VOO": {
+                                "min": 0.09066
+                              },
+                              "VSS": {
+                                "min": 0.39686
+                              },
+                              "VWO": {
+                                "min": 1.02211
+                              },
+                              "AVUV": {
+                                "max": 0
+                              },
+                              "DFSI": {
+                                "min": 1.31958
+                              },
+                              "DFSV": {
+                                "min": 1.69293
+                              },
+                              "IDEV": {
+                                "max": 0
+                              },
+                              "IEFA": {
+                                "min": 0.6066
+                              },
+                              "IEMG": {
+                                "min": 0.85417
+                              },
+                              "SCHD": {
+                                "min": 1.69786
+                              },
+                              "SCHE": {
+                                "min": 1.67761
+                              },
+                              "SCHF": {
+                                "min": 2.32318
+                              },
+                              "SCHK": {
+                                "min": 1.73065
+                              },
+                              "SCHX": {
+                                "min": 2.10976
+                              },
+                              "SLYV": {
+                                "min": 0.60378
+                              },
+                              "SPLG": {
+                                "min": 0.71203
+                              },
+                              "SPTM": {
+                                "min": 0.68533
+                              },
+                              "VIOV": {
+                                "max": 0
+                              },
+                              "VONE": {
+                                "max": 0
+                              }
+                            }
+                          },
+                          "strategySpecific": {
+                            "allUnsellableTaxLotsDueToSellPermissions": {
+                              "VV": [
+                                {
+                                  "taxLot": {
+                                    "id": 27,
+                                    "pxB": 259.87205,
+                                    "dayB": "2025-03-21",
+                                    "qtyB": 0.18132
+                                  },
+                                  "taxLotId": 27
+                                }
+                              ],
+                              "IWB": [
+                                {
+                                  "taxLot": {
+                                    "id": 39,
+                                    "pxB": 280.24602,
+                                    "dayB": "2025-04-04",
+                                    "qtyB": 0.15283
+                                  },
+                                  "taxLotId": 39
+                                }
+                              ],
+                              "VBR": [
+                                {
+                                  "taxLot": {
+                                    "id": 42,
+                                    "pxB": 188.5259,
+                                    "dayB": "2025-03-21",
+                                    "qtyB": 0.24978
+                                  },
+                                  "taxLotId": 42
+                                }
+                              ],
+                              "VEA": [
+                                {
+                                  "taxLot": {
+                                    "id": 45,
+                                    "pxB": 52.07101,
+                                    "dayB": "2025-03-21",
+                                    "qtyB": 0.90415
+                                  },
+                                  "taxLotId": 45
+                                }
+                              ],
+                              "VEU": [
+                                {
+                                  "taxLot": {
+                                    "id": 32,
+                                    "pxB": 61.98396,
+                                    "dayB": "2025-03-21",
+                                    "qtyB": 0.75939
+                                  },
+                                  "taxLotId": 32
+                                }
+                              ],
+                              "VIG": [
+                                {
+                                  "taxLot": {
+                                    "id": 30,
+                                    "pxB": 193.95113,
+                                    "dayB": "2025-03-21",
+                                    "qtyB": 0.24269
+                                  },
+                                  "taxLotId": 30
+                                }
+                              ],
+                              "VOO": [
+                                {
+                                  "taxLot": {
+                                    "id": 37,
+                                    "pxB": 519.08229,
+                                    "dayB": "2025-03-21",
+                                    "qtyB": 0.09066
+                                  },
+                                  "taxLotId": 37
+                                }
+                              ],
+                              "VSS": [
+                                {
+                                  "taxLot": {
+                                    "id": 33,
+                                    "pxB": 118.70685,
+                                    "dayB": "2025-03-21",
+                                    "qtyB": 0.39686
+                                  },
+                                  "taxLotId": 33
+                                }
+                              ],
+                              "VWO": [
+                                {
+                                  "taxLot": {
+                                    "id": 40,
+                                    "pxB": 46.04201,
+                                    "dayB": "2025-03-21",
+                                    "qtyB": 1.02211
+                                  },
+                                  "taxLotId": 40
+                                }
+                              ],
+                              "DFSI": [
+                                {
+                                  "taxLot": {
+                                    "id": 35,
+                                    "pxB": 32.41183,
+                                    "dayB": "2025-04-04",
+                                    "qtyB": 1.31958
+                                  },
+                                  "taxLotId": 35
+                                }
+                              ],
+                              "DFSV": [
+                                {
+                                  "taxLot": {
+                                    "id": 34,
+                                    "pxB": 26.73471,
+                                    "dayB": "2025-04-03",
+                                    "qtyB": 1.69293
+                                  },
+                                  "taxLotId": 34
+                                }
+                              ],
+                              "IEFA": [
+                                {
+                                  "taxLot": {
+                                    "id": 36,
+                                    "pxB": 77.59644,
+                                    "dayB": "2025-03-21",
+                                    "qtyB": 0.6066
+                                  },
+                                  "taxLotId": 36
+                                }
+                              ],
+                              "IEMG": [
+                                {
+                                  "taxLot": {
+                                    "id": 44,
+                                    "pxB": 55.08271,
+                                    "dayB": "2025-03-21",
+                                    "qtyB": 0.85417
+                                  },
+                                  "taxLotId": 44
+                                }
+                              ],
+                              "SCHD": [
+                                {
+                                  "taxLot": {
+                                    "id": 38,
+                                    "pxB": 27.74669,
+                                    "dayB": "2025-03-21",
+                                    "qtyB": 1.69786
+                                  },
+                                  "taxLotId": 38
+                                }
+                              ],
+                              "SCHE": [
+                                {
+                                  "taxLot": {
+                                    "id": 31,
+                                    "pxB": 28.06969,
+                                    "dayB": "2025-03-21",
+                                    "qtyB": 1.67761
+                                  },
+                                  "taxLotId": 31
+                                }
+                              ],
+                              "SCHF": [
+                                {
+                                  "taxLot": {
+                                    "id": 41,
+                                    "pxB": 20.26963,
+                                    "dayB": "2025-03-21",
+                                    "qtyB": 2.32318
+                                  },
+                                  "taxLotId": 41
+                                }
+                              ],
+                              "SCHK": [
+                                {
+                                  "taxLot": {
+                                    "id": 43,
+                                    "pxB": 27.20943,
+                                    "dayB": "2025-03-21",
+                                    "qtyB": 1.73065
+                                  },
+                                  "taxLotId": 43
+                                }
+                              ],
+                              "SCHX": [
+                                {
+                                  "taxLot": {
+                                    "id": 29,
+                                    "pxB": 22.31533,
+                                    "dayB": "2025-03-21",
+                                    "qtyB": 2.10976
+                                  },
+                                  "taxLotId": 29
+                                }
+                              ],
+                              "SLYV": [
+                                {
+                                  "taxLot": {
+                                    "id": 46,
+                                    "pxB": 74.97764,
+                                    "dayB": "2025-04-03",
+                                    "qtyB": 0.60378
+                                  },
+                                  "taxLotId": 46
+                                }
+                              ],
+                              "SPLG": [
+                                {
+                                  "taxLot": {
+                                    "id": 47,
+                                    "pxB": 60.13792,
+                                    "dayB": "2025-04-04",
+                                    "qtyB": 0.71203
+                                  },
+                                  "taxLotId": 47
+                                }
+                              ],
+                              "SPTM": [
+                                {
+                                  "taxLot": {
+                                    "id": 28,
+                                    "pxB": 68.68224,
+                                    "dayB": "2025-03-21",
+                                    "qtyB": 0.68533
+                                  },
+                                  "taxLotId": 28
+                                }
+                              ]
+                            }
+                          },
+                          "nonStrategySpecific": {
+                            "washSaleRestrictions": {
+                              "type": "withTaxLotDetail",
+                              "doNotBuy": [
+                                "AVUV",
+                                "IDEV",
+                                "IVV",
+                                "VIOV",
+                                "VONE"
+                              ],
+                              "restrictions": {}
+                            }
+                          }
+                        },
+                        "tradingThresholdPredicateResult": {
+                          "type": "globalObjectiveBased",
+                          "objectiveValues": {
+                            "afterTrading": {
+                              "tax": 0,
+                              "entire": 8.01790501,
+                              "detailedTracking": {
+                                "betaBased": 8.01790501,
+                                "entireTracking": 8.01790501
+                              }
+                            },
+                            "beforeTrading": {
+                              "tax": 0,
+                              "entire": 8.86953034,
+                              "detailedTracking": {
+                                "betaBased": 8.86953034,
+                                "entireTracking": 8.86953034
+                              }
+                            }
+                          },
+                          "tradingDecision": {
+                            "details": {
+                              "reasonNotToTrade": "tradesMakePortfolioOnlySlightlyBetter",
+                              "globalObjectiveThreshold": {
+                                "type": "globalObjectiveBased",
+                                "improvementMustExceed": 10
+                              },
+                              "suggestedOrderQuantities": {
+                                "buyQuantities": {
+                                  "VSS": 0.00135268,
+                                  "IEFA": 0.00039395,
+                                  "SCHK": 0.00067318,
+                                  "SCHX": 0.00148013
+                                }
+                              }
+                            },
+                            "willTrade": false
+                          }
+                        },
+                        "preQuantizationNonEmptyOrderQuantities": {
+                          "buyQuantities": {
+                            "VSS": 0.00135268,
+                            "IEFA": 0.00039395,
+                            "SCHK": 0.00067318,
+                            "SCHX": 0.00148013
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "singleAccountInvestingActionSummary": {
+                "singleAccountJournalInfo": {
+                  "mapOfSubAccounts": {
+                    "2424:ETF_TLH:PAIRS_TLH": {}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }

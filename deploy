@@ -1,0 +1,18 @@
+set -e
+
+ENV="${ENV:-dev}"
+VERSION="$(date -uI)-$(git rev-parse --short HEAD)"
+BUILD_IMAGE="oracle/$ENV:$VERSION"
+ECR_ACCOUNT_ID="341780365223"
+ECR_REGION="us-east-1"
+ECR_URI="$ECR_ACCOUNT_ID.dkr.ecr.$ECR_REGION.amazonaws.com"
+ECR_IMAGE="$ECR_URI/$BUILD_IMAGE"
+FUNCTION="oracle-$ENV"
+
+aws sso login
+aws ecr get-login-password --region $ECR_REGION | docker login --username AWS --password-stdin $ECR_URI
+docker buildx build --platform linux/arm64 --provenance=false --build-arg VERSION=$VERSION -t $BUILD_IMAGE .
+docker tag $BUILD_IMAGE $ECR_IMAGE
+docker push $ECR_IMAGE
+aws lambda update-function-code --function-name $FUNCTION --image-uri $ECR_IMAGE --publish
+aws lambda wait function-updated --function-name $FUNCTION

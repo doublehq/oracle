@@ -1,0 +1,68 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run Tests - local",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "unittest",
+            "args": [
+                
+                "discover",
+                "-s",
+                ".",
+                "-p",
+                // "test_factor_model.py"
+                // "test_optimization_vars.py"
+                "test_onboardi*.py"
+                // "oracle.tests",
+                // "oracle.tests",
+                // "oracle.tests.test_min_notional.TestMinNotional",
+                // "oracle.tests.test_wash_sale_restrictions_match_rowboat.TestWashSaleRestrictionsMatchRowboat",
+                // "oracle.tests.test_multi_variable_optimizations.TestMultiVariableOptimizations",
+                // "oracle.tests.test_single_variable_optimizations",
+                // "oracle.tests.test_withdrawl",
+                // "oracle.tests.test_optimization_vars.py",
+                // "reporting.tests.target_actual_tests.TestTargetActuals.test_reporting_strategy",
+                // "transfer.tests.acats_create_strategy_tests.TestACATSCreateStrategy",
+                // "transfer.tests.transfer_handler_tests",// .TestScheduledTransfer.test_create_scheduled_transfer_with_assignment",
+                // "transfer.tests.scheduled_transfer_tests.TestScheduledTransfer.test_create_scheduled_transfer_with_assignment",
+                // "transfer.tests.acats_create_strategy_tests.TestACATSCreateStrategy",
+                // "internal.tests.optimizer.rebalance_tests.RebalanceTests",
+                // "-v 3",
+                // "--noinput",
+                // "--keepdb",
+            ],
+            "console": "integratedTerminal",
+            "purpose": ["debug-test"]
+        },
+        {
+            "name": "Python: All Tests",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "unittest",
+            "args": [
+                "discover",
+                "-s",
+                ".",
+                "-p",
+                "test_[!o]*.py",
+                
+            ],
+            "console": "integratedTerminal",
+            "purpose": ["debug-test"]
+        },
+        {
+            "name": "debug.json",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "debug.py",
+            "env": {
+                "VERSION": "debug"
+            }
+        }
+    ]
+}
