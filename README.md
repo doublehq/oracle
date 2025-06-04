@@ -11,7 +11,7 @@ It provides the basics of a complete portfolio optimization engine similar to:
 - [AlphaThena](https://alphathena.com/) 
 - [BlackRock's Tax-Managed Equity SMA by Aperio](https://www.blackrock.com/us/financial-professionals/investments/tax-managed-equity-sma-aperio)
 - [AdvisorArch (Acquired by Apex 2024)](https://apexfintechsolutions.com/news-resources/press-releases/apex-fintech-solutions-announces-acquisition-of-advisorarch-bringing-a-suite-of-technology-driven-portfolio-management-solutions/)
-- [Party Pris](https://partipris-invest.com/)
+- [Parti Pris](https://partipris-invest.com/)
 
 ## Features
 
