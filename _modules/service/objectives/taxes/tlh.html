@@ -1,0 +1,766 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>service.objectives.taxes.tlh &mdash; Oracle 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            Oracle
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../index.html">Oracle Optimizer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules/initializers.html">Initializers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules/optimization_types.html">Optimization Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules/oracle.html">Oracle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules/oracle_strategy.html">OracleStrategy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules/objectives.html">Objectives</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules/constraints.html">Constraints</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules/helpers.html">Helpers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Oracle</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">service.objectives.taxes.tlh</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for service.objectives.taxes.tlh</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pulp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.service.constraints.restriction.wash_sale_restrictions</span><span class="w"> </span><span class="kn">import</span> <span class="n">WashSaleRestrictions</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.service.constraints.constraints_manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConstraintsManager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.service.helpers.enums</span><span class="w"> </span><span class="kn">import</span> <span class="n">OracleOptimizationType</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.service.reports.drift_report</span><span class="w"> </span><span class="kn">import</span> <span class="n">generate_drift_report</span><span class="p">,</span> <span class="n">PositionStatus</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.service.helpers.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">CASH_CUSIP_ID</span>
+
+<div class="viewcode-block" id="TLHTrade">
+<a class="viewcode-back" href="../../../../modules/objectives.html#service.objectives.taxes.tlh.TLHTrade">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TLHTrade</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Represents a tax loss harvesting opportunity for a specific lot&quot;&quot;&quot;</span>
+    <span class="n">tax_lot_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">identifier</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">quantity</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">cost_basis</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">current_value</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">loss_percentage</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">potential_tax_savings</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">target_weight</span><span class="p">:</span> <span class="nb">float</span>  <span class="c1"># Target weight for the position</span>
+    <span class="n">current_weight</span><span class="p">:</span> <span class="nb">float</span>  <span class="c1"># Current weight of the position</span>
+    <span class="n">harvest_quantity</span><span class="p">:</span> <span class="nb">float</span>  <span class="c1"># Quantity to harvest based on sizing function</span>
+    <span class="n">lot_priority</span><span class="p">:</span> <span class="nb">float</span>  <span class="c1"># Priority score for harvesting this lot</span>
+    <span class="n">replacement_buys</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Added field for replacement securities and quantities</span></div>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_calculate_harvest_quantities</span><span class="p">(</span>
+    <span class="n">lots</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">current_weight</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">target_weight</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">min_weight_multiplier</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">max_weight_multiplier</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">total_portfolio_value</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">prices</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">min_notional</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">trade_rounding</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">min_harvest_basis_points</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">50.0</span><span class="p">,</span>
+    <span class="n">soft_limit_percentage</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.90</span>  <span class="c1"># New parameter for soft limit (90% by default)</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate harvest quantities for a group of lots of the same security,</span>
+<span class="sd">    ensuring we stay within weight bounds.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        lots: DataFrame of lots for a single security, sorted by priority</span>
+<span class="sd">        current_weight: Current weight of the security</span>
+<span class="sd">        target_weight: Target weight for the security</span>
+<span class="sd">        min_weight_multiplier: Minimum weight multiplier</span>
+<span class="sd">        max_weight_multiplier: Maximum weight multiplier</span>
+<span class="sd">        total_portfolio_value: Total portfolio value</span>
+<span class="sd">        prices: DataFrame with security prices</span>
+<span class="sd">        min_notional: Minimum notional value for a trade in dollars</span>
+<span class="sd">        trade_rounding: Rounding increment for trade quantities</span>
+<span class="sd">        min_harvest_basis_points: Minimum harvest size in basis points (default 50 = 0.5%)</span>
+<span class="sd">        soft_limit_percentage: Percentage of the way to hard limit for soft limit (default 90%)</span>
+<span class="sd">        </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Dict mapping tax_lot_id to harvest quantity</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># If no target weight is set, we can&#39;t calculate min/max allowed weights</span>
+    <span class="k">if</span> <span class="n">target_weight</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{}</span>
+        
+    <span class="c1"># Calculate hard minimum allowed weight</span>
+    <span class="n">hard_min_allowed_weight</span> <span class="o">=</span> <span class="n">target_weight</span> <span class="o">*</span> <span class="n">min_weight_multiplier</span>
+    
+    <span class="c1"># Calculate soft minimum allowed weight (90% of the way to hard minimum)</span>
+    <span class="c1"># Example: If target=10%, hard_min=5%, then soft_min=5.5%</span>
+    <span class="c1"># Because 10% - (90% * (10% - 5%)) = 5.5%</span>
+    <span class="n">weight_delta</span> <span class="o">=</span> <span class="n">target_weight</span> <span class="o">-</span> <span class="n">hard_min_allowed_weight</span>
+    <span class="n">soft_min_allowed_weight</span> <span class="o">=</span> <span class="n">target_weight</span> <span class="o">-</span> <span class="p">(</span><span class="n">soft_limit_percentage</span> <span class="o">*</span> <span class="n">weight_delta</span><span class="p">)</span>
+    
+    <span class="n">max_allowed_weight</span> <span class="o">=</span> <span class="n">target_weight</span> <span class="o">*</span> <span class="n">max_weight_multiplier</span>
+    
+    <span class="c1"># If we&#39;re already below soft minimum weight, don&#39;t harvest anything</span>
+    <span class="k">if</span> <span class="n">current_weight</span> <span class="o">&lt;=</span> <span class="n">soft_min_allowed_weight</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{}</span>
+        
+    <span class="c1"># Calculate how much value we can harvest while staying above soft minimum weight</span>
+    <span class="n">max_harvest_value</span> <span class="o">=</span> <span class="p">(</span><span class="n">current_weight</span> <span class="o">-</span> <span class="n">soft_min_allowed_weight</span><span class="p">)</span> <span class="o">*</span> <span class="n">total_portfolio_value</span>
+    
+    <span class="c1"># Calculate minimum harvest value (50 bps = 0.5% of current position value)</span>
+    <span class="n">current_position_value</span> <span class="o">=</span> <span class="n">current_weight</span> <span class="o">*</span> <span class="n">total_portfolio_value</span>
+    <span class="n">min_harvest_value</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">min_harvest_basis_points</span> <span class="o">/</span> <span class="mf">10000.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">current_position_value</span><span class="p">,</span>
+        <span class="n">min_notional</span>  <span class="c1"># Ensure we meet minimum notional requirement</span>
+    <span class="p">)</span>
+    
+    <span class="c1"># If max possible harvest is less than minimum size, don&#39;t harvest</span>
+    <span class="k">if</span> <span class="n">max_harvest_value</span> <span class="o">&lt;</span> <span class="n">min_harvest_value</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{}</span>
+    
+    <span class="c1"># Allocate harvesting across lots in priority order</span>
+    <span class="n">harvest_quantities</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">remaining_harvest_value</span> <span class="o">=</span> <span class="n">max_harvest_value</span>
+    <span class="n">total_harvested_value</span> <span class="o">=</span> <span class="mf">0.0</span>  <span class="c1"># Track total value harvested</span>
+    
+    <span class="c1">#Lots have already been but into order but lets make sure. </span>
+    <span class="n">lots</span> <span class="o">=</span> <span class="n">lots</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;priority&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">lot</span> <span class="ow">in</span> <span class="n">lots</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">lot</span><span class="p">[</span><span class="s1">&#39;identifier&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;EYPT_30233G209&quot;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ahhhh&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">remaining_harvest_value</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">break</span>
+            
+        <span class="n">price</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[</span><span class="n">prices</span><span class="p">[</span><span class="s1">&#39;identifier&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">lot</span><span class="p">[</span><span class="s1">&#39;identifier&#39;</span><span class="p">]][</span><span class="s1">&#39;price&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">lot_value</span> <span class="o">=</span> <span class="n">lot</span><span class="p">[</span><span class="s1">&#39;quantity&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">price</span>
+        
+        <span class="c1"># Harvest the minimum of:</span>
+        <span class="c1"># 1. The entire lot</span>
+        <span class="c1"># 2. The remaining harvest value we can do</span>
+        <span class="n">harvest_value</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">lot_value</span><span class="p">,</span> <span class="n">remaining_harvest_value</span><span class="p">)</span>
+        <span class="n">harvest_qty</span> <span class="o">=</span> <span class="n">harvest_value</span> <span class="o">/</span> <span class="n">price</span>
+        
+        <span class="c1"># If we&#39;re harvesting the entire lot, don&#39;t round</span>
+        <span class="k">if</span> <span class="n">harvest_value</span> <span class="o">&gt;=</span> <span class="n">lot_value</span><span class="p">:</span>
+            <span class="n">harvest_qty</span> <span class="o">=</span> <span class="n">lot</span><span class="p">[</span><span class="s1">&#39;quantity&#39;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># For partial harvests, floor to the specified increment</span>
+            <span class="n">harvest_qty</span> <span class="o">=</span> <span class="p">(</span><span class="n">harvest_qty</span> <span class="o">//</span> <span class="n">trade_rounding</span><span class="p">)</span> <span class="o">*</span> <span class="n">trade_rounding</span>
+        
+        <span class="c1"># Recalculate harvest value after potential rounding</span>
+        <span class="n">harvest_value</span> <span class="o">=</span> <span class="n">harvest_qty</span> <span class="o">*</span> <span class="n">price</span>
+        
+        <span class="c1"># Check if this harvest would violate the hard minimum weight limit</span>
+        <span class="n">new_position_value</span> <span class="o">=</span> <span class="n">current_position_value</span> <span class="o">-</span> <span class="n">harvest_value</span>
+        <span class="n">new_weight</span> <span class="o">=</span> <span class="n">new_position_value</span> <span class="o">/</span> <span class="n">total_portfolio_value</span>
+        
+        <span class="k">if</span> <span class="n">new_weight</span> <span class="o">&lt;</span> <span class="n">hard_min_allowed_weight</span><span class="p">:</span>
+            <span class="c1"># Skip this lot if it would violate hard limit</span>
+            <span class="k">continue</span>
+        
+        <span class="k">if</span> <span class="n">harvest_qty</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># Check if this lot would meet minimum notional requirement</span>
+            <span class="k">if</span> <span class="n">harvest_value</span> <span class="o">&gt;=</span> <span class="n">min_notional</span><span class="p">:</span>
+                <span class="c1"># Only proceed if this would make total harvest at least min_harvest_value</span>
+                <span class="k">if</span> <span class="n">total_harvested_value</span> <span class="o">+</span> <span class="n">harvest_value</span> <span class="o">&gt;=</span> <span class="n">min_harvest_value</span><span class="p">:</span>
+                    <span class="n">harvest_quantities</span><span class="p">[</span><span class="n">lot</span><span class="p">[</span><span class="s1">&#39;tax_lot_id&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">harvest_qty</span>
+                    <span class="n">remaining_harvest_value</span> <span class="o">-=</span> <span class="n">harvest_value</span>
+                    <span class="n">total_harvested_value</span> <span class="o">+=</span> <span class="n">harvest_value</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># If adding this lot wouldn&#39;t reach minimum size, skip it</span>
+                    <span class="k">continue</span>
+            
+    <span class="c1"># If total harvest is less than minimum size, don&#39;t harvest anything</span>
+    <span class="k">if</span> <span class="n">total_harvested_value</span> <span class="o">&lt;</span> <span class="n">min_harvest_value</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{}</span>
+            
+    <span class="k">return</span> <span class="n">harvest_quantities</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_identify_direct_index_tlh_opportunities</span><span class="p">(</span>
+    <span class="n">gain_loss_report</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">prices</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">tax_rates</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">constraints_manager</span><span class="p">,</span>
+    <span class="n">target_weights</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">total_portfolio_value</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">min_weight_multiplier</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">max_weight_multiplier</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">min_notional</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">trade_rounding</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">min_loss_threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.015</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">TLHTrade</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Identify tax loss harvesting opportunities for Direct Indexing strategy.</span>
+<span class="sd">    Uses asset class target weights to determine harvesting opportunities.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        gain_loss_report: DataFrame with current gain/loss information for all lots</span>
+<span class="sd">        prices: DataFrame with current security prices</span>
+<span class="sd">        tax_rates: DataFrame with tax rates for different gain types</span>
+<span class="sd">        constraints_manager: ConstraintsManager instance to check restrictions</span>
+<span class="sd">        target_weights: DataFrame with target weights for each security</span>
+<span class="sd">        total_portfolio_value: Total portfolio value for weight calculations</span>
+<span class="sd">        min_weight_multiplier: Minimum weight multiplier from strategy type</span>
+<span class="sd">        max_weight_multiplier: Maximum weight multiplier from strategy type</span>
+<span class="sd">        min_notional: Minimum notional value for a trade in dollars</span>
+<span class="sd">        trade_rounding: Rounding increment for trade quantities</span>
+<span class="sd">        min_loss_threshold: Minimum loss percentage to consider for TLH (default 1.5%)</span>
+<span class="sd">        </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        List of TLHTrade objects representing potential TLH opportunities</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tlh_opportunities</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="c1"># Calculate current weights by security</span>
+    <span class="n">grouped_lots</span> <span class="o">=</span> <span class="n">gain_loss_report</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;identifier&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span>
+        <span class="s1">&#39;quantity&#39;</span><span class="p">:</span> <span class="s1">&#39;sum&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;cost_basis&#39;</span><span class="p">:</span> <span class="s1">&#39;sum&#39;</span>
+    <span class="p">})</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">prices</span><span class="p">)</span>
+    
+    <span class="n">grouped_lots</span><span class="p">[</span><span class="s2">&quot;current_value&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">grouped_lots</span><span class="p">[</span><span class="s2">&quot;quantity&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">grouped_lots</span><span class="p">[</span><span class="s2">&quot;price&quot;</span><span class="p">]</span>
+    <span class="n">grouped_lots</span><span class="p">[</span><span class="s1">&#39;current_weight&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">grouped_lots</span><span class="p">[</span><span class="s1">&#39;current_value&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">total_portfolio_value</span>
+    
+    <span class="c1"># Process each security&#39;s lots</span>
+    <span class="k">for</span> <span class="n">identifier</span> <span class="ow">in</span> <span class="n">grouped_lots</span><span class="p">[</span><span class="s1">&#39;identifier&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
+        <span class="c1"># Get security-level info</span>
+        <span class="n">current_weight</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">target_weight</span> <span class="o">=</span> <span class="mf">0.0</span>
+        
+        <span class="c1"># Safely get current weight</span>
+        <span class="n">current_weight_series</span> <span class="o">=</span> <span class="n">grouped_lots</span><span class="p">[</span><span class="n">grouped_lots</span><span class="p">[</span><span class="s1">&#39;identifier&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">identifier</span><span class="p">][</span><span class="s1">&#39;current_weight&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">current_weight_series</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="n">current_weight</span> <span class="o">=</span> <span class="n">current_weight_series</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        
+        <span class="k">if</span> <span class="n">current_weight</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">:</span>
+            <span class="c1"># No current weight, skip this security</span>
+            <span class="k">continue</span>
+            
+        <span class="c1"># Get target weight from asset class</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">target_weights</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">identifier</span> <span class="ow">in</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;identifiers&#39;</span><span class="p">]:</span>
+                <span class="n">target_weight</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;target_weight&#39;</span><span class="p">]</span>
+                <span class="k">break</span>
+        
+        <span class="c1"># Get all lots for this security</span>
+        <span class="n">security_lots</span> <span class="o">=</span> <span class="n">gain_loss_report</span><span class="p">[</span><span class="n">gain_loss_report</span><span class="p">[</span><span class="s1">&#39;identifier&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">identifier</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        
+        <span class="c1"># Skip lots that can&#39;t be sold due to restrictions using ConstraintsManager</span>
+        <span class="n">security_lots</span> <span class="o">=</span> <span class="n">security_lots</span><span class="p">[</span>
+            <span class="o">~</span><span class="n">security_lots</span><span class="p">[</span><span class="s1">&#39;tax_lot_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+                <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">constraints_manager</span><span class="o">.</span><span class="n">is_restricted_from_selling_pre_trade</span><span class="p">(</span><span class="n">identifier</span><span class="p">,</span> <span class="n">x</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="p">)</span>
+        <span class="p">]</span>
+        
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">security_lots</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">continue</span>
+            
+        <span class="c1"># Calculate loss percentage and priority for each lot</span>
+        <span class="n">security_lots</span><span class="p">[</span><span class="s1">&#39;current_value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">security_lots</span><span class="p">[</span><span class="s1">&#39;quantity&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">prices</span><span class="p">[</span>
+            <span class="n">prices</span><span class="p">[</span><span class="s1">&#39;identifier&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">identifier</span>
+        <span class="p">][</span><span class="s1">&#39;price&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">security_lots</span> <span class="o">=</span> <span class="n">security_lots</span><span class="p">[</span><span class="n">security_lots</span><span class="p">[</span><span class="s1">&#39;tax_gain_loss_percentage&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="o">-</span><span class="nb">abs</span><span class="p">(</span><span class="n">min_loss_threshold</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">security_lots</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">continue</span>
+            
+        <span class="c1"># Rank lots by per_share_tax_liability (smaller values get higher priority)</span>
+        <span class="n">security_lots</span><span class="p">[</span><span class="s1">&#39;priority&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">security_lots</span><span class="p">[</span><span class="s1">&#39;per_share_tax_liability&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rank</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        
+        <span class="c1"># Sort by priority (highest first) and calculate harvest quantities</span>
+        <span class="n">security_lots</span> <span class="o">=</span> <span class="n">security_lots</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;priority&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">security_lots</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">continue</span>
+            
+        <span class="n">harvest_quantities</span> <span class="o">=</span> <span class="n">_calculate_harvest_quantities</span><span class="p">(</span>
+            <span class="n">lots</span><span class="o">=</span><span class="n">security_lots</span><span class="p">,</span>
+            <span class="n">current_weight</span><span class="o">=</span><span class="n">current_weight</span><span class="p">,</span>
+            <span class="n">target_weight</span><span class="o">=</span><span class="n">target_weight</span><span class="p">,</span>
+            <span class="n">min_weight_multiplier</span><span class="o">=</span><span class="n">min_weight_multiplier</span><span class="p">,</span>
+            <span class="n">max_weight_multiplier</span><span class="o">=</span><span class="n">max_weight_multiplier</span><span class="p">,</span>
+            <span class="n">total_portfolio_value</span><span class="o">=</span><span class="n">total_portfolio_value</span><span class="p">,</span>
+            <span class="n">prices</span><span class="o">=</span><span class="n">prices</span><span class="p">,</span>
+            <span class="n">min_notional</span><span class="o">=</span><span class="n">min_notional</span><span class="p">,</span>
+            <span class="n">trade_rounding</span><span class="o">=</span><span class="n">trade_rounding</span>
+        <span class="p">)</span>
+        
+        <span class="c1"># Create TLHTrade objects for lots we want to harvest</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">lot</span> <span class="ow">in</span> <span class="n">security_lots</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+            <span class="n">harvest_qty</span> <span class="o">=</span> <span class="n">harvest_quantities</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">lot</span><span class="p">[</span><span class="s1">&#39;tax_lot_id&#39;</span><span class="p">],</span> <span class="mf">0.0</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">harvest_qty</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">tax_rate</span> <span class="o">=</span> <span class="n">tax_rates</span><span class="p">[</span><span class="n">tax_rates</span><span class="p">[</span><span class="s1">&#39;gain_type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">lot</span><span class="p">[</span><span class="s1">&#39;gain_type&#39;</span><span class="p">]][</span><span class="s1">&#39;total_rate&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">potential_savings</span> <span class="o">=</span> <span class="p">(</span><span class="n">lot</span><span class="p">[</span><span class="s1">&#39;cost_basis&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">lot</span><span class="p">[</span><span class="s1">&#39;current_value&#39;</span><span class="p">])</span> <span class="o">*</span> <span class="n">tax_rate</span>
+                
+                <span class="n">tlh_opportunities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">TLHTrade</span><span class="p">(</span>
+                    <span class="n">tax_lot_id</span><span class="o">=</span><span class="n">lot</span><span class="p">[</span><span class="s1">&#39;tax_lot_id&#39;</span><span class="p">],</span>
+                    <span class="n">identifier</span><span class="o">=</span><span class="n">lot</span><span class="p">[</span><span class="s1">&#39;identifier&#39;</span><span class="p">],</span>
+                    <span class="n">quantity</span><span class="o">=</span><span class="n">lot</span><span class="p">[</span><span class="s1">&#39;quantity&#39;</span><span class="p">],</span>
+                    <span class="n">cost_basis</span><span class="o">=</span><span class="n">lot</span><span class="p">[</span><span class="s1">&#39;cost_basis&#39;</span><span class="p">],</span>
+                    <span class="n">current_value</span><span class="o">=</span><span class="n">lot</span><span class="p">[</span><span class="s1">&#39;current_value&#39;</span><span class="p">],</span>
+                    <span class="n">loss_percentage</span><span class="o">=</span><span class="n">lot</span><span class="p">[</span><span class="s1">&#39;tax_gain_loss_percentage&#39;</span><span class="p">],</span>
+                    <span class="n">potential_tax_savings</span><span class="o">=</span><span class="n">potential_savings</span><span class="p">,</span>
+                    <span class="n">target_weight</span><span class="o">=</span><span class="n">target_weight</span><span class="p">,</span>
+                    <span class="n">current_weight</span><span class="o">=</span><span class="n">current_weight</span><span class="p">,</span>
+                    <span class="n">harvest_quantity</span><span class="o">=</span><span class="n">harvest_qty</span><span class="p">,</span>
+                    <span class="n">lot_priority</span><span class="o">=</span><span class="n">lot</span><span class="p">[</span><span class="s1">&#39;priority&#39;</span><span class="p">]</span>
+                <span class="p">))</span>
+    
+    <span class="k">return</span> <span class="n">tlh_opportunities</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_identify_pairs_tlh_opportunities</span><span class="p">(</span>
+    <span class="n">drift_report</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">gain_loss_report</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">prices</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">tax_rates</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">constraints_manager</span><span class="p">,</span>
+    <span class="n">target_weights</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">total_portfolio_value</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">min_notional</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">trade_rounding</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">min_loss_threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.015</span><span class="p">,</span>
+    <span class="n">min_weight_multiplier</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>  <span class="c1"># Added parameter for minimum weight multiplier</span>
+    <span class="n">soft_limit_percentage</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.90</span>  <span class="c1"># New parameter for soft limit</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">TLHTrade</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Identify tax loss harvesting opportunities for Pairs TLH strategy.</span>
+<span class="sd">    For each asset class, finds the security with the best tax benefit that can be sold</span>
+<span class="sd">    and pairs it with a valid replacement security from the same asset class.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        gain_loss_report: DataFrame with current gain/loss information for all lots</span>
+<span class="sd">        prices: DataFrame with current security prices</span>
+<span class="sd">        tax_rates: DataFrame with tax rates for different gain types</span>
+<span class="sd">        constraints_manager: ConstraintsManager instance to check restrictions</span>
+<span class="sd">        target_weights: DataFrame with target weights for each security</span>
+<span class="sd">        total_portfolio_value: Total portfolio value for weight calculations</span>
+<span class="sd">        min_notional: Minimum notional value for a trade in dollars</span>
+<span class="sd">        trade_rounding: Rounding increment for trade quantities</span>
+<span class="sd">        min_loss_threshold: Minimum loss percentage to consider for TLH (default 1.5%)</span>
+<span class="sd">        min_weight_multiplier: Minimum weight multiplier (default 0.5)</span>
+<span class="sd">        soft_limit_percentage: Percentage of the way to hard limit for soft limit (default 90%)</span>
+<span class="sd">        </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        List of TLHTrade objects representing potential TLH opportunities with replacement buys</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tlh_opportunities</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="c1"># Calculate current weights by security</span>
+    <span class="n">grouped_lots</span> <span class="o">=</span> <span class="n">gain_loss_report</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;identifier&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span>
+        <span class="s1">&#39;quantity&#39;</span><span class="p">:</span> <span class="s1">&#39;sum&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;cost_basis&#39;</span><span class="p">:</span> <span class="s1">&#39;sum&#39;</span>
+    <span class="p">})</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">prices</span><span class="p">)</span>
+    
+    <span class="n">grouped_lots</span><span class="p">[</span><span class="s2">&quot;current_value&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">grouped_lots</span><span class="p">[</span><span class="s2">&quot;quantity&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">grouped_lots</span><span class="p">[</span><span class="s2">&quot;price&quot;</span><span class="p">]</span>
+    <span class="n">grouped_lots</span><span class="p">[</span><span class="s1">&#39;current_weight&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">grouped_lots</span><span class="p">[</span><span class="s1">&#39;current_value&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">total_portfolio_value</span>
+    
+    <span class="c1"># Process each asset class</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">asset_class</span> <span class="ow">in</span> <span class="n">target_weights</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">asset_class</span><span class="p">[</span><span class="s1">&#39;asset_class&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">CASH_CUSIP_ID</span><span class="p">:</span>
+            <span class="k">continue</span>
+            
+        <span class="n">identifiers</span> <span class="o">=</span> <span class="n">asset_class</span><span class="p">[</span><span class="s1">&#39;identifiers&#39;</span><span class="p">]</span>
+        <span class="n">best_sell_identifier</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">best_tax_benefit</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">best_lots</span> <span class="o">=</span> <span class="kc">None</span>
+        
+        <span class="c1"># Find the security with the best tax benefit that we can sell</span>
+        <span class="k">for</span> <span class="n">identifier</span> <span class="ow">in</span> <span class="n">identifiers</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">identifier</span> <span class="o">==</span> <span class="s2">&quot;J_46982L108&quot;</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ahh&quot;</span><span class="p">)</span>
+            <span class="c1"># Get all lots for this security</span>
+            <span class="n">security_lots</span> <span class="o">=</span> <span class="n">gain_loss_report</span><span class="p">[</span><span class="n">gain_loss_report</span><span class="p">[</span><span class="s1">&#39;identifier&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">identifier</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">security_lots</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">continue</span>
+                
+            <span class="c1"># Check if we can sell any lots</span>
+            <span class="n">can_sell_any</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">lot</span> <span class="ow">in</span> <span class="n">security_lots</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+                <span class="n">is_restricted</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">constraints_manager</span><span class="o">.</span><span class="n">is_restricted_from_selling_pre_trade</span><span class="p">(</span><span class="n">identifier</span><span class="p">,</span> <span class="n">lot</span><span class="p">[</span><span class="s1">&#39;tax_lot_id&#39;</span><span class="p">])</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">is_restricted</span><span class="p">:</span>
+                    <span class="n">can_sell_any</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="k">break</span>
+                    
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">can_sell_any</span><span class="p">:</span>
+                <span class="k">continue</span>
+            
+            <span class="c1"># Filter to lots with sufficient loss</span>
+            <span class="n">loss_lots</span> <span class="o">=</span> <span class="n">security_lots</span><span class="p">[</span><span class="n">security_lots</span><span class="p">[</span><span class="s1">&#39;tax_gain_loss_percentage&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="o">-</span><span class="nb">abs</span><span class="p">(</span><span class="n">min_loss_threshold</span><span class="p">)]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">loss_lots</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">continue</span>
+                
+            <span class="c1"># Calculate total potential tax benefit for this security</span>
+            <span class="n">total_tax_benefit</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">lot</span> <span class="ow">in</span> <span class="n">loss_lots</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+                <span class="n">is_restricted</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">constraints_manager</span><span class="o">.</span><span class="n">is_restricted_from_selling_pre_trade</span><span class="p">(</span><span class="n">identifier</span><span class="p">,</span> <span class="n">lot</span><span class="p">[</span><span class="s1">&#39;tax_lot_id&#39;</span><span class="p">])</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">is_restricted</span><span class="p">:</span>
+                    <span class="n">total_tax_benefit</span> <span class="o">+=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">lot</span><span class="p">[</span><span class="s1">&#39;tax_liability&#39;</span><span class="p">])</span>
+            
+            <span class="k">if</span> <span class="n">total_tax_benefit</span> <span class="o">&gt;</span> <span class="n">best_tax_benefit</span><span class="p">:</span>
+                <span class="n">best_tax_benefit</span> <span class="o">=</span> <span class="n">total_tax_benefit</span>
+                <span class="n">best_sell_identifier</span> <span class="o">=</span> <span class="n">identifier</span>
+                <span class="n">best_lots</span> <span class="o">=</span> <span class="n">loss_lots</span>
+                
+        <span class="k">if</span> <span class="n">best_sell_identifier</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">best_lots</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">continue</span>
+            
+        <span class="c1"># Find a valid replacement security from the same asset class</span>
+        <span class="n">replacement_security</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">potential_replacement</span> <span class="ow">in</span> <span class="n">identifiers</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">potential_replacement</span> <span class="o">!=</span> <span class="n">best_sell_identifier</span><span class="p">:</span>
+                <span class="n">is_restricted</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">constraints_manager</span><span class="o">.</span><span class="n">is_restricted_from_buying_pre_trade</span><span class="p">(</span><span class="n">potential_replacement</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">is_restricted</span><span class="p">:</span>
+                    <span class="n">replacement_security</span> <span class="o">=</span> <span class="n">potential_replacement</span>
+                    <span class="k">break</span>
+                    
+        <span class="k">if</span> <span class="n">replacement_security</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">continue</span>
+            
+        <span class="c1"># Rank lots by per_share_tax_liability (smaller values get higher priority)</span>
+        <span class="n">best_lots</span><span class="p">[</span><span class="s1">&#39;priority&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">best_lots</span><span class="p">[</span><span class="s1">&#39;per_share_tax_liability&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rank</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">best_lots</span> <span class="o">=</span> <span class="n">best_lots</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;priority&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># Calculate target weight for each security in the asset class</span>
+        <span class="n">target_weight</span> <span class="o">=</span> <span class="n">asset_class</span><span class="p">[</span><span class="s1">&#39;target_weight&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">identifiers</span><span class="p">)</span>
+        
+        <span class="c1"># Calculate hard and soft minimum weights</span>
+        <span class="n">hard_min_allowed_weight</span> <span class="o">=</span> <span class="n">target_weight</span> <span class="o">*</span> <span class="n">min_weight_multiplier</span>
+        <span class="n">weight_delta</span> <span class="o">=</span> <span class="n">target_weight</span> <span class="o">-</span> <span class="n">hard_min_allowed_weight</span>
+        <span class="n">soft_min_allowed_weight</span> <span class="o">=</span> <span class="n">target_weight</span> <span class="o">-</span> <span class="p">(</span><span class="n">soft_limit_percentage</span> <span class="o">*</span> <span class="n">weight_delta</span><span class="p">)</span>
+
+        <span class="c1"># Calculate current weight</span>
+        <span class="n">current_weight</span> <span class="o">=</span> <span class="n">grouped_lots</span><span class="p">[</span><span class="n">grouped_lots</span><span class="p">[</span><span class="s1">&#39;identifier&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">best_sell_identifier</span><span class="p">][</span><span class="s1">&#39;current_weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        
+        <span class="c1"># If already below soft minimum, skip this opportunity</span>
+        <span class="k">if</span> <span class="n">current_weight</span> <span class="o">&lt;=</span> <span class="n">soft_min_allowed_weight</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+        <span class="c1"># Calculate how much value we can harvest while staying above soft minimum</span>
+        <span class="n">max_harvest_value</span> <span class="o">=</span> <span class="p">(</span><span class="n">current_weight</span> <span class="o">-</span> <span class="n">soft_min_allowed_weight</span><span class="p">)</span> <span class="o">*</span> <span class="n">total_portfolio_value</span>
+        
+        <span class="c1"># Calculate harvest quantities respecting both soft and hard limits</span>
+        <span class="n">total_harvest_value</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">harvest_quantities</span> <span class="o">=</span> <span class="p">{}</span>
+        
+        <span class="c1"># Calculate minimum harvest value (50 bps = 0.5% of current position value)</span>
+        <span class="n">current_position_value</span> <span class="o">=</span> <span class="n">best_lots</span><span class="p">[</span><span class="s1">&#39;market_value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="n">min_harvest_value</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
+            <span class="p">(</span><span class="mf">50.0</span> <span class="o">/</span> <span class="mf">10000.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">current_position_value</span><span class="p">,</span>  <span class="c1"># 50 bps = 0.5%</span>
+            <span class="n">min_notional</span>  <span class="c1"># Ensure we meet minimum notional requirement</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Process each lot in priority order</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">lot</span> <span class="ow">in</span> <span class="n">best_lots</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+            <span class="n">price</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[</span><span class="n">prices</span><span class="p">[</span><span class="s1">&#39;identifier&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">lot</span><span class="p">[</span><span class="s1">&#39;identifier&#39;</span><span class="p">]][</span><span class="s1">&#39;price&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">lot_value</span> <span class="o">=</span> <span class="n">lot</span><span class="p">[</span><span class="s1">&#39;quantity&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">price</span>
+            
+            <span class="c1"># Calculate maximum harvestable value for this lot</span>
+            <span class="n">harvest_value</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">lot_value</span><span class="p">,</span> <span class="n">max_harvest_value</span> <span class="o">-</span> <span class="n">total_harvest_value</span><span class="p">)</span>
+            
+            <span class="c1"># Calculate harvest quantity</span>
+            <span class="n">harvest_qty</span> <span class="o">=</span> <span class="p">(</span><span class="n">harvest_value</span> <span class="o">/</span> <span class="n">price</span><span class="p">)</span> <span class="o">//</span> <span class="n">trade_rounding</span> <span class="o">*</span> <span class="n">trade_rounding</span>
+            <span class="n">actual_harvest_value</span> <span class="o">=</span> <span class="n">harvest_qty</span> <span class="o">*</span> <span class="n">price</span>
+            
+            <span class="c1"># Check if this harvest would violate the hard minimum weight limit</span>
+            <span class="n">new_position_value</span> <span class="o">=</span> <span class="n">current_position_value</span> <span class="o">-</span> <span class="n">actual_harvest_value</span>
+            <span class="n">new_weight</span> <span class="o">=</span> <span class="n">new_position_value</span> <span class="o">/</span> <span class="n">total_portfolio_value</span>
+            
+            <span class="k">if</span> <span class="n">new_weight</span> <span class="o">&lt;</span> <span class="n">hard_min_allowed_weight</span><span class="p">:</span>
+                <span class="c1"># Skip this lot if it would violate hard limit</span>
+                <span class="k">continue</span>
+            
+            <span class="c1"># Only include if it meets minimum notional</span>
+            <span class="k">if</span> <span class="n">actual_harvest_value</span> <span class="o">&gt;=</span> <span class="n">min_notional</span><span class="p">:</span>
+                <span class="n">harvest_quantities</span><span class="p">[</span><span class="n">lot</span><span class="p">[</span><span class="s1">&#39;tax_lot_id&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">harvest_qty</span>
+                <span class="n">total_harvest_value</span> <span class="o">+=</span> <span class="n">actual_harvest_value</span>
+
+        <span class="c1"># If total harvest value doesn&#39;t meet minimum, skip this opportunity</span>
+        <span class="k">if</span> <span class="n">total_harvest_value</span> <span class="o">&lt;</span> <span class="n">min_harvest_value</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+        <span class="c1"># Calculate buy quantity for the replacement security</span>
+        <span class="n">replacement_price</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[</span><span class="n">prices</span><span class="p">[</span><span class="s1">&#39;identifier&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">replacement_security</span><span class="p">][</span><span class="s1">&#39;price&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">buy_qty</span> <span class="o">=</span> <span class="p">(</span><span class="n">total_harvest_value</span> <span class="o">/</span> <span class="n">replacement_price</span><span class="p">)</span> <span class="o">//</span> <span class="n">trade_rounding</span> <span class="o">*</span> <span class="n">trade_rounding</span>
+        
+        <span class="c1"># Only proceed if replacement buy meets minimum notional</span>
+        <span class="k">if</span> <span class="n">buy_qty</span> <span class="o">*</span> <span class="n">replacement_price</span> <span class="o">&lt;</span> <span class="n">min_notional</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+        <span class="n">buy_quantities</span> <span class="o">=</span> <span class="p">{</span><span class="n">replacement_security</span><span class="p">:</span> <span class="n">buy_qty</span><span class="p">}</span>
+            
+        <span class="c1"># Create TLHTrade objects for lots we want to harvest</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">lot</span> <span class="ow">in</span> <span class="n">best_lots</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+            <span class="n">harvest_qty</span> <span class="o">=</span> <span class="n">harvest_quantities</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">lot</span><span class="p">[</span><span class="s1">&#39;tax_lot_id&#39;</span><span class="p">],</span> <span class="mf">0.0</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">harvest_qty</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">tax_rate</span> <span class="o">=</span> <span class="n">tax_rates</span><span class="p">[</span><span class="n">tax_rates</span><span class="p">[</span><span class="s1">&#39;gain_type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">lot</span><span class="p">[</span><span class="s1">&#39;gain_type&#39;</span><span class="p">]][</span><span class="s1">&#39;total_rate&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">potential_savings</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">lot</span><span class="p">[</span><span class="s1">&#39;tax_liability&#39;</span><span class="p">])</span>
+                
+                <span class="n">tlh_opportunities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">TLHTrade</span><span class="p">(</span>
+                    <span class="n">tax_lot_id</span><span class="o">=</span><span class="n">lot</span><span class="p">[</span><span class="s1">&#39;tax_lot_id&#39;</span><span class="p">],</span>
+                    <span class="n">identifier</span><span class="o">=</span><span class="n">lot</span><span class="p">[</span><span class="s1">&#39;identifier&#39;</span><span class="p">],</span>
+                    <span class="n">quantity</span><span class="o">=</span><span class="n">lot</span><span class="p">[</span><span class="s1">&#39;quantity&#39;</span><span class="p">],</span>
+                    <span class="n">cost_basis</span><span class="o">=</span><span class="n">lot</span><span class="p">[</span><span class="s1">&#39;cost_basis&#39;</span><span class="p">],</span>
+                    <span class="n">current_value</span><span class="o">=</span><span class="n">lot</span><span class="p">[</span><span class="s1">&#39;market_value&#39;</span><span class="p">],</span>
+                    <span class="n">loss_percentage</span><span class="o">=</span><span class="n">lot</span><span class="p">[</span><span class="s1">&#39;tax_gain_loss_percentage&#39;</span><span class="p">],</span>
+                    <span class="n">potential_tax_savings</span><span class="o">=</span><span class="n">potential_savings</span><span class="p">,</span>
+                    <span class="n">target_weight</span><span class="o">=</span><span class="n">target_weight</span><span class="p">,</span>
+                    <span class="n">current_weight</span><span class="o">=</span><span class="n">current_weight</span><span class="p">,</span>
+                    <span class="n">harvest_quantity</span><span class="o">=</span><span class="n">harvest_qty</span><span class="p">,</span>
+                    <span class="n">lot_priority</span><span class="o">=</span><span class="n">lot</span><span class="p">[</span><span class="s1">&#39;priority&#39;</span><span class="p">],</span>
+                    <span class="n">replacement_buys</span><span class="o">=</span><span class="n">buy_quantities</span>
+                <span class="p">))</span>
+    
+    <span class="k">return</span> <span class="n">tlh_opportunities</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_identify_tlh_opportunities</span><span class="p">(</span>
+    <span class="n">drift_report</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">gain_loss_report</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">prices</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">tax_rates</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">constraints_manager</span><span class="p">,</span>
+    <span class="n">target_weights</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">total_portfolio_value</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">min_weight_multiplier</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">max_weight_multiplier</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">min_notional</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">trade_rounding</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">min_loss_threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.015</span><span class="p">,</span>
+    <span class="n">optimization_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">OracleOptimizationType</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">TLHTrade</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Helper function to identify tax loss harvesting opportunities.</span>
+<span class="sd">    Routes to the appropriate TLH identification function based on optimization type.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        gain_loss_report: DataFrame with current gain/loss information for all lots</span>
+<span class="sd">        prices: DataFrame with current security prices</span>
+<span class="sd">        tax_rates: DataFrame with tax rates for different gain types</span>
+<span class="sd">        constraints_manager: ConstraintsManager instance to check restrictions</span>
+<span class="sd">        target_weights: DataFrame with target weights for each security</span>
+<span class="sd">        total_portfolio_value: Total portfolio value for weight calculations</span>
+<span class="sd">        min_weight_multiplier: Minimum weight multiplier from strategy type</span>
+<span class="sd">        max_weight_multiplier: Maximum weight multiplier from strategy type</span>
+<span class="sd">        min_notional: Minimum notional value for a trade in dollars</span>
+<span class="sd">        trade_rounding: Rounding increment for trade quantities</span>
+<span class="sd">        min_loss_threshold: Minimum loss percentage to consider for TLH (default 1.5%)</span>
+<span class="sd">        optimization_type: The optimization type (OracleOptimizationType)</span>
+<span class="sd">        </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        List of TLHTrade objects representing potential TLH opportunities</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">optimization_type</span> <span class="o">==</span> <span class="n">OracleOptimizationType</span><span class="o">.</span><span class="n">PAIRS_TLH</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_identify_pairs_tlh_opportunities</span><span class="p">(</span>
+            <span class="n">drift_report</span><span class="o">=</span><span class="n">drift_report</span><span class="p">,</span>
+            <span class="n">gain_loss_report</span><span class="o">=</span><span class="n">gain_loss_report</span><span class="p">,</span>
+            <span class="n">prices</span><span class="o">=</span><span class="n">prices</span><span class="p">,</span>
+            <span class="n">tax_rates</span><span class="o">=</span><span class="n">tax_rates</span><span class="p">,</span>
+            <span class="n">constraints_manager</span><span class="o">=</span><span class="n">constraints_manager</span><span class="p">,</span>
+            <span class="n">target_weights</span><span class="o">=</span><span class="n">target_weights</span><span class="p">,</span>
+            <span class="n">total_portfolio_value</span><span class="o">=</span><span class="n">total_portfolio_value</span><span class="p">,</span>
+            <span class="n">min_notional</span><span class="o">=</span><span class="n">min_notional</span><span class="p">,</span>
+            <span class="n">trade_rounding</span><span class="o">=</span><span class="n">trade_rounding</span><span class="p">,</span>
+            <span class="n">min_loss_threshold</span><span class="o">=</span><span class="n">min_loss_threshold</span>
+        <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">optimization_type</span> <span class="o">==</span> <span class="n">OracleOptimizationType</span><span class="o">.</span><span class="n">DIRECT_INDEX</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_identify_direct_index_tlh_opportunities</span><span class="p">(</span>
+            <span class="n">gain_loss_report</span><span class="o">=</span><span class="n">gain_loss_report</span><span class="p">,</span>
+            <span class="n">prices</span><span class="o">=</span><span class="n">prices</span><span class="p">,</span>
+            <span class="n">tax_rates</span><span class="o">=</span><span class="n">tax_rates</span><span class="p">,</span>
+            <span class="n">constraints_manager</span><span class="o">=</span><span class="n">constraints_manager</span><span class="p">,</span>
+            <span class="n">target_weights</span><span class="o">=</span><span class="n">target_weights</span><span class="p">,</span>
+            <span class="n">total_portfolio_value</span><span class="o">=</span><span class="n">total_portfolio_value</span><span class="p">,</span>
+            <span class="n">min_weight_multiplier</span><span class="o">=</span><span class="n">min_weight_multiplier</span><span class="p">,</span>
+            <span class="n">max_weight_multiplier</span><span class="o">=</span><span class="n">max_weight_multiplier</span><span class="p">,</span>
+            <span class="n">min_notional</span><span class="o">=</span><span class="n">min_notional</span><span class="p">,</span>
+            <span class="n">trade_rounding</span><span class="o">=</span><span class="n">trade_rounding</span><span class="p">,</span>
+            <span class="n">min_loss_threshold</span><span class="o">=</span><span class="n">min_loss_threshold</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="calculate_tlh_impact">
+<a class="viewcode-back" href="../../../../modules/objectives.html#service.objectives.taxes.tlh.calculate_tlh_impact">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">calculate_tlh_impact</span><span class="p">(</span>
+    <span class="n">prob</span><span class="p">:</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpProblem</span><span class="p">,</span>
+    <span class="n">buys</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpVariable</span><span class="p">],</span>
+    <span class="n">sells</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpVariable</span><span class="p">],</span>
+    <span class="n">drift_report</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">gain_loss_report</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">prices</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">tax_rates</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">constraints_manager</span><span class="p">:</span> <span class="n">ConstraintsManager</span><span class="p">,</span>
+    <span class="n">target_weights</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">total_portfolio_value</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">min_weight_multiplier</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">max_weight_multiplier</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">min_notional</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">trade_rounding</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">min_loss_threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.015</span><span class="p">,</span>
+    <span class="n">objective_manager</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># Add ObjectiveManager parameter</span>
+    <span class="n">optimization_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">OracleOptimizationType</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Updated type hint</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">TLHTrade</span><span class="p">],</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]]:</span>  <span class="c1"># Updated return type</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Identify tax loss harvesting opportunities and determine sell quantities.</span>
+<span class="sd">    Also calculates baseline objective values after TLH trades.</span>
+<span class="sd">    For pairs trading, identifies and constrains both sells and replacement buys.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        prob: The optimization problem</span>
+<span class="sd">        buys: Dictionary of buy variables</span>
+<span class="sd">        sells: Dictionary of sell variables</span>
+<span class="sd">        gain_loss_report: DataFrame with current gain/loss information for all lots</span>
+<span class="sd">        prices: DataFrame with current security prices</span>
+<span class="sd">        tax_rates: DataFrame with tax rates for different gain types</span>
+<span class="sd">        constraints_manager: ConstraintsManager instance to check restrictions</span>
+<span class="sd">        target_weights: DataFrame with target weights for each security</span>
+<span class="sd">        total_portfolio_value: Total portfolio value for weight calculations</span>
+<span class="sd">        min_weight_multiplier: Minimum weight multiplier from strategy type</span>
+<span class="sd">        max_weight_multiplier: Maximum weight multiplier from strategy type</span>
+<span class="sd">        min_notional: Minimum notional value for a trade in dollars</span>
+<span class="sd">        trade_rounding: Rounding increment for trade quantities</span>
+<span class="sd">        min_loss_threshold: Minimum loss percentage to consider for TLH (default 1.5%)</span>
+<span class="sd">        objective_manager: ObjectiveManager instance to calculate objective values</span>
+<span class="sd">        optimization_type: The optimization type (OracleOptimizationType)</span>
+<span class="sd">        </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple of:</span>
+<span class="sd">        - List of TLHTrade objects representing identified opportunities</span>
+<span class="sd">        - Dictionary mapping tax_lot_id to sell quantities</span>
+<span class="sd">        - Dictionary mapping identifier to buy quantities (for pairs trading)</span>
+<span class="sd">        - Dictionary of baseline objective component values after TLH trades (or None if no TLH trades)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Identify TLH opportunities with quantities</span>
+    <span class="n">tlh_opportunities</span> <span class="o">=</span> <span class="n">_identify_tlh_opportunities</span><span class="p">(</span>
+        <span class="n">drift_report</span><span class="o">=</span><span class="n">drift_report</span><span class="p">,</span>
+        <span class="n">gain_loss_report</span><span class="o">=</span><span class="n">gain_loss_report</span><span class="p">,</span>
+        <span class="n">prices</span><span class="o">=</span><span class="n">prices</span><span class="p">,</span>
+        <span class="n">tax_rates</span><span class="o">=</span><span class="n">tax_rates</span><span class="p">,</span>
+        <span class="n">constraints_manager</span><span class="o">=</span><span class="n">constraints_manager</span><span class="p">,</span>
+        <span class="n">target_weights</span><span class="o">=</span><span class="n">target_weights</span><span class="p">,</span>
+        <span class="n">total_portfolio_value</span><span class="o">=</span><span class="n">total_portfolio_value</span><span class="p">,</span>
+        <span class="n">min_weight_multiplier</span><span class="o">=</span><span class="n">min_weight_multiplier</span><span class="p">,</span>
+        <span class="n">max_weight_multiplier</span><span class="o">=</span><span class="n">max_weight_multiplier</span><span class="p">,</span>
+        <span class="n">min_notional</span><span class="o">=</span><span class="n">min_notional</span><span class="p">,</span>
+        <span class="n">trade_rounding</span><span class="o">=</span><span class="n">trade_rounding</span><span class="p">,</span>
+        <span class="n">min_loss_threshold</span><span class="o">=</span><span class="n">min_loss_threshold</span><span class="p">,</span>
+        <span class="n">optimization_type</span><span class="o">=</span><span class="n">optimization_type</span>
+    <span class="p">)</span>
+    
+    <span class="c1"># Create dictionaries of sell and buy quantities</span>
+    <span class="n">sell_quantities</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">buy_quantities</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="n">sell_identifiers</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">sold_identifiers</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="k">for</span> <span class="n">opportunity</span> <span class="ow">in</span> <span class="n">tlh_opportunities</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">opportunity</span><span class="o">.</span><span class="n">tax_lot_id</span> <span class="ow">in</span> <span class="n">sells</span><span class="p">:</span>
+            <span class="c1"># Add constraint to sell exactly the harvest quantity</span>
+            <span class="k">if</span> <span class="n">opportunity</span><span class="o">.</span><span class="n">harvest_quantity</span> <span class="o">&gt;</span> <span class="n">opportunity</span><span class="o">.</span><span class="n">quantity</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;TLH Harvest quantity exceeds available quantity.&quot;</span><span class="p">)</span>
+            <span class="n">prob</span> <span class="o">+=</span> <span class="n">sells</span><span class="p">[</span><span class="n">opportunity</span><span class="o">.</span><span class="n">tax_lot_id</span><span class="p">]</span> <span class="o">==</span> <span class="n">opportunity</span><span class="o">.</span><span class="n">harvest_quantity</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;tlh_sell_</span><span class="si">{</span><span class="n">opportunity</span><span class="o">.</span><span class="n">tax_lot_id</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">sell_identifiers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">opportunity</span><span class="o">.</span><span class="n">identifier</span><span class="p">)</span>
+            <span class="n">sell_quantities</span><span class="p">[</span><span class="n">opportunity</span><span class="o">.</span><span class="n">tax_lot_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">opportunity</span><span class="o">.</span><span class="n">harvest_quantity</span>
+            <span class="c1"># When selling a security, prevent buying it at the same time</span>
+            <span class="k">if</span> <span class="n">opportunity</span><span class="o">.</span><span class="n">identifier</span> <span class="ow">in</span> <span class="n">buys</span> <span class="ow">and</span> <span class="n">opportunity</span><span class="o">.</span><span class="n">identifier</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sold_identifiers</span><span class="p">:</span>
+                <span class="n">prob</span> <span class="o">+=</span> <span class="n">buys</span><span class="p">[</span><span class="n">opportunity</span><span class="o">.</span><span class="n">identifier</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;tlh_buy_</span><span class="si">{</span><span class="n">opportunity</span><span class="o">.</span><span class="n">identifier</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="n">sold_identifiers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">opportunity</span><span class="o">.</span><span class="n">identifier</span><span class="p">)</span>
+            
+            <span class="c1"># For pairs trading, add buy constraints for replacement securities</span>
+            <span class="k">if</span> <span class="n">optimization_type</span> <span class="o">==</span> <span class="n">OracleOptimizationType</span><span class="o">.</span><span class="n">PAIRS_TLH</span> <span class="ow">and</span> <span class="n">opportunity</span><span class="o">.</span><span class="n">replacement_buys</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">replacement_id</span><span class="p">,</span> <span class="n">buy_qty</span> <span class="ow">in</span> <span class="n">opportunity</span><span class="o">.</span><span class="n">replacement_buys</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="n">replacement_id</span> <span class="ow">in</span> <span class="n">buys</span><span class="p">:</span> <span class="c1"># and replacement_id not in sell_identifiers:</span>
+                        <span class="n">prob</span> <span class="o">+=</span> <span class="n">buys</span><span class="p">[</span><span class="n">replacement_id</span><span class="p">]</span> <span class="o">==</span> <span class="n">buy_qty</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;tlh_buy_</span><span class="si">{</span><span class="n">replacement_id</span><span class="si">}</span><span class="s2">&quot;</span>
+                        <span class="n">buy_quantities</span><span class="p">[</span><span class="n">replacement_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">buy_qty</span>
+                        <span class="n">all_sell_lots</span> <span class="o">=</span> <span class="n">gain_loss_report</span><span class="p">[</span><span class="n">gain_loss_report</span><span class="p">[</span><span class="s1">&#39;identifier&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">replacement_id</span><span class="p">]</span>
+                        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">lot</span> <span class="ow">in</span> <span class="n">all_sell_lots</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+                            <span class="n">prob</span> <span class="o">+=</span> <span class="n">sells</span><span class="p">[</span><span class="n">lot</span><span class="p">[</span><span class="s1">&#39;tax_lot_id&#39;</span><span class="p">]]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;tlh_sell_</span><span class="si">{</span><span class="n">lot</span><span class="p">[</span><span class="s1">&#39;tax_lot_id&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+    
+    <span class="c1"># If we have TLH trades and an objective manager, calculate baseline values</span>
+    <span class="n">baseline_components</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">sell_quantities</span> <span class="ow">or</span> <span class="n">buy_quantities</span><span class="p">)</span> <span class="ow">and</span> <span class="n">objective_manager</span><span class="p">:</span>
+        <span class="c1"># Extract component values</span>
+        <span class="n">baseline_components</span> <span class="o">=</span> <span class="n">objective_manager</span><span class="o">.</span><span class="n">extract_component_values</span><span class="p">(</span><span class="n">prob</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">tlh_opportunities</span><span class="p">,</span> <span class="n">sell_quantities</span><span class="p">,</span> <span class="n">buy_quantities</span><span class="p">,</span> <span class="n">baseline_components</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

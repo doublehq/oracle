@@ -1,0 +1,236 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>service.objectives.cash_deployment.cash_deployment &mdash; Oracle 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            Oracle
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../index.html">Oracle Optimizer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules/initializers.html">Initializers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules/optimization_types.html">Optimization Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules/oracle.html">Oracle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules/oracle_strategy.html">OracleStrategy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules/objectives.html">Objectives</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules/constraints.html">Constraints</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules/helpers.html">Helpers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Oracle</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">service.objectives.cash_deployment.cash_deployment</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for service.objectives.cash_deployment.cash_deployment</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pulp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.service.helpers.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">CASH_CUSIP_ID</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.service.helpers.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">logger</span>
+
+<div class="viewcode-block" id="calculate_cash_deployment_objective">
+<a class="viewcode-back" href="../../../../modules/objectives.html#service.objectives.cash_deployment.cash_deployment.calculate_cash_deployment_objective">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">calculate_cash_deployment_objective</span><span class="p">(</span>
+    <span class="n">prob</span><span class="p">:</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpProblem</span><span class="p">,</span>
+    <span class="n">buys</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpVariable</span><span class="p">],</span>
+    <span class="n">sells</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpVariable</span><span class="p">],</span>
+    <span class="n">drift</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">gain_loss</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">total_value</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">prices</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">cash_normalization</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">debug</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpAffineExpression</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate a penalty for holding excess cash above target.</span>
+<span class="sd">    Only penalizes cash when it&#39;s above target, not when below.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        prob: The optimization problem to add constraints to</span>
+<span class="sd">        buys: Dictionary of buy variables</span>
+<span class="sd">        sells: Dictionary of sell variables</span>
+<span class="sd">        drift: DataFrame with drift report</span>
+<span class="sd">        gain_loss: DataFrame with gain/loss report</span>
+<span class="sd">        total_value: Total portfolio value</span>
+<span class="sd">        prices: DataFrame with current prices</span>
+<span class="sd">        debug: Enable debug logging</span>
+<span class="sd">        cash_normalization: Normalization factor for cash penalty</span>
+<span class="sd">        </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        The cash penalty expression</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Get cash information from drift report</span>
+    <span class="n">cash_row</span> <span class="o">=</span> <span class="n">drift</span><span class="p">[</span><span class="n">drift</span><span class="p">[</span><span class="s1">&#39;asset_class&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">CASH_CUSIP_ID</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">cash_row</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;CASH_CUSIP_ID not found in drift report for cash penalty calculation.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">0</span>  <span class="c1"># No cash position defined</span>
+        
+    <span class="n">cash_target</span> <span class="o">=</span> <span class="n">cash_row</span><span class="p">[</span><span class="s1">&#39;target_weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">current_cash</span> <span class="o">=</span> <span class="n">cash_row</span><span class="p">[</span><span class="s1">&#39;actual_weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    
+    <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Calculating Cash Deployment Component ===&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Current cash weight: </span><span class="si">{</span><span class="n">current_cash</span><span class="si">:</span><span class="s2">.4%</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Calculate total buys and sells in dollar terms</span>
+    <span class="n">total_buys</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">identifier</span><span class="p">,</span> <span class="n">buy_var</span> <span class="ow">in</span> <span class="n">buys</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">identifier</span> <span class="o">!=</span> <span class="n">CASH_CUSIP_ID</span><span class="p">:</span>
+            <span class="n">price</span> <span class="o">=</span> <span class="n">prices</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">prices</span><span class="p">[</span><span class="s1">&#39;identifier&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">identifier</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">total_buys</span> <span class="o">+=</span> <span class="n">buy_var</span> <span class="o">*</span> <span class="n">price</span>
+            
+    <span class="n">total_sells</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">lot</span> <span class="ow">in</span> <span class="n">gain_loss</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+        <span class="n">tax_lot_id</span> <span class="o">=</span> <span class="n">lot</span><span class="p">[</span><span class="s1">&#39;tax_lot_id&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">tax_lot_id</span> <span class="ow">in</span> <span class="n">sells</span><span class="p">:</span>
+            <span class="n">price</span> <span class="o">=</span> <span class="n">prices</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">prices</span><span class="p">[</span><span class="s1">&#39;identifier&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">lot</span><span class="p">[</span><span class="s1">&#39;identifier&#39;</span><span class="p">],</span> <span class="s1">&#39;price&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">total_sells</span> <span class="o">+=</span> <span class="n">sells</span><span class="p">[</span><span class="n">tax_lot_id</span><span class="p">]</span> <span class="o">*</span> <span class="n">price</span>
+    
+    <span class="c1"># Calculate new cash weight after trades</span>
+    <span class="n">new_cash_dollars</span> <span class="o">=</span> <span class="p">(</span><span class="n">current_cash</span> <span class="o">*</span> <span class="n">total_value</span><span class="p">)</span> <span class="o">+</span> <span class="n">total_sells</span> <span class="o">-</span> <span class="n">total_buys</span>
+    <span class="n">new_cash_weight</span> <span class="o">=</span> <span class="n">new_cash_dollars</span> <span class="o">/</span> <span class="n">total_value</span>
+    
+    <span class="c1"># Calculate initial excess cash</span>
+    <span class="n">initial_excess_cash</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">current_cash</span> <span class="o">-</span> <span class="n">cash_target</span><span class="p">)</span>
+    
+    <span class="c1"># Create variable for excess cash after trades</span>
+    <span class="n">excess_cash</span> <span class="o">=</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpVariable</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;excess_cash&quot;</span><span class="p">,</span> <span class="n">lowBound</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">prob</span> <span class="o">+=</span> <span class="n">new_cash_weight</span> <span class="o">-</span> <span class="n">cash_target</span> <span class="o">&lt;=</span> <span class="n">excess_cash</span><span class="p">,</span> <span class="s2">&quot;cash_excess_constr&quot;</span>
+    
+    <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Added cash deployment component (minimizing new_cash_weight)&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Initial excess cash: </span><span class="si">{</span><span class="n">initial_excess_cash</span><span class="si">:</span><span class="s2">.4%</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Create list of terms to sum</span>
+    <span class="n">cash_terms</span> <span class="o">=</span> <span class="p">[(</span><span class="n">excess_cash</span> <span class="o">-</span> <span class="n">initial_excess_cash</span><span class="p">)</span> <span class="o">*</span> <span class="n">cash_normalization</span><span class="p">]</span>
+    
+    <span class="c1"># Return the sum of all cash terms</span>
+    <span class="k">return</span> <span class="n">pulp</span><span class="o">.</span><span class="n">lpSum</span><span class="p">(</span><span class="n">cash_terms</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="calculate_max_withdrawal_objective">
+<a class="viewcode-back" href="../../../../modules/objectives.html#service.objectives.cash_deployment.cash_deployment.calculate_max_withdrawal_objective">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">calculate_max_withdrawal_objective</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">prob</span><span class="p">:</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpProblem</span><span class="p">,</span>
+    <span class="n">buys</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpVariable</span><span class="p">],</span>
+    <span class="n">sells</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpVariable</span><span class="p">],</span>
+    <span class="n">gain_loss</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">debug</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpAffineExpression</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate an objective that maximizes cash withdrawal.</span>
+<span class="sd">    Creates an objective that maximizes the cash generated from selling securities.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        prob: PuLP optimization problem</span>
+<span class="sd">        buys: Dictionary of buy variables</span>
+<span class="sd">        sells: Dictionary of sell variables</span>
+<span class="sd">        gain_loss: DataFrame with gain/loss report</span>
+<span class="sd">        debug: Enable debug logging</span>
+<span class="sd">        </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Cash withdrawal maximization objective term (negative since we&#39;re minimizing)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Calculating max withdrawal objective&quot;</span><span class="p">)</span>
+        
+    <span class="c1"># Create a cash generation objective (for maximizing withdrawal)</span>
+    <span class="c1"># We want to maximize cash, which means minimizing the negative of cash</span>
+    <span class="n">total_cash_generated</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">lot</span> <span class="ow">in</span> <span class="n">gain_loss</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+        <span class="n">tax_lot_id</span> <span class="o">=</span> <span class="n">lot</span><span class="p">[</span><span class="s1">&#39;tax_lot_id&#39;</span><span class="p">]</span>
+        <span class="n">identifier</span> <span class="o">=</span> <span class="n">lot</span><span class="p">[</span><span class="s1">&#39;identifier&#39;</span><span class="p">]</span>
+        <span class="n">price</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="o">.</span><span class="n">prices</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="o">.</span><span class="n">prices</span><span class="p">[</span><span class="s1">&#39;identifier&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">identifier</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">total_cash_generated</span> <span class="o">+=</span> <span class="n">sells</span><span class="p">[</span><span class="n">tax_lot_id</span><span class="p">]</span> <span class="o">*</span> <span class="n">price</span>
+    
+    <span class="c1"># In a minimization problem, we minimize the negative of what we want to maximize</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">total_cash_generated</span></div>
+
+    
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

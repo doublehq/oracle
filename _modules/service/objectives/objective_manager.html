@@ -1,0 +1,432 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>service.objectives.objective_manager &mdash; Oracle 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Oracle
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Oracle Optimizer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/initializers.html">Initializers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/optimization_types.html">Optimization Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/oracle.html">Oracle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/oracle_strategy.html">OracleStrategy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/objectives.html">Objectives</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/constraints.html">Constraints</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/helpers.html">Helpers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Oracle</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">service.objectives.objective_manager</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for service.objectives.objective_manager</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pulp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.service.objectives.drift.drift_optimization</span><span class="w"> </span><span class="kn">import</span> <span class="n">calculate_drift_impact_vectorized</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.service.objectives.cash_deployment.cash_deployment</span><span class="w"> </span><span class="kn">import</span> <span class="n">calculate_cash_deployment_objective</span><span class="p">,</span> <span class="n">calculate_max_withdrawal_objective</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.service.objectives.taxes.tax_optimization</span><span class="w"> </span><span class="kn">import</span> <span class="n">calculate_tax_impact</span><span class="p">,</span> <span class="n">get_tax_cost</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.service.objectives.transaction_costs.transaction_optimization</span><span class="w"> </span><span class="kn">import</span> <span class="n">calculate_transaction_costs</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.service.objectives.factor_model.factor_model_optimization</span><span class="w"> </span><span class="kn">import</span> <span class="n">calculate_factor_model_impact_vectorized</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.service.helpers.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">CASH_CUSIP_ID</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.service.helpers.enums</span><span class="w"> </span><span class="kn">import</span> <span class="n">OracleOptimizationType</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.service.helpers.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">logger</span>
+
+<div class="viewcode-block" id="ObjectiveManager">
+<a class="viewcode-back" href="../../../modules/objectives.html#service.objectives.objective_manager.ObjectiveManager">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ObjectiveManager</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Manager class for handling all optimization objective terms.&quot;&quot;&quot;</span>
+    
+<div class="viewcode-block" id="ObjectiveManager.__init__">
+<a class="viewcode-back" href="../../../modules/objectives.html#service.objectives.objective_manager.ObjectiveManager.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">oracle_strategy</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize ObjectiveManager with reference to OracleStrategy.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            oracle_strategy: Reference to the OracleStrategy instance</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">strategy</span> <span class="o">=</span> <span class="n">oracle_strategy</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">objective_components</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># Store individual objective components</span></div>
+
+        
+        
+<div class="viewcode-block" id="ObjectiveManager.calculate_objectives">
+<a class="viewcode-back" href="../../../modules/objectives.html#service.objectives.objective_manager.ObjectiveManager.calculate_objectives">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">calculate_objectives</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">buys</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpVariable</span><span class="p">],</span>
+        <span class="n">sells</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpVariable</span><span class="p">],</span>
+        <span class="n">drift</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+        <span class="n">gain_loss</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+        <span class="n">total_value</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">weight_tax</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">weight_drift</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">weight_transaction</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">weight_factor_model</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+        <span class="n">weight_cash_drag</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+        <span class="n">rank_penalty_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.00</span><span class="p">,</span>
+        <span class="n">buy_df</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">sell_df</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">enforce_wash_sale_prevention</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">debug</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">log_time</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpAffineExpression</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate all objective terms and return the combined objective.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            buys: Dictionary of buy variables</span>
+<span class="sd">            sells: Dictionary of sell variables</span>
+<span class="sd">            drift: DataFrame with drift report</span>
+<span class="sd">            tax_lot_drift: DataFrame with tax lot level drift</span>
+<span class="sd">            gain_loss: DataFrame with gain/loss report</span>
+<span class="sd">            total_value: Total portfolio value</span>
+<span class="sd">            weight_tax: Weight for tax component</span>
+<span class="sd">            weight_drift: Weight for drift component</span>
+<span class="sd">            weight_transaction: Weight for transaction cost component</span>
+<span class="sd">            weight_factor_model: Weight for factor model component</span>
+<span class="sd">            weight_cash_drag: Weight for cash deployment component</span>
+<span class="sd">            rank_penalty_factor: Factor to control the strength of rank penalty (default 0.05)</span>
+<span class="sd">            debug: Enable debug logging</span>
+<span class="sd">            log_time: Whether to log timing information</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            Combined objective function expression</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">timing_data</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">log_time</span><span class="p">:</span>
+            <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+        <span class="c1"># Apply strategy-specific weight adjustments</span>
+        <span class="n">weight_tax</span><span class="p">,</span> <span class="n">weight_drift</span><span class="p">,</span> <span class="n">weight_transaction</span><span class="p">,</span> <span class="n">weight_factor_model</span><span class="p">,</span> <span class="n">weight_cash_drag</span> <span class="o">=</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="o">.</span><span class="n">optimization_type</span><span class="o">.</span><span class="n">adjust_weights</span><span class="p">(</span>
+                <span class="n">weight_tax</span><span class="p">,</span> <span class="n">weight_drift</span><span class="p">,</span> <span class="n">weight_transaction</span><span class="p">,</span> <span class="n">weight_factor_model</span><span class="p">,</span> <span class="n">weight_cash_drag</span>
+            <span class="p">)</span>
+            
+        <span class="n">objective_terms</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># Reset objective components for this calculation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">objective_components</span> <span class="o">=</span> <span class="p">{}</span>
+        
+        <span class="c1"># Calculate tax impact</span>
+        <span class="k">if</span> <span class="n">weight_tax</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">log_time</span><span class="p">:</span>
+                <span class="n">tax_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">tax_impact</span> <span class="o">=</span> <span class="n">calculate_tax_impact</span><span class="p">(</span>
+                <span class="n">prob</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="o">.</span><span class="n">optimization_problem</span><span class="p">,</span>
+                <span class="n">sells</span><span class="o">=</span><span class="n">sells</span><span class="p">,</span>
+                <span class="n">gain_loss</span><span class="o">=</span><span class="n">gain_loss</span><span class="p">,</span>
+                <span class="n">total_value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="o">.</span><span class="n">total_value</span><span class="p">(),</span>
+                <span class="n">tax_normalization</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="o">.</span><span class="n">TAX_NORMALIZATION</span> <span class="o">*</span> <span class="n">weight_tax</span><span class="p">,</span>
+                <span class="n">enforce_wash_sale_prevention</span><span class="o">=</span><span class="n">enforce_wash_sale_prevention</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">objective_terms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tax_impact</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">objective_components</span><span class="p">[</span><span class="s1">&#39;tax&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tax_impact</span>
+            <span class="k">if</span> <span class="n">log_time</span><span class="p">:</span>
+                <span class="n">timing_data</span><span class="p">[</span><span class="s1">&#39;tax_calculation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">tax_start</span>
+            
+        <span class="c1"># Calculate drift impact</span>
+        <span class="k">if</span> <span class="n">weight_drift</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">log_time</span><span class="p">:</span>
+                <span class="n">drift_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">drift_impact</span>  <span class="o">=</span> <span class="n">calculate_drift_impact_vectorized</span><span class="p">(</span>
+                <span class="n">prob</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="o">.</span><span class="n">optimization_problem</span><span class="p">,</span>
+                <span class="n">buy_df</span><span class="o">=</span><span class="n">buy_df</span><span class="p">,</span>
+                <span class="n">sell_df</span><span class="o">=</span><span class="n">sell_df</span><span class="p">,</span>
+                <span class="n">drift</span><span class="o">=</span><span class="n">drift</span><span class="p">,</span>
+                <span class="n">total_value</span><span class="o">=</span><span class="n">total_value</span><span class="p">,</span>
+                <span class="n">debug</span><span class="o">=</span><span class="n">debug</span><span class="p">,</span>
+                <span class="n">absolute_drift_normalization</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="o">.</span><span class="n">DRIFT_NORMALIZATION</span> <span class="o">*</span> <span class="n">weight_drift</span><span class="p">,</span>
+                <span class="n">rank_penalty_factor</span><span class="o">=</span><span class="n">rank_penalty_factor</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">objective_terms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">drift_impact</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">objective_components</span><span class="p">[</span><span class="s1">&#39;drift&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">drift_impact</span>
+            <span class="k">if</span> <span class="n">log_time</span><span class="p">:</span>
+                <span class="n">timing_data</span><span class="p">[</span><span class="s1">&#39;drift_calculation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">drift_start</span>
+            
+        <span class="c1"># Calculate transaction costs</span>
+        <span class="k">if</span> <span class="n">weight_transaction</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">log_time</span><span class="p">:</span>
+                <span class="n">transaction_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+            <span class="n">transaction_impact</span> <span class="o">=</span> <span class="n">calculate_transaction_costs</span><span class="p">(</span>
+                <span class="n">buys</span><span class="o">=</span><span class="n">buys</span><span class="p">,</span>
+                <span class="n">sells</span><span class="o">=</span><span class="n">sells</span><span class="p">,</span>
+                <span class="n">total_value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="o">.</span><span class="n">total_value</span><span class="p">(),</span>
+                <span class="n">spreads</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="o">.</span><span class="n">spreads</span><span class="p">,</span>
+                <span class="n">transaction_normalization</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="o">.</span><span class="n">TRANSACTION_NORMALIZATION</span> <span class="o">*</span> <span class="n">weight_transaction</span>
+            <span class="p">)</span>
+            <span class="n">objective_terms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">transaction_impact</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">objective_components</span><span class="p">[</span><span class="s1">&#39;transaction&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">transaction_impact</span>
+            <span class="k">if</span> <span class="n">log_time</span><span class="p">:</span>
+                <span class="n">timing_data</span><span class="p">[</span><span class="s1">&#39;transaction_calculation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">transaction_start</span>
+            
+        <span class="c1"># Calculate factor model impact</span>
+        <span class="k">if</span> <span class="n">weight_factor_model</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="o">.</span><span class="n">factor_model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">log_time</span><span class="p">:</span>
+                <span class="n">factor_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">factor_impact</span> <span class="o">=</span> <span class="n">calculate_factor_model_impact_vectorized</span><span class="p">(</span>
+                <span class="n">prob</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="o">.</span><span class="n">optimization_problem</span><span class="p">,</span>
+                <span class="n">buy_df</span><span class="o">=</span><span class="n">buy_df</span><span class="p">,</span>
+                <span class="n">sell_df</span><span class="o">=</span><span class="n">sell_df</span><span class="p">,</span>
+                <span class="n">total_value</span><span class="o">=</span><span class="n">total_value</span><span class="p">,</span>
+                <span class="n">factor_model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="o">.</span><span class="n">factor_model</span><span class="p">,</span>
+                <span class="n">target_factors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="o">.</span><span class="n">factor_model_target</span><span class="p">,</span>
+                <span class="n">actual_factors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="o">.</span><span class="n">factor_model_actual</span><span class="p">,</span>
+                <span class="n">debug</span><span class="o">=</span><span class="n">debug</span><span class="p">,</span>
+                <span class="n">factor_normalization</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="o">.</span><span class="n">FACTOR_MODEL_NORMALIZATION</span> <span class="o">*</span> <span class="n">weight_factor_model</span><span class="p">,</span>
+                <span class="n">use_piecewise</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
+            <span class="n">objective_terms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">factor_impact</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">objective_components</span><span class="p">[</span><span class="s1">&#39;factor_model&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">factor_impact</span>
+            <span class="k">if</span> <span class="n">log_time</span><span class="p">:</span>
+                <span class="n">timing_data</span><span class="p">[</span><span class="s1">&#39;factor_model_calculation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">factor_start</span>
+            
+        <span class="c1"># Calculate cash deployment impact (only if no withdrawal)</span>
+        <span class="k">if</span> <span class="n">weight_cash_drag</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="o">.</span><span class="n">withdrawal_amount</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">log_time</span><span class="p">:</span>
+                <span class="n">cash_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">cash_impact</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_cash_deployment_objective</span><span class="p">(</span>
+                <span class="n">prob</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="o">.</span><span class="n">optimization_problem</span><span class="p">,</span>
+                <span class="n">buys</span><span class="o">=</span><span class="n">buys</span><span class="p">,</span>
+                <span class="n">sells</span><span class="o">=</span><span class="n">sells</span><span class="p">,</span>
+                <span class="n">drift</span><span class="o">=</span><span class="n">drift</span><span class="p">,</span>
+                <span class="n">total_value</span><span class="o">=</span><span class="n">total_value</span><span class="p">,</span>
+                <span class="n">factor_normalization</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="o">.</span><span class="n">CASH_DRAG_NORMALIZATION</span> <span class="o">*</span> <span class="n">weight_cash_drag</span><span class="p">,</span>
+                <span class="n">debug</span><span class="o">=</span><span class="n">debug</span>
+            <span class="p">)</span>
+            <span class="n">objective_terms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cash_impact</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">objective_components</span><span class="p">[</span><span class="s1">&#39;cash_drag&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cash_impact</span>
+            <span class="k">if</span> <span class="n">log_time</span><span class="p">:</span>
+                <span class="n">timing_data</span><span class="p">[</span><span class="s1">&#39;cash_drag_calculation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">cash_start</span>
+            
+        <span class="c1"># Combine all terms</span>
+        <span class="n">combined_objective</span> <span class="o">=</span> <span class="n">pulp</span><span class="o">.</span><span class="n">lpSum</span><span class="p">(</span><span class="n">objective_terms</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">objective_components</span><span class="p">[</span><span class="s1">&#39;total&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">combined_objective</span>
+
+        <span class="k">if</span> <span class="n">log_time</span><span class="p">:</span>
+            <span class="n">timing_data</span><span class="p">[</span><span class="s1">&#39;total_time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;=== Objective Calculation Timing Breakdown ===&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">section</span><span class="p">,</span> <span class="n">duration</span> <span class="ow">in</span> <span class="n">timing_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">section</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">duration</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">combined_objective</span></div>
+
+        
+<div class="viewcode-block" id="ObjectiveManager.calculate_cash_deployment_objective">
+<a class="viewcode-back" href="../../../modules/objectives.html#service.objectives.objective_manager.ObjectiveManager.calculate_cash_deployment_objective">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">calculate_cash_deployment_objective</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">prob</span><span class="p">:</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpProblem</span><span class="p">,</span>
+        <span class="n">buys</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpVariable</span><span class="p">],</span>
+        <span class="n">sells</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpVariable</span><span class="p">],</span>
+        <span class="n">drift</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+        <span class="n">total_value</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">factor_normalization</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">debug</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpAffineExpression</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the cash deployment objective term.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            prob: The optimization problem to add constraints to</span>
+<span class="sd">            buy_df: DataFrame with buy variables and prices</span>
+<span class="sd">            sell_df: DataFrame with sell variables and prices</span>
+<span class="sd">            drift: DataFrame with drift report</span>
+<span class="sd">            total_value: Total portfolio value</span>
+<span class="sd">            debug: Enable debug logging</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            Cash deployment objective term</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Calculating cash deployment objective&quot;</span><span class="p">)</span>
+            
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="o">.</span><span class="n">withdrawal_amount</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>  <span class="c1"># No cash deployment objective when withdrawing</span>
+            
+        <span class="c1"># Call the existing cash deployment calculation</span>
+        <span class="n">cash_impact</span> <span class="o">=</span> <span class="n">calculate_cash_deployment_objective</span><span class="p">(</span>
+            <span class="n">prob</span><span class="o">=</span><span class="n">prob</span><span class="p">,</span>
+            <span class="n">buys</span><span class="o">=</span><span class="n">buys</span><span class="p">,</span>
+            <span class="n">sells</span><span class="o">=</span><span class="n">sells</span><span class="p">,</span>
+            <span class="n">drift</span><span class="o">=</span><span class="n">drift</span><span class="p">,</span>
+            <span class="n">gain_loss</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="o">.</span><span class="n">gain_loss_report</span><span class="p">,</span>
+            <span class="n">total_value</span><span class="o">=</span><span class="n">total_value</span><span class="p">,</span>
+            <span class="n">prices</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="o">.</span><span class="n">prices</span><span class="p">,</span>
+            <span class="n">cash_normalization</span><span class="o">=</span><span class="n">factor_normalization</span><span class="p">,</span>
+            <span class="n">debug</span><span class="o">=</span><span class="n">debug</span>
+        <span class="p">)</span>
+        
+        <span class="c1"># Apply normalization</span>
+        <span class="k">return</span> <span class="n">cash_impact</span></div>
+
+    
+<div class="viewcode-block" id="ObjectiveManager.calculate_max_withdrawal_objective">
+<a class="viewcode-back" href="../../../modules/objectives.html#service.objectives.objective_manager.ObjectiveManager.calculate_max_withdrawal_objective">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">calculate_max_withdrawal_objective</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">prob</span><span class="p">:</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpProblem</span><span class="p">,</span>
+        <span class="n">buys</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpVariable</span><span class="p">],</span>
+        <span class="n">sells</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpVariable</span><span class="p">],</span>
+        <span class="n">gain_loss</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+        <span class="n">debug</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpAffineExpression</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate an objective that maximizes cash withdrawal.</span>
+<span class="sd">        Creates an objective that maximizes the cash generated from selling securities.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            prob: PuLP optimization problem</span>
+<span class="sd">            buys: Dictionary of buy variables</span>
+<span class="sd">            sells: Dictionary of sell variables</span>
+<span class="sd">            gain_loss: DataFrame with gain/loss report</span>
+<span class="sd">            debug: Enable debug logging</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            Cash withdrawal maximization objective term (negative since we&#39;re minimizing)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">return</span> <span class="n">calculate_max_withdrawal_objective</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">prob</span><span class="o">=</span><span class="n">prob</span><span class="p">,</span>
+            <span class="n">buys</span><span class="o">=</span><span class="n">buys</span><span class="p">,</span>
+            <span class="n">sells</span><span class="o">=</span><span class="n">sells</span><span class="p">,</span>
+            <span class="n">gain_loss</span><span class="o">=</span><span class="n">gain_loss</span><span class="p">,</span>
+            <span class="n">debug</span><span class="o">=</span><span class="n">debug</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ObjectiveManager.extract_component_values">
+<a class="viewcode-back" href="../../../modules/objectives.html#service.objectives.objective_manager.ObjectiveManager.extract_component_values">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">extract_component_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prob</span><span class="p">:</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpProblem</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Extract the values of each objective component from a solved problem.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            prob: A solved PuLP problem</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            Dictionary containing component values</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">component_values</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">component_name</span><span class="p">,</span> <span class="n">component_expr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">objective_components</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component_expr</span><span class="p">,</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpAffineExpression</span><span class="p">):</span>
+                    <span class="c1"># Calculate the value of this component with the current variable values</span>
+                    <span class="n">component_value</span> <span class="o">=</span> <span class="n">pulp</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="n">component_expr</span><span class="p">)</span>
+                    <span class="n">component_values</span><span class="p">[</span><span class="n">component_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">component_value</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># Handle non-expression components</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Component </span><span class="si">{</span><span class="n">component_name</span><span class="si">}</span><span class="s2"> is not an LpAffineExpression&quot;</span><span class="p">)</span>
+                    <span class="n">component_values</span><span class="p">[</span><span class="n">component_name</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not evaluate component </span><span class="si">{</span><span class="n">component_name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">component_values</span><span class="p">[</span><span class="n">component_name</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        
+        <span class="c1"># Compare total with actual optimization value</span>
+        <span class="n">actual_obj_value</span> <span class="o">=</span> <span class="n">pulp</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="n">prob</span><span class="o">.</span><span class="n">objective</span><span class="p">)</span>
+        <span class="n">computed_total</span> <span class="o">=</span> <span class="n">component_values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;total&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">computed_total</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">abs</span><span class="p">(</span><span class="n">actual_obj_value</span> <span class="o">-</span> <span class="n">computed_total</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">1e-6</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Discrepancy detected between optimization value (</span><span class="si">{</span><span class="n">actual_obj_value</span><span class="si">}</span><span class="s2">) &quot;</span>
+                         <span class="sa">f</span><span class="s2">&quot;and sum of components (</span><span class="si">{</span><span class="n">computed_total</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Component breakdown:&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">component_values</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">name</span> <span class="o">!=</span> <span class="s1">&#39;total&#39;</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                
+        <span class="k">return</span> <span class="n">component_values</span> </div>
+</div>
+
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,455 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>service.constraints.constraints_manager &mdash; Oracle 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Oracle
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Oracle Optimizer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/initializers.html">Initializers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/optimization_types.html">Optimization Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/oracle.html">Oracle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/oracle_strategy.html">OracleStrategy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/objectives.html">Objectives</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/constraints.html">Constraints</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/helpers.html">Helpers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Oracle</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">service.constraints.constraints_manager</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for service.constraints.constraints_manager</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pulp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">timedelta</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.service.helpers.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">logger</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.service.constraints.cash.cash_validator</span><span class="w"> </span><span class="kn">import</span> <span class="n">CashValidator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.service.constraints.trade.min_notional_validator</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinNotionalValidator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.service.constraints.trade.no_simultaneous_trade_validator</span><span class="w"> </span><span class="kn">import</span> <span class="n">NoSimultaneousTradeValidator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.service.constraints.restriction.restriction_validator</span><span class="w"> </span><span class="kn">import</span> <span class="n">RestrictionValidator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.service.constraints.holding_time.holding_time_validator</span><span class="w"> </span><span class="kn">import</span> <span class="n">HoldingTimeValidator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.service.constraints.cash.withdrawal_validator</span><span class="w"> </span><span class="kn">import</span> <span class="n">WithdrawalValidator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.service.constraints.trade.no_buy_validator</span><span class="w"> </span><span class="kn">import</span> <span class="n">NoBuyValidator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.service.constraints.drift.drift_validator</span><span class="w"> </span><span class="kn">import</span> <span class="n">DriftValidator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.service.helpers.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">CASH_CUSIP_ID</span>
+
+<div class="viewcode-block" id="ConstraintsManager">
+<a class="viewcode-back" href="../../../modules/constraints.html#service.constraints.constraints_manager.ConstraintsManager">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ConstraintsManager</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Manager class for handling all optimization constraints.&quot;&quot;&quot;</span>
+    
+<div class="viewcode-block" id="ConstraintsManager.__init__">
+<a class="viewcode-back" href="../../../modules/constraints.html#service.constraints.constraints_manager.ConstraintsManager.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">oracle_strategy</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize ConstraintsManager with reference to OracleStrategy.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            oracle_strategy: Reference to the OracleStrategy instance</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">strategy</span> <span class="o">=</span> <span class="n">oracle_strategy</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">validators</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pre_trade_validators</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># Validators that must be checked before any trade</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">post_trade_validators</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># Validators that are checked after trade decisions</span></div>
+
+    
+<div class="viewcode-block" id="ConstraintsManager.add_constraints">
+<a class="viewcode-back" href="../../../modules/constraints.html#service.constraints.constraints_manager.ConstraintsManager.add_constraints">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_constraints</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">prob</span><span class="p">:</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpProblem</span><span class="p">,</span>
+        <span class="n">buys</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpVariable</span><span class="p">],</span>
+        <span class="n">sells</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpVariable</span><span class="p">],</span>
+        <span class="n">prices</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+        <span class="n">gain_loss</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+        <span class="n">tax_lots</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+        <span class="n">min_cash_amount</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">holding_time_delta</span><span class="p">:</span> <span class="n">timedelta</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">min_notional</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">range_min_weight_multiplier</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>  <span class="c1"># Default to 50% below target</span>
+        <span class="n">range_max_weight_multiplier</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">,</span>   <span class="c1"># Default to 100% above target</span>
+        <span class="n">log_time</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">buy_df</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">sell_df</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">enforce_wash_sale_prevention</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">debug</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add all constraints to the optimization problem.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            prob: PuLP optimization problem</span>
+<span class="sd">            buys: Dictionary of buy variables</span>
+<span class="sd">            sells: Dictionary of sell variables</span>
+<span class="sd">            gain_loss: DataFrame with gain/loss report</span>
+<span class="sd">            tax_lots: DataFrame with tax lot information</span>
+<span class="sd">            min_cash_amount: Minimum cash amount to maintain</span>
+<span class="sd">            holding_time_delta: Minimum holding time for tax lots</span>
+<span class="sd">            min_notional: Minimum notional amount for any trade (in dollars)</span>
+<span class="sd">            range_min_weight_multiplier: Multiplier for minimum weight (e.g. 0.5 means can&#39;t go below 50% of target)</span>
+<span class="sd">            range_max_weight_multiplier: Multiplier for maximum weight (e.g. 2.0 means can&#39;t go above 200% of target)</span>
+<span class="sd">            debug: Enable debug logging</span>
+<span class="sd">            log_time: Whether to log timing information</span>
+<span class="sd">            buy_df: Optional DataFrame with buy information for vectorized operations</span>
+<span class="sd">            sell_df: Optional DataFrame with sell information for vectorized operations</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">timing_data</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">log_time</span><span class="p">:</span>
+            <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        
+        <span class="c1"># Initialize and use CashValidator if not already created</span>
+        <span class="k">if</span> <span class="n">log_time</span><span class="p">:</span>
+            <span class="n">cash_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="k">if</span> <span class="s1">&#39;cash&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">post_trade_validators</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">post_trade_validators</span><span class="p">[</span><span class="s1">&#39;cash&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">CashValidator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="p">,</span> <span class="n">min_cash_amount</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">post_trade_validators</span><span class="p">[</span><span class="s1">&#39;cash&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min_cash_amount</span> <span class="o">=</span> <span class="n">min_cash_amount</span>
+            
+        <span class="c1"># Add cash constraints using validator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">post_trade_validators</span><span class="p">[</span><span class="s1">&#39;cash&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">add_to_problem</span><span class="p">(</span>
+            <span class="n">prob</span><span class="o">=</span><span class="n">prob</span><span class="p">,</span>
+            <span class="n">buys</span><span class="o">=</span><span class="n">buys</span><span class="p">,</span>
+            <span class="n">sells</span><span class="o">=</span><span class="n">sells</span><span class="p">,</span>
+            <span class="n">gain_loss</span><span class="o">=</span><span class="n">gain_loss</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">log_time</span><span class="p">:</span>
+            <span class="n">timing_data</span><span class="p">[</span><span class="s1">&#39;cash_constraints&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">cash_start</span>
+        
+        <span class="c1"># Initialize and use MinNotionalValidator if not already created</span>
+        <span class="k">if</span> <span class="n">log_time</span><span class="p">:</span>
+            <span class="n">notional_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="k">if</span> <span class="s1">&#39;min_notional&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">post_trade_validators</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">post_trade_validators</span><span class="p">[</span><span class="s1">&#39;min_notional&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">MinNotionalValidator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="p">,</span> <span class="n">min_notional</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">post_trade_validators</span><span class="p">[</span><span class="s1">&#39;min_notional&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min_notional</span> <span class="o">=</span> <span class="n">min_notional</span>
+            
+        <span class="c1"># Add minimum notional constraints using validator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">post_trade_validators</span><span class="p">[</span><span class="s1">&#39;min_notional&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">add_to_problem</span><span class="p">(</span>
+            <span class="n">prob</span><span class="o">=</span><span class="n">prob</span><span class="p">,</span>
+            <span class="n">buys</span><span class="o">=</span><span class="n">buys</span><span class="p">,</span>
+            <span class="n">sells</span><span class="o">=</span><span class="n">sells</span><span class="p">,</span>
+            <span class="n">prices</span><span class="o">=</span><span class="n">prices</span><span class="p">,</span>
+            <span class="n">tax_lots</span><span class="o">=</span><span class="n">tax_lots</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">log_time</span><span class="p">:</span>
+            <span class="n">timing_data</span><span class="p">[</span><span class="s1">&#39;notional_constraints&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">notional_start</span>
+        
+        <span class="c1"># Initialize and use NoSimultaneousTradeValidator</span>
+        <span class="k">if</span> <span class="n">log_time</span><span class="p">:</span>
+            <span class="n">simultaneous_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="k">if</span> <span class="s1">&#39;no_simultaneous_trade&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">post_trade_validators</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">post_trade_validators</span><span class="p">[</span><span class="s1">&#39;no_simultaneous_trade&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">NoSimultaneousTradeValidator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="p">)</span>
+            
+        <span class="c1"># Add no simultaneous buy/sell constraints using validator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">post_trade_validators</span><span class="p">[</span><span class="s1">&#39;no_simultaneous_trade&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">add_to_problem</span><span class="p">(</span>
+            <span class="n">prob</span><span class="o">=</span><span class="n">prob</span><span class="p">,</span>
+            <span class="n">buys</span><span class="o">=</span><span class="n">buys</span><span class="p">,</span>
+            <span class="n">sells</span><span class="o">=</span><span class="n">sells</span><span class="p">,</span>
+            <span class="n">gain_loss</span><span class="o">=</span><span class="n">gain_loss</span><span class="p">,</span>
+            <span class="n">all_identifiers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="o">.</span><span class="n">all_identifiers</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">log_time</span><span class="p">:</span>
+            <span class="n">timing_data</span><span class="p">[</span><span class="s1">&#39;simultaneous_trade_constraints&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">simultaneous_start</span>
+        
+        <span class="c1"># Initialize and use RestrictionValidator</span>
+        <span class="k">if</span> <span class="n">log_time</span><span class="p">:</span>
+            <span class="n">restriction_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="k">if</span> <span class="s1">&#39;restriction&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre_trade_validators</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pre_trade_validators</span><span class="p">[</span><span class="s1">&#39;restriction&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">RestrictionValidator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="p">,</span> <span class="n">enforce_wash_sale_prevention</span><span class="p">)</span>
+            
+        <span class="c1"># Add stock and wash sale restrictions using validator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pre_trade_validators</span><span class="p">[</span><span class="s1">&#39;restriction&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">add_to_problem</span><span class="p">(</span>
+            <span class="n">prob</span><span class="o">=</span><span class="n">prob</span><span class="p">,</span>
+            <span class="n">buys</span><span class="o">=</span><span class="n">buys</span><span class="p">,</span>
+            <span class="n">sells</span><span class="o">=</span><span class="n">sells</span><span class="p">,</span>
+            <span class="n">gain_loss</span><span class="o">=</span><span class="n">gain_loss</span><span class="p">,</span>
+            <span class="n">stock_restrictions</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="o">.</span><span class="n">oracle</span><span class="o">.</span><span class="n">stock_restrictions</span><span class="p">,</span>
+            <span class="n">wash_sale_restrictions</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="o">.</span><span class="n">oracle</span><span class="o">.</span><span class="n">wash_sale_restrictions</span><span class="p">,</span>
+            <span class="n">all_identifiers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="o">.</span><span class="n">all_identifiers</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">log_time</span><span class="p">:</span>
+            <span class="n">timing_data</span><span class="p">[</span><span class="s1">&#39;restriction_constraints&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">restriction_start</span>
+        
+        <span class="c1"># Initialize and use HoldingTimeValidator if needed</span>
+        <span class="k">if</span> <span class="n">holding_time_delta</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">holding_time_delta</span> <span class="o">&gt;</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">log_time</span><span class="p">:</span>
+                <span class="n">holding_time_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="k">if</span> <span class="s1">&#39;holding_time&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre_trade_validators</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">pre_trade_validators</span><span class="p">[</span><span class="s1">&#39;holding_time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">HoldingTimeValidator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="p">,</span> <span class="n">holding_time_delta</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">pre_trade_validators</span><span class="p">[</span><span class="s1">&#39;holding_time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">holding_time_delta</span> <span class="o">=</span> <span class="n">holding_time_delta</span>
+                
+            <span class="c1"># Add holding time constraints using validator</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pre_trade_validators</span><span class="p">[</span><span class="s1">&#39;holding_time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">add_to_problem</span><span class="p">(</span>
+                <span class="n">prob</span><span class="o">=</span><span class="n">prob</span><span class="p">,</span>
+                <span class="n">sells</span><span class="o">=</span><span class="n">sells</span><span class="p">,</span>
+                <span class="n">tax_lots</span><span class="o">=</span><span class="n">tax_lots</span><span class="p">,</span>
+                <span class="n">current_date</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="o">.</span><span class="n">oracle</span><span class="o">.</span><span class="n">current_date</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">log_time</span><span class="p">:</span>
+                <span class="n">timing_data</span><span class="p">[</span><span class="s1">&#39;holding_time_constraints&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">holding_time_start</span>
+            
+        <span class="c1"># Add DriftValidator for PAIRS_TLH and DIRECT_INDEX optimization types</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="o">.</span><span class="n">optimization_type</span> <span class="ow">in</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="o">.</span><span class="n">optimization_type</span><span class="o">.</span><span class="n">PAIRS_TLH</span><span class="p">,</span> 
+                                                    <span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="o">.</span><span class="n">optimization_type</span><span class="o">.</span><span class="n">DIRECT_INDEX</span><span class="p">}:</span>
+            <span class="k">if</span> <span class="n">log_time</span><span class="p">:</span>
+                <span class="n">drift_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="k">if</span> <span class="s1">&#39;drift&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">post_trade_validators</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">post_trade_validators</span><span class="p">[</span><span class="s1">&#39;drift&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">DriftValidator</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="p">,</span>
+                    <span class="n">range_min_weight_multiplier</span><span class="o">=</span><span class="n">range_min_weight_multiplier</span><span class="p">,</span>
+                    <span class="n">range_max_weight_multiplier</span><span class="o">=</span><span class="n">range_max_weight_multiplier</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">post_trade_validators</span><span class="p">[</span><span class="s1">&#39;drift&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">range_min_weight_multiplier</span> <span class="o">=</span> <span class="n">range_min_weight_multiplier</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">post_trade_validators</span><span class="p">[</span><span class="s1">&#39;drift&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">range_max_weight_multiplier</span> <span class="o">=</span> <span class="n">range_max_weight_multiplier</span>
+                
+            <span class="c1"># Add drift constraints using validator with vectorized DataFrames</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">post_trade_validators</span><span class="p">[</span><span class="s1">&#39;drift&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">add_to_problem</span><span class="p">(</span>
+                <span class="n">prob</span><span class="o">=</span><span class="n">prob</span><span class="p">,</span>
+                <span class="n">buys</span><span class="o">=</span><span class="n">buys</span><span class="p">,</span>
+                <span class="n">sells</span><span class="o">=</span><span class="n">sells</span><span class="p">,</span>
+                <span class="n">drift</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="o">.</span><span class="n">drift_report</span><span class="p">,</span>
+                <span class="n">buy_df</span><span class="o">=</span><span class="n">buy_df</span><span class="p">,</span>
+                <span class="n">sell_df</span><span class="o">=</span><span class="n">sell_df</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">log_time</span><span class="p">:</span>
+                <span class="n">timing_data</span><span class="p">[</span><span class="s1">&#39;drift_constraints&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">drift_start</span>
+        
+        <span class="c1"># Keep validators dict in sync with pre and post trade validators</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">validators</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">pre_trade_validators</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">post_trade_validators</span><span class="p">}</span>
+
+        <span class="k">if</span> <span class="n">log_time</span><span class="p">:</span>
+            <span class="n">timing_data</span><span class="p">[</span><span class="s1">&#39;total_time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;=== Constraints Setup Timing Breakdown ===&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">section</span><span class="p">,</span> <span class="n">duration</span> <span class="ow">in</span> <span class="n">timing_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">section</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">duration</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span></div>
+
+            
+<div class="viewcode-block" id="ConstraintsManager.add_withdrawal_constraints">
+<a class="viewcode-back" href="../../../modules/constraints.html#service.constraints.constraints_manager.ConstraintsManager.add_withdrawal_constraints">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_withdrawal_constraints</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">prob</span><span class="p">:</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpProblem</span><span class="p">,</span>
+        <span class="n">buys</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpVariable</span><span class="p">],</span>
+        <span class="n">sells</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpVariable</span><span class="p">],</span>
+        <span class="n">drift</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+        <span class="n">gain_loss</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+        <span class="n">total_value</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">withdrawal_amount</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">debug</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add withdrawal-related constraints to the optimization problem.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            prob: PuLP optimization problem</span>
+<span class="sd">            buys: Dictionary of buy variables</span>
+<span class="sd">            sells: Dictionary of sell variables</span>
+<span class="sd">            drift: DataFrame with drift report</span>
+<span class="sd">            gain_loss: DataFrame with gain/loss report</span>
+<span class="sd">            total_value: Total portfolio value</span>
+<span class="sd">            withdrawal_amount: Amount to withdraw from the portfolio</span>
+<span class="sd">            debug: Enable debug logging</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">withdrawal_amount</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span>  <span class="c1"># No withdrawal, no constraints needed</span>
+            
+        <span class="c1"># Initialize and use WithdrawalValidator if not already created</span>
+        <span class="k">if</span> <span class="s1">&#39;withdrawal&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">post_trade_validators</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">post_trade_validators</span><span class="p">[</span><span class="s1">&#39;withdrawal&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">WithdrawalValidator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="p">,</span> <span class="n">withdrawal_amount</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">post_trade_validators</span><span class="p">[</span><span class="s1">&#39;withdrawal&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">withdrawal_amount</span> <span class="o">=</span> <span class="n">withdrawal_amount</span>
+            
+        <span class="c1"># Add withdrawal constraints using validator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">post_trade_validators</span><span class="p">[</span><span class="s1">&#39;withdrawal&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">add_to_problem</span><span class="p">(</span>
+            <span class="n">prob</span><span class="o">=</span><span class="n">prob</span><span class="p">,</span>
+            <span class="n">buys</span><span class="o">=</span><span class="n">buys</span><span class="p">,</span>
+            <span class="n">sells</span><span class="o">=</span><span class="n">sells</span><span class="p">,</span>
+            <span class="n">drift</span><span class="o">=</span><span class="n">drift</span><span class="p">,</span>
+            <span class="n">gain_loss</span><span class="o">=</span><span class="n">gain_loss</span><span class="p">,</span>
+            <span class="n">total_value</span><span class="o">=</span><span class="n">total_value</span><span class="p">,</span>
+            <span class="n">debug</span><span class="o">=</span><span class="n">debug</span>
+        <span class="p">)</span>
+        
+        <span class="c1"># Keep validators dict in sync</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">validators</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">pre_trade_validators</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">post_trade_validators</span><span class="p">}</span></div>
+
+        
+<div class="viewcode-block" id="ConstraintsManager.add_no_buy_constraints">
+<a class="viewcode-back" href="../../../modules/constraints.html#service.constraints.constraints_manager.ConstraintsManager.add_no_buy_constraints">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_no_buy_constraints</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">prob</span><span class="p">:</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpProblem</span><span class="p">,</span>
+        <span class="n">buys</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpVariable</span><span class="p">],</span>
+        <span class="n">exclude_cash</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add constraints to prevent buying any securities (typically used for liquidation).</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            prob: PuLP optimization problem</span>
+<span class="sd">            buys: Dictionary of buy variables</span>
+<span class="sd">            exclude_cash: Whether to exclude cash from the no-buy constraint (default True)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Initialize and use NoBuyValidator if not already created</span>
+        <span class="k">if</span> <span class="s1">&#39;no_buy&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">post_trade_validators</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">post_trade_validators</span><span class="p">[</span><span class="s1">&#39;no_buy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">NoBuyValidator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="p">,</span> <span class="n">exclude_cash</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">post_trade_validators</span><span class="p">[</span><span class="s1">&#39;no_buy&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">exclude_cash</span> <span class="o">=</span> <span class="n">exclude_cash</span>
+            
+        <span class="c1"># Add no-buy constraints using validator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">post_trade_validators</span><span class="p">[</span><span class="s1">&#39;no_buy&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">add_to_problem</span><span class="p">(</span>
+            <span class="n">prob</span><span class="o">=</span><span class="n">prob</span><span class="p">,</span>
+            <span class="n">buys</span><span class="o">=</span><span class="n">buys</span><span class="p">,</span>
+            <span class="n">exclude_cash</span><span class="o">=</span><span class="n">exclude_cash</span>
+        <span class="p">)</span>
+        
+        <span class="c1"># Keep validators dict in sync</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">validators</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">pre_trade_validators</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">post_trade_validators</span><span class="p">}</span></div>
+
+        
+<div class="viewcode-block" id="ConstraintsManager.is_restricted_from_selling_pre_trade">
+<a class="viewcode-back" href="../../../modules/constraints.html#service.constraints.constraints_manager.ConstraintsManager.is_restricted_from_selling_pre_trade">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_restricted_from_selling_pre_trade</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">tax_lot_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check if a security is restricted from buying or selling.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            identifier: The security identifier to check</span>
+<span class="sd">            tax_lot_id: Optional tax lot ID if checking sell restrictions</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple of (is_restricted, reason)</span>
+<span class="sd">            - is_restricted: True if restricted, False otherwise</span>
+<span class="sd">            - reason: None if not restricted, otherwise a string explaining why it&#39;s restricted</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Check sell restrictions</span>
+        <span class="k">for</span> <span class="n">validator</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre_trade_validators</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">is_allowed</span><span class="p">,</span> <span class="n">reason</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">validate_sell</span><span class="p">(</span><span class="n">tax_lot_id</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">is_allowed</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="n">reason</span>
+            <span class="k">except</span> <span class="ne">NotImplementedError</span><span class="p">:</span>
+                <span class="c1"># Skip validators that don&#39;t implement individual trade validation</span>
+                <span class="k">continue</span>
+        <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">None</span></div>
+
+        
+<div class="viewcode-block" id="ConstraintsManager.is_restricted_from_buying_pre_trade">
+<a class="viewcode-back" href="../../../modules/constraints.html#service.constraints.constraints_manager.ConstraintsManager.is_restricted_from_buying_pre_trade">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_restricted_from_buying_pre_trade</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check if a security is restricted from buying or selling.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            identifier: The security identifier to check</span>
+<span class="sd">            tax_lot_id: Optional tax lot ID if checking sell restrictions</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple of (is_restricted, reason)</span>
+<span class="sd">            - is_restricted: True if restricted, False otherwise</span>
+<span class="sd">            - reason: None if not restricted, otherwise a string explaining why it&#39;s restricted</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">validator</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">validators</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">is_allowed</span><span class="p">,</span> <span class="n">reason</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">validate_buy</span><span class="p">(</span><span class="n">identifier</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">is_allowed</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="n">reason</span>
+            <span class="k">except</span> <span class="ne">NotImplementedError</span><span class="p">:</span>
+                <span class="c1"># Skip validators that don&#39;t implement individual trade validation</span>
+                <span class="k">continue</span>
+        <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">None</span></div>
+</div>
+
+        
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

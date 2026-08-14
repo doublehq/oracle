@@ -1,0 +1,329 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.service.initializers.factor_model &mdash; Oracle 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            Oracle
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../index.html">Oracle Optimizer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules/initializers.html">Initializers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules/optimization_types.html">Optimization Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules/oracle.html">Oracle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules/oracle_strategy.html">OracleStrategy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules/objectives.html">Objectives</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules/constraints.html">Constraints</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules/helpers.html">Helpers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Oracle</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">src.service.initializers.factor_model</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for src.service.initializers.factor_model</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tuple</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.service.helpers.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">CASH_CUSIP_ID</span><span class="p">,</span> <span class="n">logger</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">normalize_factor_model</span><span class="p">(</span><span class="n">factor_model</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> 
+                         <span class="n">preserve_range</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.75</span><span class="p">,</span>
+                         <span class="n">scale_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Normalize factor model values using a piecewise approach that preserves values</span>
+<span class="sd">    in the [-preserve_range, preserve_range] range and applies tanh compression beyond that.</span>
+<span class="sd">    Uses a global maximum across all factors to ensure consistent scaling.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        factor_model: DataFrame with factor exposures</span>
+<span class="sd">        preserve_range: Range to preserve without compression (default 0.75)</span>
+<span class="sd">        scale_factor: Scaling factor for tanh compression beyond preserve_range.</span>
+<span class="sd">                     Lower values make the transformation more gradual.</span>
+<span class="sd">                     Higher values make it more aggressive.</span>
+<span class="sd">                     Default 0.1 provides good coverage for typical factor values.</span>
+<span class="sd">        </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Normalized factor model DataFrame</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Make a copy to avoid modifying the original</span>
+    <span class="n">normalized</span> <span class="o">=</span> <span class="n">factor_model</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    
+    <span class="c1"># Get factor columns (excluding identifier)</span>
+    <span class="n">factor_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">factor_model</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span> <span class="o">!=</span> <span class="s1">&#39;identifier&#39;</span><span class="p">]</span>
+    
+    <span class="c1"># Find the global maximum absolute value across all factors</span>
+    <span class="n">global_max_abs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">normalized</span><span class="p">[</span><span class="n">col</span><span class="p">]))</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">factor_cols</span><span class="p">])</span>
+    
+    <span class="c1"># Calculate scaling factor to map global_max_abs to preserve_range</span>
+    <span class="n">scale</span> <span class="o">=</span> <span class="n">preserve_range</span> <span class="o">/</span> <span class="n">global_max_abs</span>
+    
+    <span class="c1"># Only normalize if we have values outside [-1, 1]</span>
+    <span class="k">if</span> <span class="n">global_max_abs</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">factor_cols</span><span class="p">:</span>
+            <span class="c1"># Apply piecewise transformation</span>
+            <span class="n">mask_inside</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">normalized</span><span class="p">[</span><span class="n">col</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="n">preserve_range</span>
+            <span class="n">mask_outside</span> <span class="o">=</span> <span class="o">~</span><span class="n">mask_inside</span>
+            
+            <span class="c1"># For values that would be inside preserve_range after scaling, just scale them</span>
+            <span class="n">normalized</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mask_inside</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">normalized</span><span class="p">[</span><span class="n">col</span><span class="p">][</span><span class="n">mask_inside</span><span class="p">]</span> <span class="o">*</span> <span class="n">scale</span>
+            
+            <span class="c1"># For values that would be outside preserve_range after scaling</span>
+            <span class="k">if</span> <span class="n">mask_outside</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+                <span class="c1"># Calculate the offset to make tanh continuous at preserve_range</span>
+                <span class="n">offset</span> <span class="o">=</span> <span class="n">preserve_range</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">scale_factor</span> <span class="o">*</span> <span class="n">preserve_range</span><span class="p">)</span>
+                
+                <span class="c1"># Apply tanh compression with offset</span>
+                <span class="n">normalized</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mask_outside</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">scale_factor</span> <span class="o">*</span> <span class="n">normalized</span><span class="p">[</span><span class="n">col</span><span class="p">][</span><span class="n">mask_outside</span><span class="p">]</span> <span class="o">*</span> <span class="n">scale</span><span class="p">)</span> <span class="o">+</span> <span class="n">offset</span>
+                <span class="p">)</span>
+            
+            <span class="c1"># Ensure values are within [-1, 1]</span>
+            <span class="n">normalized</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">normalized</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+            <span class="n">normalized</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">normalized</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span>
+    
+    <span class="k">return</span> <span class="n">normalized</span>
+
+<div class="viewcode-block" id="initialize_factor_model">
+<a class="viewcode-back" href="../../../../modules/initializers.html#service.initializers.initialize_factor_model">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">initialize_factor_model</span><span class="p">(</span><span class="n">factor_model</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">targets</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">actuals</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Initialize and validate a factor model DataFrame, and compute weighted average factors.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        factor_model (pd.DataFrame): DataFrame with columns:</span>
+<span class="sd">        - identifier (str): Security identifier</span>
+<span class="sd">        - [factor_name] (float): One or more factor exposure columns</span>
+<span class="sd">        targets (pd.DataFrame): DataFrame with columns:</span>
+<span class="sd">        - asset_class (str): Asset class identifier</span>
+<span class="sd">        - target_weight (float): Target portfolio weight</span>
+<span class="sd">        - identifiers (list[str]): List of valid identifiers for each asset class</span>
+<span class="sd">        actuals (pd.DataFrame): DataFrame with columns:</span>
+<span class="sd">        - identifier (str): Security identifier</span>
+<span class="sd">        - actual_weight (float): Current portfolio weight</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple containing:</span>
+<span class="sd">        - factor_model (pd.DataFrame): Normalized factor exposures for each security</span>
+<span class="sd">        - target_exposures (pd.DataFrame): Target portfolio&#39;s weighted average factor exposures</span>
+<span class="sd">        - actual_exposures (pd.DataFrame): Current portfolio&#39;s weighted average factor exposures</span>
+<span class="sd">        </span>
+<span class="sd">    Notes:</span>
+<span class="sd">        - Factor values are normalized using tanh-based compression</span>
+<span class="sd">        - Weighted averages are computed using target and actual weights</span>
+<span class="sd">        - Missing factors are handled gracefully with appropriate warnings</span>
+<span class="sd">        - Factors are validated for numerical stability</span>
+<span class="sd">        </span>
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If:</span>
+<span class="sd">        - Factor model is missing required columns</span>
+<span class="sd">        - No numeric factor columns are present</span>
+<span class="sd">        - Non-numeric data in factor columns</span>
+<span class="sd">        - Missing entries for required identifiers</span>
+<span class="sd">        - Null values in any column</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+        
+    <span class="c1"># Validate factor model structure</span>
+    <span class="k">if</span> <span class="s1">&#39;identifier&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">factor_model</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Factor model must have &#39;identifier&#39; column&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Check that we have at least one numeric column</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">factor_model</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># Only identifier column</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Factor model must have at least one numeric factor column besides identifier&quot;</span><span class="p">)</span>
+    
+    <span class="n">factor_model</span> <span class="o">=</span> <span class="n">factor_model</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">factor_model</span><span class="p">[</span><span class="s1">&#39;identifier&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">factor_model</span><span class="p">[</span><span class="s1">&#39;identifier&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+    
+    <span class="c1"># Check for null values in any column</span>
+    <span class="n">null_counts</span> <span class="o">=</span> <span class="n">factor_model</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">columns_with_nulls</span> <span class="o">=</span> <span class="n">null_counts</span><span class="p">[</span><span class="n">null_counts</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">columns_with_nulls</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Found null values in the following columns: </span><span class="si">{</span><span class="nb">dict</span><span class="p">(</span><span class="n">columns_with_nulls</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Verify all non-identifier columns are numeric</span>
+    <span class="n">non_numeric_cols</span> <span class="o">=</span> <span class="n">factor_model</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;identifier&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;float64&#39;</span><span class="p">,</span> <span class="s1">&#39;int64&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">columns</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">non_numeric_cols</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;All factor columns must be numeric. Non-numeric columns found: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">non_numeric_cols</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Normalize the factor model</span>
+    <span class="n">factor_model</span> <span class="o">=</span> <span class="n">normalize_factor_model</span><span class="p">(</span><span class="n">factor_model</span><span class="p">)</span>
+    
+    <span class="c1"># Check if CASH_CUSIP_ID exists in targets</span>
+    <span class="n">cash_exists</span> <span class="o">=</span> <span class="n">CASH_CUSIP_ID</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">factor_model</span><span class="p">[</span><span class="s1">&#39;identifier&#39;</span><span class="p">])</span>
+    
+    <span class="c1"># If cash doesn&#39;t exist, add it with zero factors</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">cash_exists</span><span class="p">:</span>
+        <span class="c1"># Add cash with zero factors</span>
+        <span class="n">cash_row</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+            <span class="s1">&#39;identifier&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">CASH_CUSIP_ID</span><span class="p">],</span>
+            <span class="o">**</span><span class="p">{</span><span class="n">col</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">factor_model</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span> <span class="o">!=</span> <span class="s1">&#39;identifier&#39;</span><span class="p">},</span>
+        <span class="p">})</span>
+        <span class="n">factor_model</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">factor_model</span><span class="p">,</span> <span class="n">cash_row</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    
+    <span class="c1"># Get all identifiers from targets</span>
+    <span class="n">all_target_identifiers</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="n">id_</span> <span class="k">for</span> <span class="n">ids</span> <span class="ow">in</span> <span class="n">targets</span><span class="p">[</span><span class="s1">&#39;identifiers&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">id_</span> <span class="ow">in</span> <span class="n">ids</span><span class="p">])</span>
+    
+    <span class="c1"># Check that we have factor model entries for all required identifiers</span>
+    <span class="k">if</span> <span class="n">all_target_identifiers</span><span class="p">:</span>
+        <span class="n">missing_identifiers</span> <span class="o">=</span> <span class="n">all_target_identifiers</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">factor_model</span><span class="p">[</span><span class="s1">&#39;identifier&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">missing_identifiers</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Missing factor model entries for identifiers: </span><span class="si">{</span><span class="n">missing_identifiers</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Create a mapping of identifier to target weight by distributing asset class weights</span>
+    <span class="c1"># This only makes sense because the identifiers in a asset_class are length 1</span>
+    <span class="n">identifier_target_weights</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">targets</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+        <span class="n">asset_class_weight</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;target_weight&#39;</span><span class="p">]</span>
+        <span class="n">identifiers</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;identifiers&#39;</span><span class="p">]</span>
+        <span class="c1"># Distribute asset class weight equally among identifiers</span>
+        <span class="k">if</span> <span class="n">identifiers</span><span class="p">:</span>  <span class="c1"># Skip if empty list</span>
+            <span class="n">weight_per_identifier</span> <span class="o">=</span> <span class="n">asset_class_weight</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">identifiers</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">identifier</span> <span class="ow">in</span> <span class="n">identifiers</span><span class="p">:</span>
+                <span class="n">identifier_target_weights</span><span class="p">[</span><span class="n">identifier</span><span class="p">]</span> <span class="o">=</span> <span class="n">weight_per_identifier</span>
+    
+    <span class="c1"># Create a DataFrame with identifier weights</span>
+    <span class="n">identifier_weights</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+        <span class="s1">&#39;identifier&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">identifier_target_weights</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span>
+        <span class="s1">&#39;target_weight&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">identifier_target_weights</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    <span class="p">})</span>
+    
+    <span class="c1"># Compute weighted average factors for targets</span>
+    <span class="c1"># First merge factor model with identifier weights</span>
+    <span class="n">weighted_factors</span> <span class="o">=</span> <span class="n">factor_model</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+        <span class="n">identifier_weights</span><span class="p">,</span>
+        <span class="n">on</span><span class="o">=</span><span class="s1">&#39;identifier&#39;</span><span class="p">,</span>
+        <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span>
+    <span class="p">)</span>
+    <span class="n">weighted_factors</span><span class="p">[</span><span class="s1">&#39;target_weight&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">weighted_factors</span><span class="p">[</span><span class="s1">&#39;target_weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+    
+    <span class="c1"># For each factor column, multiply by weight and sum</span>
+    <span class="n">factor_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">factor_model</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span> <span class="o">!=</span> <span class="s1">&#39;identifier&#39;</span><span class="p">]</span>
+    <span class="n">weighted_sums</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">factor_cols</span><span class="p">:</span>
+        <span class="n">weighted_sums</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">weighted_factors</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">*</span> <span class="n">weighted_factors</span><span class="p">[</span><span class="s1">&#39;target_weight&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    
+    <span class="c1"># Create DataFrame with weighted averages for targets</span>
+    <span class="n">weighted_average_factors</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">weighted_sums</span><span class="p">])</span>
+
+    <span class="c1"># Compute weighted average factors for actuals</span>
+    <span class="n">weighted_actual_factors</span> <span class="o">=</span> <span class="n">factor_model</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+        <span class="n">actuals</span><span class="p">[[</span><span class="s1">&#39;identifier&#39;</span><span class="p">,</span> <span class="s1">&#39;actual_weight&#39;</span><span class="p">]],</span> 
+        <span class="n">on</span><span class="o">=</span><span class="s1">&#39;identifier&#39;</span><span class="p">,</span>
+        <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span>
+    <span class="p">)</span>
+    <span class="n">weighted_actual_factors</span><span class="p">[</span><span class="s1">&#39;actual_weight&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">weighted_actual_factors</span><span class="p">[</span><span class="s1">&#39;actual_weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+    
+    <span class="c1"># For each factor column, multiply by actual weight and sum</span>
+    <span class="n">actual_weighted_sums</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">factor_cols</span><span class="p">:</span>
+        <span class="n">actual_weighted_sums</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">weighted_actual_factors</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">*</span> <span class="n">weighted_actual_factors</span><span class="p">[</span><span class="s1">&#39;actual_weight&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    
+    <span class="c1"># Create DataFrame with weighted averages for actuals</span>
+    <span class="n">weighted_average_actuals_factors</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">actual_weighted_sums</span><span class="p">])</span>
+
+    <span class="c1"># Check for missing actual identifiers and add them with weighted average factors</span>
+    <span class="n">all_actual_identifiers</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">actuals</span><span class="p">[</span><span class="s1">&#39;identifier&#39;</span><span class="p">])</span>
+    <span class="n">missing_actual_identifiers</span> <span class="o">=</span> <span class="n">all_actual_identifiers</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">factor_model</span><span class="p">[</span><span class="s1">&#39;identifier&#39;</span><span class="p">])</span>
+    
+    <span class="k">if</span> <span class="n">missing_actual_identifiers</span><span class="p">:</span>
+        <span class="c1"># Create rows for missing identifiers using weighted average factors</span>
+        <span class="n">missing_rows</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">identifier</span> <span class="ow">in</span> <span class="n">missing_actual_identifiers</span><span class="p">:</span>
+            <span class="n">new_row</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;identifier&#39;</span><span class="p">:</span> <span class="n">identifier</span><span class="p">}</span>
+            <span class="c1"># Add weighted average factors for each factor column</span>
+            <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">factor_cols</span><span class="p">:</span>
+                <span class="n">new_row</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">weighted_average_factors</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">missing_rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_row</span><span class="p">)</span>
+        
+        <span class="c1"># Add the missing rows to the factor model</span>
+        <span class="k">if</span> <span class="n">missing_rows</span><span class="p">:</span>
+            <span class="n">missing_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">missing_rows</span><span class="p">)</span>
+            <span class="n">factor_model</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">factor_model</span><span class="p">,</span> <span class="n">missing_df</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Added </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">missing_actual_identifiers</span><span class="p">)</span><span class="si">}</span><span class="s2"> missing identifiers to factor model with weighted average factors&quot;</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">factor_model</span><span class="p">,</span> <span class="n">weighted_average_factors</span><span class="p">,</span> <span class="n">weighted_average_actuals_factors</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
