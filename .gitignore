@@ -193,3 +193,7 @@ cython_debug/
 #  refer to https://docs.cursor.com/context/ignore-files
 .cursorignore
 .cursorindexingignore
+.cursor/mcp.json
+
+# E2E agent test artifacts (snapshots, caches, results)
+artifacts/

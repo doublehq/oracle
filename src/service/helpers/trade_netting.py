@@ -12,7 +12,10 @@ def net_trades_across_strategies(strategy_results: Dict[int, Tuple[Optional[int]
         return pd.DataFrame(columns=NETTED_TRADES_COLUMNS)
     
     trades["quantity"] = trades["quantity"].map(lambda quantity: round(Decimal(quantity), trade_rounding))
-    trades["quantity"].mask(trades["action"] == "sell", -trades["quantity"], inplace=True)
+    trades["quantity"] = trades["quantity"].mask(
+        trades["action"] == "sell",
+        -trades["quantity"],
+    )
 
     net = trades.groupby("identifier").agg({
         "quantity": "sum",
@@ -23,7 +26,7 @@ def net_trades_across_strategies(strategy_results: Dict[int, Tuple[Optional[int]
 
     trades.sort_values("quantity", ascending=False, inplace=True)
     trades["cumqty"] = trades.groupby("identifier")["quantity"].transform(methodcaller("cumsum"))
-    sells = trades[trades["cumqty"] < 0]
+    sells = trades[trades["cumqty"] < 0].copy()
     sells["netqty"] = sells["quantity"].clip(lower=sells["cumqty"])
 
     netpct = (sells["netqty"] / sells["quantity"]).astype(float)
@@ -38,7 +41,10 @@ def net_trades_across_strategies(strategy_results: Dict[int, Tuple[Optional[int]
     assert not matching_lots.duplicated(["identifier", "tax_lot_id"]).any(), "duplicate sell tax lots"
 
     net = net.merge(matching_lots, how="left", on="identifier")
-    net["quantity"].mask(net["action"] == "sell", -net["netqty"], inplace=True)
+    net["quantity"] = net["quantity"].mask(
+        net["action"] == "sell",
+        -net["netqty"],
+    )
     net["quantity"] = net["quantity"].astype(float)
 
     assert (net["quantity"] > 0).all(), "invalid netting"

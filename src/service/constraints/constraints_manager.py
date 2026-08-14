@@ -13,6 +13,7 @@ from src.service.constraints.holding_time.holding_time_validator import HoldingT
 from src.service.constraints.cash.withdrawal_validator import WithdrawalValidator
 from src.service.constraints.trade.no_buy_validator import NoBuyValidator
 from src.service.constraints.drift.drift_validator import DriftValidator
+from src.service.constraints.trade.disposal_order_validator import DisposalOrderValidator
 from src.service.helpers.constants import CASH_CUSIP_ID
 
 class ConstraintsManager:
@@ -48,6 +49,8 @@ class ConstraintsManager:
         sell_df: Optional[pd.DataFrame] = None,
         enforce_wash_sale_prevention: bool = True,
         debug: bool = False,
+        disposal_method: str = "FIFO",
+        enforce_disposal_order: bool = False,
     ) -> None:
         """
         Add all constraints to the optimization problem.
@@ -190,6 +193,23 @@ class ConstraintsManager:
             )
             if log_time:
                 timing_data['drift_constraints'] = time.time() - drift_start
+
+        if enforce_disposal_order:
+            if log_time:
+                disposal_start = time.time()
+            if 'disposal_order' not in self.pre_trade_validators:
+                self.pre_trade_validators['disposal_order'] = DisposalOrderValidator(
+                    self.strategy, disposal_method
+                )
+            else:
+                self.pre_trade_validators['disposal_order'].disposal_method = disposal_method
+            self.pre_trade_validators['disposal_order'].add_to_problem(
+                prob=prob,
+                sells=sells,
+                tax_lots=tax_lots,
+            )
+            if log_time:
+                timing_data['disposal_order_constraints'] = time.time() - disposal_start
         
         # Keep validators dict in sync with pre and post trade validators
         self.validators = {**self.pre_trade_validators, **self.post_trade_validators}

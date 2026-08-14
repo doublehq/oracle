@@ -7,6 +7,7 @@ from src.service.constraints.constraints_manager import ConstraintsManager
 from src.service.helpers.enums import OracleOptimizationType
 from src.service.reports.drift_report import generate_drift_report, PositionStatus
 from src.service.helpers.constants import CASH_CUSIP_ID
+from src.service.helpers.lp_names import safe_lp_name
 
 @dataclass
 class TLHTrade:
@@ -625,7 +626,10 @@ def calculate_tlh_impact(
             # Add constraint to sell exactly the harvest quantity
             if opportunity.harvest_quantity > opportunity.quantity:
                 raise ValueError("TLH Harvest quantity exceeds available quantity.")
-            prob += sells[opportunity.tax_lot_id] == opportunity.harvest_quantity, f"tlh_sell_{opportunity.tax_lot_id}"
+            prob += (
+                sells[opportunity.tax_lot_id] == opportunity.harvest_quantity,
+                f"tlh_sell_{safe_lp_name(opportunity.tax_lot_id)}",
+            )
             sell_identifiers.append(opportunity.identifier)
             sell_quantities[opportunity.tax_lot_id] = opportunity.harvest_quantity
             # When selling a security, prevent buying it at the same time
@@ -641,7 +645,10 @@ def calculate_tlh_impact(
                         buy_quantities[replacement_id] = buy_qty
                         all_sell_lots = gain_loss_report[gain_loss_report['identifier'] == replacement_id]
                         for _, lot in all_sell_lots.iterrows():
-                            prob += sells[lot['tax_lot_id']] == 0, f"tlh_sell_{lot['tax_lot_id']}"
+                            prob += (
+                                sells[lot['tax_lot_id']] == 0,
+                                f"tlh_sell_{safe_lp_name(lot['tax_lot_id'])}",
+                            )
     
     # If we have TLH trades and an objective manager, calculate baseline values
     baseline_components = None

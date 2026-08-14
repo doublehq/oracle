@@ -3,6 +3,7 @@ import pandas as pd
 from typing import Dict, List, Tuple, Any, Optional
 
 from src.service.helpers.constants import logger
+from src.service.helpers.lp_names import safe_lp_name
 
 def _create_buy_dataframe(
     buys: Dict[str, pulp.LpVariable],
@@ -102,7 +103,7 @@ def create_decision_variables(
     # Buy variables - one per security
     for identifier in buy_identifiers:
         buys[identifier] = pulp.LpVariable(
-            f"buy_{identifier}",
+            f"buy_{safe_lp_name(identifier)}",
             lowBound=0,
             cat='Continuous'
         )
@@ -114,7 +115,7 @@ def create_decision_variables(
     for _, lot in gain_loss.iterrows():
         tax_lot_id = lot['tax_lot_id']
         sells[tax_lot_id] = pulp.LpVariable(
-            f"sell_{tax_lot_id}",
+            f"sell_{safe_lp_name(tax_lot_id)}",
             lowBound=0,
             upBound=lot['quantity'],
             cat='Continuous'

@@ -68,6 +68,9 @@ def apply_trades_to_portfolio(
         process_start = time.time()
 
     updated_tax_lots = tax_lots.copy()
+    for column in ("quantity", "cost_basis"):
+        if column in updated_tax_lots:
+            updated_tax_lots[column] = updated_tax_lots[column].astype(float)
     updated_cash = cash
     new_lots_list = []
     closed_lots_list = []

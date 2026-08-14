@@ -862,7 +862,9 @@ class OracleStrategy:
         enforce_wash_sale_prevention: bool = True,
         debug: bool = True,
         dump: bool = False,
-        log_time: bool = True
+        log_time: bool = True,
+        disposal_method: str = "FIFO",
+        enforce_disposal_order: bool = False,
     ) -> tuple[Optional[int], bool, Dict, pd.DataFrame]:
         """
         Compute optimal trades using linear optimization.
@@ -892,6 +894,10 @@ class OracleStrategy:
             debug (bool): Whether to print debug information (default: True)
             dump (bool): Whether to dump strategy state (default: False)
             log_time (bool): Whether to log execution times (default: True)
+            disposal_method (str): Broker lot-disposal order when enforce_disposal_order is True
+                (FIFO, LIFO, or HIFO; default: FIFO)
+            enforce_disposal_order (bool): If True, only sell lots in the broker's disposal
+                order so recommendations are executable without specific-lot targeting
 
         Returns:
             tuple[Optional[int], bool, Dict, pd.DataFrame]: Tuple containing:
@@ -924,6 +930,8 @@ class OracleStrategy:
         self.range_min_weight_multiplier = range_min_weight_multiplier
         self.range_max_weight_multiplier = range_max_weight_multiplier
         self.enforce_wash_sale_prevention = enforce_wash_sale_prevention
+        self.disposal_method = disposal_method
+        self.enforce_disposal_order = enforce_disposal_order
 
         if dump and self.oracle is not None:
             pass
@@ -1070,7 +1078,9 @@ class OracleStrategy:
             min_notional=min_notional,
             buy_df=self.buy_df,
             sell_df=self.sell_df,
-            enforce_wash_sale_prevention=self.enforce_wash_sale_prevention
+            enforce_wash_sale_prevention=self.enforce_wash_sale_prevention,
+            disposal_method=self.disposal_method,
+            enforce_disposal_order=self.enforce_disposal_order,
         )
 
         if log_time:

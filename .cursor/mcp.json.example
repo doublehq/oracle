@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "oracle": {
+      "command": "/ABSOLUTE/PATH/TO/oracle/.venv/bin/oracle-mcp"
+    },
+    "robinhood-trading": {
+      "url": "https://agent.robinhood.com/mcp/trading"
+    }
+  }
+}

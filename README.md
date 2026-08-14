@@ -2,7 +2,7 @@
 
 Oracle, built by [Double Finance](https://double.finance), is a sophisticated portfolio optimization engine that tax loss harvests and intelligently rebalances portfolios while considering tax implications, trading costs, and various constraints placed upon portfolios (holding time restrictions, etc). It's designed to help investors maintain their target asset allocations while minimizing tax burdens and transaction costs.
 
-We use this in production at [Double Finance](https://double.finance) for daily Tax Loss Harvesting and Automated Rebalancing. Oracle simply returns optimal trades to make for a portfolio - it does not execute anything. You must bring your own price and target/index data. Oracle does not fetch anything from the internet. It allows for customization and control regarding how aggressive you want to be along pretty much every axis.
+We use this in production at [Double Finance](https://double.finance) for daily Tax Loss Harvesting and Automated Rebalancing. The core optimizer is offline and only recommends trades. Optional MCP tools can fetch Robinhood account data and SSGA holdings, but they never place orders.
 
 It provides the basics of a complete portfolio optimization engine similar to:
 
@@ -34,14 +34,69 @@ It provides the basics of a complete portfolio optimization engine similar to:
 ## Installation
 
 ```shell
-# Install CBC solver (required for optimization)
-brew install coin-or-tools/coinor/cbc
-
 # Set up Python environment
 python -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt
+pip install -e .
 ```
+
+PuLP ships a bundled CBC solver, so no system install is required. If you already have CBC on your PATH (or via Homebrew at `/opt/homebrew/opt/cbc/bin/cbc`), Oracle will use that instead:
+
+```shell
+brew install coin-or-tools/coinor/cbc   # optional
+```
+
+You can also install with `pip install -r requirements.txt` if you only need the library (not the `oracle-mcp` console script).
+
+## Local MCP server (Robinhood Agentic Trading)
+
+Oracle exposes its optimizer as a **local-only stdio MCP server**. There is no hosted Oracle. Clone this repo, install it, and register the server with your MCP client. Pair it with the [Robinhood Trading MCP](https://robinhood.com/us/en/support/articles/agentic-trading-overview/) (`https://agent.robinhood.com/mcp/trading`) so an agent can fetch tax lots / quotes / cash, call Oracle, then review and place orders in the dedicated Agentic account.
+
+Oracle never executes trades. The server instructions require dry-run by default: compute → `review_equity_order` → explicit user confirmation of the exact trade list → only then `place_equity_order`.
+
+Specified-lot sells require Robinhood `open_lot_id` values. Without them, generated orders omit `tax_lots` and use Robinhood's default FIFO disposal.
+
+### Register with an MCP client
+
+After `pip install -e .`, use the **absolute** path to the venv script (MCP clients do not inherit your shell cwd):
+
+**Claude Code**
+
+```shell
+claude mcp add oracle -- /ABSOLUTE/PATH/TO/oracle/.venv/bin/oracle-mcp
+```
+
+**Cursor** — Settings → Tools & MCPs, or copy [`.cursor/mcp.json.example`](.cursor/mcp.json.example) to `.cursor/mcp.json` and replace the path:
+
+```json
+{
+  "mcpServers": {
+    "oracle": {
+      "command": "/ABSOLUTE/PATH/TO/oracle/.venv/bin/oracle-mcp"
+    }
+  }
+}
+```
+
+Then connect the Robinhood Trading MCP at `https://agent.robinhood.com/mcp/trading` (OAuth in a desktop browser).
+
+Claude Desktop and other MCP clients can register the same absolute `oracle-mcp` command. Call `get_workflow_guide` for detailed field mappings and the dry-run workflow.
+
+### MCP tools
+
+| Tool | Purpose |
+|------|---------|
+| `optimize_portfolio` | Single-portfolio optimize; supports `snapshot_path`, `investable_amount`, `out_path` |
+| `fetch_robinhood_snapshot` | Bulk fetch account + SPY + quotes + fundamentals (read-only RH client) |
+| `build_wash_sale_history` | Merge Robinhood PnL + order payloads into `recently_closed_lots` |
+| `fetch_etf_holdings_targets` | Download SSGA daily holdings XLSX (default SPY) → normalized `targets` |
+| `normalize_robinhood_tax_lots` | Flatten `get_equity_tax_lots` responses for Oracle inputs |
+| `build_factor_model_from_fundamentals` | Build DIRECT_INDEX factor model from `get_equity_fundamentals` |
+| `build_robinhood_equity_orders` | Build `review_equity_order` / `place_equity_order` payloads from lot-level trades |
+| `compute_optimal_trades` | Raw multi-strategy Lambda event passthrough |
+| `get_workflow_guide` | Full Robinhood + Oracle workflow |
+
+**Console scripts:** `oracle-mcp`, `oracle-rh-login` (one-time OAuth), and `oracle-rh-snapshot` (read-only bulk fetch). For a local dry run, use `python scripts/record_live_e2e.py`; generated financial artifacts stay under ignored `artifacts/`.
 
 ## Quick Start
 
@@ -109,7 +164,7 @@ strategy = OracleStrategy(
 )
 
 # Set this Oracle instance as the strategy's oracle
-strategy.set_oracle(self)
+strategy.set_oracle(oracle)
 oracle.initialize_wash_sale_restrictions(percentage_protection_from_inadvertent_wash_sales=0.003)
 
 

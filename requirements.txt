@@ -1,3 +1,5 @@
-pandas
-pulp
-numpy
+pandas>=2.0,<4
+pulp>=2.7,<4
+numpy>=1.24,<3
+mcp>=2.0,<3
+openpyxl>=3.1,<4

@@ -3,6 +3,7 @@ import pandas as pd
 import pulp
 
 from src.service.constraints.base_validator import BaseValidator
+from src.service.helpers.lp_names import safe_lp_name
 
 class RestrictionValidator(BaseValidator):
     """Validator for stock and wash sale restrictions."""
@@ -77,7 +78,10 @@ class RestrictionValidator(BaseValidator):
                 if not row['can_sell']:
                     for _, lot in gain_loss[gain_loss['identifier'] == identifier].iterrows():
                         if lot['tax_lot_id'] in sells:
-                            prob += (sells[lot['tax_lot_id']] == 0), f"no_sell_{lot['tax_lot_id']}"
+                            prob += (
+                                sells[lot['tax_lot_id']] == 0,
+                                f"no_sell_{safe_lp_name(lot['tax_lot_id'])}",
+                            )
                                 
         # Wash sale restrictions
         if self.enforce_wash_sale_prevention and wash_sale_restrictions is not None:
@@ -105,4 +109,7 @@ class RestrictionValidator(BaseValidator):
 
                     for _, lot in restricted_lots.iterrows():
                         if lot['tax_lot_id'] in sells:
-                            prob += (sells[lot['tax_lot_id']] == (lot["quantity"] * liquidate)), f"wash_sale_sell_{lot['tax_lot_id']}"
+                            prob += (
+                                sells[lot['tax_lot_id']] == (lot["quantity"] * liquidate),
+                                f"wash_sale_sell_{safe_lp_name(lot['tax_lot_id'])}",
+                            )

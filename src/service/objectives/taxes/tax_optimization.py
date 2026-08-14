@@ -2,6 +2,8 @@ import pulp
 import pandas as pd
 from typing import Dict
 
+from src.service.helpers.lp_names import safe_lp_name
+
 def get_tax_cost(
     quantity: float,
     per_share_tax_liability: float,
@@ -80,13 +82,17 @@ def calculate_tax_impact(
         current_tax_score += current_lot_tax / total_value
         
         # Create variable for realized tax (can be negative for tax loss harvesting)
-        tax_realized = pulp.LpVariable(f"tax_realized_{tax_lot_id}")
+        safe_tax_lot_id = safe_lp_name(tax_lot_id)
+        tax_realized = pulp.LpVariable(f"tax_realized_{safe_tax_lot_id}")
         
         # Constraint: realized tax equals reduction in tax liability
         # new_tax_liability = (quantity - sells[tax_lot_id]) * per_share_tax
         # tax_realized = current_tax_liability - new_tax_liability
         # Scale the constraint by total_value to match units with drift
-        prob += tax_realized == sells[tax_lot_id] * per_share_tax / total_value, f"tax_realized_{tax_lot_id}"
+        prob += (
+            tax_realized == sells[tax_lot_id] * per_share_tax / total_value,
+            f"tax_realized_{safe_tax_lot_id}",
+        )
         
         # Add to total tax impact (no need to divide by total_value again since constraint is now scaled)
         tax_impacts.append(tax_realized * tax_normalization)

@@ -1,1 +1,1 @@
- 
+"""Oracle portfolio optimizer."""

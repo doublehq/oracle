@@ -5,6 +5,7 @@ from datetime import timedelta
 
 from src.service.constraints.base_validator import BaseValidator
 from src.service.constraints.holding_time.trading_day_lookup import TradingDayLookup
+from src.service.helpers.lp_names import safe_lp_name
 
 class HoldingTimeValidator(BaseValidator):
     """Validator for minimum holding time requirements."""
@@ -115,5 +116,5 @@ class HoldingTimeValidator(BaseValidator):
             if tax_lot_id in sells:
                 prob += (
                     sells[tax_lot_id] == 0,
-                    f"No_sell_recently_bought_{tax_lot_id}"
+                    f"No_sell_recently_bought_{safe_lp_name(tax_lot_id)}"
                 )
